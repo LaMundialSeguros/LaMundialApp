@@ -1,0 +1,1 @@
+ /Users/gabrielperez/Proyectos_FLUTTER/lamundial/.dart_tool/flutter_build/debdd46dcedc936fa9252687f07d9d9b/native_assets.yaml: 

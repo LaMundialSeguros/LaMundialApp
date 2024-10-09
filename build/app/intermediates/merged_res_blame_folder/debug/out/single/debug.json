@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxxhdpi_ic_launcher_monochrome.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxxhdpi\\ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-hdpi_launcher_icon.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-hdpi\\launcher_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\drawable-v21_launch_background.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\drawable-v21\\launch_background.xml"
+    },
+    {
+        "merged": "com.example.lamundialapp-merged_res-7:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.lamundialapp-main-1:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-mdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-mdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-mdpi_ic_launcher_monochrome.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-mdpi\\ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxhdpi_ic_launcher_monochrome.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxhdpi\\ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.example.lamundialapp-merged_res-7:/mipmap-hdpi_launcher_icon.png.flat",
+        "source": "com.example.lamundialapp-main-1:/mipmap-hdpi/launcher_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-hdpi_launcher_icon2.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-hdpi\\launcher_icon2.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-hdpi_ic_launcher_monochrome.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-hdpi\\ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-hdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-hdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-merged_res-7:\\mipmap-xhdpi_ic_launcher_monochrome.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\7.5\\com.example.lamundialapp-main-1:\\mipmap-xhdpi\\ic_launcher_monochrome.png"
+    }
+]
