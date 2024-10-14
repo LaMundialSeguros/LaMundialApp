@@ -27,26 +27,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AnimatedSplashScreen(
-        splash: Image.asset("assets/logoAnimation.gif"),
+        splash: Image.asset("assets/animation.gif"),
         duration: 4000,
         splashTransition: SplashTransition.scaleTransition,
         backgroundColor: const Color.fromARGB(255, 251, 251, 251),
         nextScreen: const RolPage(),
         //nextScreen: const pagar(),
-        splashIconSize: 200,
+        splashIconSize: MediaQuery.of(context).size.height,
       ),
       //home: LoginPage(),
     );
-  }
-}
-
-class MyProvider extends ChangeNotifier {
-  String _name = 'John Doe';
-
-  String get name => _name;
-
-  set name(String newName) {
-    _name = newName;
-    notifyListeners();
   }
 }

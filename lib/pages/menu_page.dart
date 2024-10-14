@@ -13,20 +13,58 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  late String texto = GlobalVariables().message;
+  late String cedula = GlobalVariables().cedulaUser;
+  late String email = GlobalVariables().emailUser;
+  late int rol = GlobalVariables().rolUser;
+  late int id = GlobalVariables().idUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
       appBar: PreferredSize(
         child: ClipPath(clipper: CurveAppBar(),
           child: AppBar(
             //toolbarHeight: 50,
-            title: Text(texto),
+            backgroundColor: Color.fromRGBO(15, 26, 90, 1),
+            title: Text(
+                          "Menu",
+                          style: TextStyle(
+                            color: Colors.white, // Cambia el color del texto aquí
+                          )
+                        ),
           ),
         ),
         preferredSize: Size.fromHeight(150),
       ),
+      body: Container(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text('ID: $id'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text('EMAIL: '+email),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text('CEDULA: '+cedula),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text('ROL: $rol'),
+              ],
+            ),
+          ],
+        ),
+      )
     );
   }
 }

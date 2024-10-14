@@ -6,7 +6,7 @@ class BannerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/logolamundial1.png',
+      'assets/ProducerBanner.png',
       //'lib/images/logo.png', // Ruta a la imagen en tu proyecto
       width: 200.0, // Ancho de la imagen (ajusta según tus necesidades)
       height: 200.0, // Altura de la imagen (ajusta según tus necesidades)

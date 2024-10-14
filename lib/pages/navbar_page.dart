@@ -5,6 +5,7 @@ import 'package:lamundialapp/pages/login_page.dart';
 //import 'package:lamundialapp/pages/menu_page.dart' as menup;
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/pages/qrscreen_page.dart';
+import 'package:lamundialapp/pages/rolPage.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -104,7 +105,7 @@ class NavBar extends StatelessWidget {
                 //menup.MenuAppState().disconnectSocket();
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
+                    builder: (context) => const RolPage(),
                   ),
                   (route) =>
                       false, // Elimina todas las rutas existentes en la pila

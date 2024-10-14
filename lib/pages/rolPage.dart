@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
+import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -55,16 +56,11 @@ class RolPageState extends State<RolPage> {
         return;
       }
 
-      // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
-
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        ),
-            (route) =>
-        false, // Elimina todas las rutas existentes en la pila
-      );
-      //await apiConsultaUsuario(context, username.text, password.text);
+      if(selectedRol.id == 3){
+        Navigator.push(context,MaterialPageRoute(builder: (context) => LoginPageClient(selectedRol)));
+      }else{
+        Navigator.push(context,MaterialPageRoute(builder: (context) => LoginPage(selectedRol)));
+      }
 
       // Resto del código...
     } catch (e) {
@@ -197,6 +193,7 @@ class RolPageState extends State<RolPage> {
                 ElevatedButton(
                   onPressed: () {
                     rolCodeFocus.unfocus();
+                    //print(selectedRol.name);
                     signUserIn();
                   },
                   style: ElevatedButton.styleFrom(
@@ -221,22 +218,6 @@ class RolPageState extends State<RolPage> {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '¿No tiene una cuenta? Cree una.',
-                          style: TextStyle(
-                              fontSize: 9,
-                              color: Color.fromRGBO(121, 116, 126, 1),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins'),
-                        ),
-                      ],
-                    ),
-                  ),
           const SizedBox(height: 20),
           const SizedBox(height: 150),
           Container(

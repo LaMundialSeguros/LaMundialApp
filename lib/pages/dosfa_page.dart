@@ -185,7 +185,7 @@ class TwoFactorAuthPageState extends State<TwoFactorAuthPage> {
                   twoFactorCodeController.text = '';
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
+                      builder: (context) => const LoginPage(1),
                     ),
                     (route) =>
                         false, // Elimina todas las rutas existentes en la pila

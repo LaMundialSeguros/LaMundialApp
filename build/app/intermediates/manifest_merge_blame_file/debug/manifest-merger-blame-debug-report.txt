@@ -13,26 +13,26 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:37:5-66
-15-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:37:22-64
+15-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:37:5-66
+15-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:37:22-64
 16    <uses-permission android:name="android.permission.CAMERA" />
-16-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:34:5-65
-16-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:34:22-62
+16-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:34:5-65
+16-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:34:22-62
 17    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-17-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:35:5-80
-17-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:35:22-78
+17-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:35:5-80
+17-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:35:22-78
 18    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-18-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:36:5-79
-18-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:36:22-77
+18-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:36:5-79
+18-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:36:22-77
 19    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-19-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:38:5-102
-19-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:38:22-83
+19-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:38:5-102
+19-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:38:22-83
 20    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-20-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:39:5-91
-20-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:39:22-72
+20-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:39:5-91
+20-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:39:22-72
 21    <uses-permission android:name="android.permission.USE_BIOMETRIC" /> <!-- suppress DeprecatedClassUsageInspection -->
-21-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:40:5-72
-21-->C:\Projects\Flutter\lamundial\android\app\src\main\AndroidManifest.xml:40:22-69
+21-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:40:5-72
+21-->C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:40:22-69
 22    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 22-->[androidx.biometric:biometric:1.1.0] C:\Users\Asus\.gradle\caches\transforms-3\29a53b35c072e5e16e15ef7c62078a12\transformed\biometric-1.1.0\AndroidManifest.xml:27:5-74
 22-->[androidx.biometric:biometric:1.1.0] C:\Users\Asus\.gradle\caches\transforms-3\29a53b35c072e5e16e15ef7c62078a12\transformed\biometric-1.1.0\AndroidManifest.xml:27:22-71

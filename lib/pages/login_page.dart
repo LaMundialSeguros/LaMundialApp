@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
+import 'package:lamundialapp/components/bannerAdmin.dart';
+import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -18,7 +20,8 @@ import '../components/logo.dart';
 final localAuth = LocalAuthentication();
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final selectedRol;
+  const LoginPage(this.selectedRol,{Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -63,7 +66,7 @@ class LoginPageState extends State<LoginPage> {
       }
 
       // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
-      await apiConsultaUsuario(context, username.text, password.text);
+      await apiConsultaUsuario(context, username.text, password.text, widget.selectedRol.id);
       almacenarCredenciales(username.text, password.text);
 
       // Resto del código...
@@ -73,6 +76,21 @@ class LoginPageState extends State<LoginPage> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  Future<void> BannerRol() async {
+    try {
+        // Validar campos nulos
+        if (widget.selectedRol.id == 1) {
+
+        }else{
+
+        }
+      // Resto del código...
+    } catch (e) {
+      // Manejar errores si es necesario
+    } finally {
     }
   }
 
@@ -148,7 +166,7 @@ class LoginPageState extends State<LoginPage> {
         // Utiliza las credenciales almacenadas para la autenticación
         almacenarCredenciales(username.text, password.text);
         // ignore: use_build_context_synchronously
-        await apiConsultaUsuario(context, username.text, password.text);
+        await apiConsultaUsuario(context, username.text, password.text, widget.selectedRol.id);
         username.text = '';
         password.text = '';
       } else {
@@ -159,7 +177,7 @@ class LoginPageState extends State<LoginPage> {
         if (storedUsername != null && storedPassword != null) {
           // Utiliza las credenciales almacenadas para la autenticación
           // ignore: use_build_context_synchronously
-          await apiConsultaUsuario(context, storedUsername, storedPassword);
+          await apiConsultaUsuario(context, storedUsername, storedPassword, widget.selectedRol.id);
         } else {
           // Si no hay credenciales almacenadas, muestra un mensaje o realiza alguna acción adicional.
           // ignore: use_build_context_synchronously
@@ -219,7 +237,9 @@ class LoginPageState extends State<LoginPage> {
         child: Form(
             child: Center(
                 child: Column(children: [
-          const BannerWidget(),
+          if (widget.selectedRol.id == 1) const BannerWidgetAdmin(),
+          if (widget.selectedRol.id == 2) const BannerWidget(),
+          //Text(widget.selectedRol.name),
           const SizedBox(height: 50),
           Container(
             width: 300,
@@ -334,22 +354,27 @@ class LoginPageState extends State<LoginPage> {
             ),
           ),
           const SizedBox(height: 15),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 45.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  '¿Olvidó su contraseña? Click aquí.',
-                  style: TextStyle(
-                      fontSize: 9,
-                      color: Color.fromRGBO(121, 116, 126, 1),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins'),
-                ),
-              ],
-            ),
-          ),
+          Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 45.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                          },
+                          child: Text(
+                            '¿Olvidó su contraseña? Click aquí.',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           const SizedBox(height: 30),
           Container(
             width: 380,
@@ -511,24 +536,6 @@ class LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text(
-          //       '¿No tienes una cuenta? ',
-          //       style:
-          //           TextStyle(color: Colors.grey[700], fontFamily: 'Capriola'),
-          //     ),
-          //     const SizedBox(width: 4),
-          //     const Text(
-          //       '¡Regístrate aquí!',
-          //       style: TextStyle(
-          //           color: Color.fromARGB(255, 17, 77, 127),
-          //           fontWeight: FontWeight.bold,
-          //           fontFamily: 'Capriola'),
-          //     ),
-          //   ],
-          // ),
         ]))));
   }
 }

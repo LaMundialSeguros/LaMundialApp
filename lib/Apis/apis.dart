@@ -10,6 +10,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:lamundialapp/Alertas/alertaspos.dart';
 import 'package:lamundialapp/pages/menu_page.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'package:win32/win32.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -27,9 +30,10 @@ class GlobalVariables {
   late String marcaUser;
   late String keyUser;
   late String secretUser;
-  late String idUser;
+  late int idUser;
   late bool success;
   late String message;
+  late int rolUser;
 
   // Agrega más variables según sea necesario
 
@@ -42,7 +46,8 @@ class GlobalVariables {
     marcaUser = '';
     keyUser = '';
     secretUser = '';
-    idUser = '';
+    idUser = 0;
+    rolUser = 0;
     message = '';
     success;
     // Reinicia otras variables según sea necesario
@@ -99,16 +104,17 @@ TwoFactorAuthPageState twofa = TwoFactorAuthPageState();
 //Fin de Instancia
 
 //Rutina para consumir la API de establecimiento
-Future<void> apiConsultaUsuario(context, String usuario, String clave) async {
+Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) async {
   try {
     final response = await http.post(
       Uri.parse('https://lmchat.lamundialdeseguros.com/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode({
         'username': usuario,
-        'password': clave
+        'password': generateMd5(clave),
+        'rol': rol
       }),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
@@ -119,10 +125,11 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave) async {
       case true:
         //var valordosfa = decoded['dosfa'];
         //coddosfa = decoded['coddosfa'];
-
-        GlobalVariables().message = decoded['message'];
-        //GlobalVariables().nombreUser = decoded['nombre'];
-        //GlobalVariables().emailUser = decoded['email'];
+        //GlobalVariables().message = decoded['message'];
+        GlobalVariables().cedulaUser = decoded['user']['cedula'];
+        GlobalVariables().emailUser = decoded['user']['username'];
+        GlobalVariables().rolUser = decoded['user']['rol'];
+        GlobalVariables().idUser = decoded['user']['id'];
         //GlobalVariables().avatarUser = decoded['avatar'] ?? 'No_tiene_Avatar';
 
 
@@ -170,7 +177,77 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave) async {
   }
 }
 //Fin de Rutina
+Future<void> apiConsultaUsuarioCliente(context, String cedula,int rol) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://lmchat.lamundialdeseguros.com/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'cedula': cedula,
+        'rol': rol
+      }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+    // ignore: avoid_print
+    mensaje = decoded['success'];
+    switch (mensaje) {
+      case 'true':
+      case true:
+      //var valordosfa = decoded['dosfa'];
+      //coddosfa = decoded['coddosfa'];
+      //GlobalVariables().message = decoded['message'];
+        GlobalVariables().cedulaUser = decoded['user']['cedula'];
+        GlobalVariables().emailUser = decoded['user']['username'];
+        GlobalVariables().rolUser = decoded['user']['rol'];
+        GlobalVariables().idUser = decoded['user']['id'];
+        //GlobalVariables().avatarUser = decoded['avatar'] ?? 'No_tiene_Avatar';
 
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const MenuPage(),
+          ),
+              (route) =>
+          false, // Elimina todas las rutas existentes en la pila
+        );
+
+        /*
+          if (valordosfa == 'SI') {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const TwoFactorAuthPage()),
+            );
+          } else {
+            alertas.usuarioNoexiste(context).then((_) {});
+          }
+        */
+
+        break;
+      case 'clave_invalida':
+        alertas.usuarioNoexiste(context).then((_) {});
+        break;
+      case 'usuario_no_existe':
+        alertas.usuarioNoexiste(context).then((_) {});
+        break;
+      case 'sin_conexion':
+        alertas.sinConexion(context).then((_) {});
+        break;
+      case 'datos_invalidos':
+        alertas.usuarioNoexiste(context).then((_) {});
+        break;
+      case 'error_inesperado':
+        alertas.sinConexion(context).then((_) {});
+        break;
+    }
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    alertas.sinConexion(context);
+  }
+}
 //Rutina para consumir la API del DosFA
 Future<void> apiConsultaDosfa(context, String dosfa) async {
   try {
@@ -209,6 +286,11 @@ Future<void> apiConsultaDosfa(context, String dosfa) async {
   } catch (e) {
     alertas.sinConexion(context);
   }
+}
+
+String generateMd5(String input) {
+  var bytes = utf8.encode(input);
+  return md5.convert(bytes).toString();
 }
 //Fin de Rutina
 
