@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/pages/Client/MenuClient.dart';
 import 'package:lamundialapp/pages/dosfa_page.dart';
 
 import 'package:intl/intl.dart';
@@ -13,6 +14,8 @@ import 'package:lamundialapp/pages/menu_page.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:win32/win32.dart';
+
+import '../Utilidades/Class/User.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -190,6 +193,10 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula,int rol) async {
       }),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
+    User user = User(
+                      decoded['user']['username'],
+                      decoded['user']['id']
+                    );
     // ignore: avoid_print
     mensaje = decoded['success'];
     switch (mensaje) {
@@ -205,9 +212,10 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula,int rol) async {
         //GlobalVariables().avatarUser = decoded['avatar'] ?? 'No_tiene_Avatar';
 
 
+
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => const MenuPage(),
+            builder: (context) => MenuClient(user),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
@@ -325,4 +333,6 @@ Future<void> apiGuardarToken(context, String qrEncriptado) async {
   // }
 }
 //Fin de Rutina
+
+
 
