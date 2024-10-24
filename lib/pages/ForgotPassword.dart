@@ -10,6 +10,7 @@ import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
+import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -38,7 +39,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   List<Method> methods = [
     Method('Correo', 1),
-    Method('Telefono', 2)
+    Method('Teléfono', 2)
   ];
 
 
@@ -56,7 +57,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
       }
 
       print("Enviar condigo al metodo indicado...");
-
+      Navigator.push(context,MaterialPageRoute(builder: (context) => SecretCodePage()));
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario

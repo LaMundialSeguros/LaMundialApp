@@ -80,12 +80,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "device_information",
-      "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/device_information-0.0.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "drawerbehavior",
       "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/drawerbehavior-2.2.2",
       "packageUri": "lib/",
@@ -536,12 +530,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "unique_identifier",
-      "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/unique_identifier-0.3.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "vector_graphics",
       "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics-1.1.11+1",
       "packageUri": "lib/",
@@ -602,7 +590,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-10-11T19:26:37.353726Z",
+  "generated": "2024-10-18T21:01:07.081778Z",
   "generator": "pub",
   "generatorVersion": "3.5.2",
   "flutterRoot": "file:///C:/Flutter",

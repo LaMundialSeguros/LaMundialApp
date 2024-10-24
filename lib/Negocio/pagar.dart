@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'package:device_information/device_information.dart';
+//import 'package:device_information/device_information.dart';
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +16,7 @@ import 'package:lamundialapp/Utilidades/scanqr.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 
-import 'package:unique_identifier/unique_identifier.dart';
+//import 'package:unique_identifier/unique_identifier.dart';
 
 AlertaState alertas = AlertaState();
 
@@ -63,8 +63,8 @@ class pagarState extends State<pagar> {
   Future<void> initPlatformState() async {
     String platformVersion;
     try {
-      //platformVersion = '608227157116297';
-      platformVersion = await DeviceInformation.deviceIMEINumber;
+      platformVersion = '608227157116297';
+      //platformVersion = await DeviceInformation.deviceIMEINumber;
       dosfa.text = platformVersion;
     } on PlatformException {
       platformVersion = 'Failed to get Device IMEI.';
@@ -79,11 +79,11 @@ class pagarState extends State<pagar> {
 
 //Rutina para consumir la API de establecimiento
   Future<void> initSerialIOS() async {
-    String? serialIOS = await UniqueIdentifier.serial;
+    //String? serialIOS = await UniqueIdentifier.serial;
     // Asignar el valor a la variable global
     setState(() {
       limpiar_campos();
-      serial = serialIOS ?? '';
+      //serial = serialIOS ?? '';
       dosfa.text = serial;
     });
     initEstablecimiento();

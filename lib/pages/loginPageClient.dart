@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/bannerClient.dart';
+import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -30,9 +31,11 @@ class LoginPageClient extends StatefulWidget {
 class LoginPageClientState extends State<LoginPageClient> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   final cedula = TextEditingController();
+  final password = TextEditingController();
   bool isLoading = false;
   bool showPassword = false;
   FocusNode cedulaCodeFocus = FocusNode();
+  FocusNode passwordCodeFocus = FocusNode();
   var typeDoc = null;
 
   List<TypeDoc> TypeDocs = [
@@ -62,7 +65,7 @@ class LoginPageClientState extends State<LoginPageClient> {
 
     try {
       // Validar campos nulos
-      if (cedula.text.isEmpty) {
+      if (cedula.text.isEmpty || password.text.isEmpty) {
         // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
         await alertas.usuarioNoexiste(context);
         return;
@@ -75,8 +78,8 @@ class LoginPageClientState extends State<LoginPageClient> {
       }
 
       // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
-      await apiConsultaUsuarioCliente(context, cedula.text, widget.selectedRol.id);
-      almacenarCredenciales(cedula.text);
+      await apiConsultaUsuarioCliente(context, cedula.text, password.text, widget.selectedRol.id);
+      almacenarCredenciales(cedula.text, password.text);
 
       // Resto del código...
     } catch (e) {
@@ -91,14 +94,19 @@ class LoginPageClientState extends State<LoginPageClient> {
 // Crear una instancia de FlutterSecureStorage
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 // Función para almacenar las credenciales de manera segura
-  Future<void> almacenarCredenciales(String cedula) async {
+  Future<void> almacenarCredenciales(String cedula, String password) async {
     await _secureStorage.write(key: 'cedula', value: cedula);
+    await _secureStorage.write(key: 'password', value: password);
     await _secureStorage.write(key: 'rol', value: widget.selectedRol.id);
   }
 
 // Función para recuperar el nombre de usuario almacenado
   Future<String?> obtenerUsuarioAlmacenado() async {
     return await _secureStorage.read(key: 'cedula');
+  }
+// Función para recuperar la contraseña almacenada
+  Future<String?> obtenerPasswordAlmacenada() async {
+    return await _secureStorage.read(key: 'password');
   }
 
 // Método para mostrar el diálogo de confirmación de autenticación biométrica
@@ -151,20 +159,22 @@ class LoginPageClientState extends State<LoginPageClient> {
     }
 
     if (authenticated) {
-      if (cedula.text != '') {
+      if (cedula.text != '' && password.text != '') {
         // Utiliza las credenciales almacenadas para la autenticación
-        almacenarCredenciales(cedula.text);
+        almacenarCredenciales(cedula.text, password.text);
         // ignore: use_build_context_synchronously
-        await apiConsultaUsuarioCliente(context, cedula.text, widget.selectedRol.id);
+        await apiConsultaUsuarioCliente(context, cedula.text, password.text, widget.selectedRol.id);
         cedula.text = '';
+        password.text = '';
       } else {
         // Intenta obtener las credenciales almacenadas
         String? storedCedula = await obtenerUsuarioAlmacenado();
+        String? storedPassword = await obtenerPasswordAlmacenada();
 
-        if (storedCedula != null) {
+        if (storedCedula != null && storedPassword != null) {
           // Utiliza las credenciales almacenadas para la autenticación
           // ignore: use_build_context_synchronously
-          await apiConsultaUsuarioCliente(context, storedCedula, widget.selectedRol.id);
+          await apiConsultaUsuarioCliente(context, storedCedula, storedPassword, widget.selectedRol.id);
         } else {
           // Si no hay credenciales almacenadas, muestra un mensaje o realiza alguna acción adicional.
           // ignore: use_build_context_synchronously
@@ -225,7 +235,22 @@ class LoginPageClientState extends State<LoginPageClient> {
             child: Center(
                 child: Column(children: [
           const BannerWidgetClient(),
-          const SizedBox(height: 50),
+          Container(
+                    //padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'ASEGURADO',
+                          style: TextStyle(
+                              fontSize: 34,
+                              color: Color.fromRGBO(15, 26, 90, 1),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins'),
+                        ),
+                      ],
+                    ),
+                  ),
           Padding(
             padding: const EdgeInsets.only(left: 50,right: 0),
             child: Row(
@@ -322,6 +347,91 @@ class LoginPageClientState extends State<LoginPageClient> {
               ],
             ),
           ),
+          const SizedBox(height: 20),
+          Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(// Color de fondo gris
+                        borderRadius: BorderRadius.only(
+                          topLeft:  Radius.zero,
+                          topRight:  Radius.circular(40.0),
+                          bottomLeft:  Radius.circular(40.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        border: Border.all(
+                          color: Color.fromRGBO(79, 127, 198, 1),
+                        )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: password,
+                            focusNode: passwordCodeFocus,
+                            style: const TextStyle(
+                              color: Colors.black, // Color del texto
+                              fontFamily: 'Poppins',
+                              // Otros estilos de texto que desees aplicar
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Ingrese su contraseña',
+                              prefixIcon: Container(
+                                padding: const EdgeInsets.all(16),
+                                child: SvgPicture.asset(
+                                  '', // Ruta de tu archivo SVG
+                                  colorFilter: const ColorFilter.mode(
+                                      Color.fromRGBO(121, 116, 126, 1),
+                                      BlendMode.srcIn),
+                                  width: 20, // Tamaño deseado en ancho
+                                  height: 20,
+                                ),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 12.0),
+                              hintStyle: TextStyle(
+                                  color: Color.fromRGBO(121, 116, 126, 1),
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700
+                              ),
+                            ),
+                            obscureText: !showPassword,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            showPassword ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey[500],
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+          Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 45.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                          },
+                          child: Text(
+                            '¿Olvidó su contraseña? Click aquí.',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           const SizedBox(height: 20),
           const SizedBox(height: 15),
           const SizedBox(height: 30),

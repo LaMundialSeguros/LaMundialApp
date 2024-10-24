@@ -180,7 +180,7 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
   }
 }
 //Fin de Rutina
-Future<void> apiConsultaUsuarioCliente(context, String cedula,int rol) async {
+Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, int rol) async {
   try {
     final response = await http.post(
       Uri.parse('https://lmchat.lamundialdeseguros.com/login'),
