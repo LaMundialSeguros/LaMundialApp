@@ -8,12 +8,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/bannerClient.dart';
+import 'package:lamundialapp/pages/Client/RegisterClient.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 //import 'package:unique_identifier/unique_identifier.dart';
 
+import '../Utilidades/Class/TypeDoc.dart';
 import '../components/banner.dart';
 import '../components/logo.dart';
 
@@ -483,6 +485,27 @@ class LoginPageClientState extends State<LoginPageClient> {
               ],
             ),
           ),
+          Container(
+                    //padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterClientPage()));
+                          },
+                          child: Text(
+                            '¿No tiene una cuenta? Cree una.',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           const SizedBox(height: 10),
           const SizedBox(height: 20),
           FutureBuilder<Uint8List>(
@@ -580,11 +603,4 @@ class LoginPageClientState extends State<LoginPageClient> {
                   ),
         ]))));
   }
-}
-
-class TypeDoc {
-  final String name;
-  final String id;
-
-  TypeDoc(this.name, this.id);
 }

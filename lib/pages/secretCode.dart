@@ -17,6 +17,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 //import 'package:unique_identifier/unique_identifier.dart';
 
+import '../Utilidades/Class/Method.dart';
 import '../components/banner.dart';
 import '../components/logo.dart';
 
@@ -228,11 +229,4 @@ class secretCodePageState extends State<SecretCodePage> {
                   ),
         ]))));
   }
-}
-
-class Method {
-  final String name;
-  final int id;
-
-  Method(this.name, this.id);
 }
