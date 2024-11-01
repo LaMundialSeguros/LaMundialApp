@@ -4,6 +4,7 @@ import 'package:lamundialapp/Utilidades/AppBar.dart';
 import 'package:lamundialapp/pages/Client/ServicesClient.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../Apis/apis.dart';
 import '../../Utilidades/Class/User.dart';
 
 class MenuClient extends StatelessWidget{
@@ -78,13 +79,7 @@ Widget Menu(BuildContext context,user) {
               const SizedBox(height: 30),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => ServicesClient(user),
-                    ),
-                        (route) =>
-                    false, // Elimina todas las rutas existentes en la pila
-                  );
+                  apiConsultServices(context,GlobalVariables().cedulaUser);
                 },
                 child: Container(
                   width: 320,

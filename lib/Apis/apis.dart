@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
 import 'package:lamundialapp/pages/Client/MenuClient.dart';
 import 'package:lamundialapp/pages/dosfa_page.dart';
 
@@ -16,6 +17,7 @@ import 'package:crypto/crypto.dart';
 import 'package:win32/win32.dart';
 
 import '../Utilidades/Class/User.dart';
+import '../pages/Client/ServicesClient.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -86,6 +88,7 @@ bool isButtonActiveultimo = true;
 bool isButtonActivedia = true;
 bool isInAsyncCall = false;
 var mensaje;
+var datos;
 int modelo = 0;
 var rif = '';
 var ultimotxnid = '';
@@ -334,5 +337,66 @@ Future<void> apiGuardarToken(context, String qrEncriptado) async {
 }
 //Fin de Rutina
 
+//Future<List<dynamic>> apiConsultServices(String cedula) async {
+Future<dynamic> apiConsultServices(context,String cedula) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://lmchat.lamundialdeseguros.com/app-services'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'cedula': cedula
+      }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+
+    datos = decoded['Polizas'];
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => ServicesClient(datos),
+      ),
+          (route) =>
+      false, // Elimina todas las rutas existentes en la pila
+    );
+
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    //alertas.sinConexion(context);
+  }
+}
+
+Future<dynamic> apiServiceManagerRCV(context,String cedula,int codigo) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://lmchat.lamundialdeseguros.com/services-manager'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'cedula': cedula,
+        "codigo": codigo
+      }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+
+    datos = decoded['Vehiculos'];
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => ClientVehiculosRCV(datos),
+      ),
+          (route) =>
+      false, // Elimina todas las rutas existentes en la pila
+    );
+
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    //alertas.sinConexion(context);
+  }
+}
 
 
