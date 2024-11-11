@@ -10,7 +10,7 @@ var alertStyle = AlertStyle(
     descStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       // ignore: use_full_hex_values_for_flutter_colors
       color: Color(0xffb1763ad),
     ),
@@ -18,13 +18,13 @@ var alertStyle = AlertStyle(
     alertBorder: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
       side: const BorderSide(
-        color: Colors.black,
+        color: Colors.white,
       ),
     ),
     titleStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       //color: Color.fromARGB(255, 15, 14, 14),
       // ignore: use_full_hex_values_for_flutter_colors
       color: Color(0xffb1763ad),
@@ -33,7 +33,7 @@ var alertStyle = AlertStyle(
     //First to chars "55" represents transparency of color
     //overlayColor: const Color.fromARGB(146, 110, 109, 109),
     backgroundColor:
-        Colors.black87, // Establece el color de fondo del contenido del alerta
+        Colors.white, // Establece el color de fondo del contenido del alerta
     overlayColor: Colors.grey.withOpacity(0.9),
     //alertElevation: 0,
     alertAlignment: Alignment.bottomCenter);
@@ -47,7 +47,7 @@ var alertStyle2 = AlertStyle(
     descStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       // ignore: use_full_hex_values_for_flutter_colors
       color: Colors.white,
     ),
@@ -68,7 +68,7 @@ var alertStyle2 = AlertStyle(
     //First to chars "55" represents transparency of color
     //overlayColor: const Color.fromARGB(146, 110, 109, 109),
     backgroundColor:
-        Colors.black, // Establece el color de fondo del contenido del alerta
+        Colors.white, // Establece el color de fondo del contenido del alerta
     overlayColor: Colors.grey.withOpacity(0.9),
     alertElevation: 10,
     alertAlignment: Alignment.topCenter);
@@ -82,7 +82,7 @@ var alertStyle3 = AlertStyle(
     descStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 20,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       // ignore: use_full_hex_values_for_flutter_colors
       color: Colors.white,
     ),
@@ -96,7 +96,7 @@ var alertStyle3 = AlertStyle(
     titleStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 60,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       //color: Color.fromARGB(255, 15, 14, 14),
       // ignore: use_full_hex_values_for_flutter_colors
       color: Colors.white,
@@ -105,7 +105,7 @@ var alertStyle3 = AlertStyle(
     //First to chars "55" represents transparency of color
     //overlayColor: const Color.fromARGB(146, 110, 109, 109),
     backgroundColor:
-        Colors.black, // Establece el color de fondo del contenido del alerta
+        Colors.white, // Establece el color de fondo del contenido del alerta
     overlayColor: Colors.grey.withOpacity(0.9),
     alertElevation: 10,
     alertAlignment: Alignment.topCenter);
@@ -117,7 +117,7 @@ var alertStyle4 = AlertStyle(
     descStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       // ignore: use_full_hex_values_for_flutter_colors
       color: Colors.white,
     ),
@@ -125,13 +125,13 @@ var alertStyle4 = AlertStyle(
     alertBorder: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
       side: const BorderSide(
-        color: Colors.black,
+        color: Colors.white,
       ),
     ),
     titleStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
-      fontFamily: 'Capriola',
+      fontFamily: 'Poppins',
       //color: Color.fromARGB(255, 15, 14, 14),
       // ignore: use_full_hex_values_for_flutter_colors
       color: Colors.white,
@@ -140,7 +140,7 @@ var alertStyle4 = AlertStyle(
     //First to chars "55" represents transparency of color
     //overlayColor: const Color.fromARGB(146, 110, 109, 109),
     backgroundColor:
-        Colors.black, // Establece el color de fondo del contenido del alerta
+        Colors.white, // Establece el color de fondo del contenido del alerta
     overlayColor: Colors.grey.withOpacity(0.9),
     //alertElevation: 0,
     alertAlignment: Alignment.bottomCenter);

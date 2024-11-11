@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
 import 'package:lamundialapp/pages/rolPage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -22,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => RolPage(),
+                        builder: (context) => WelcomeClient(),
                       ),
                           (route) =>
                       false, // Elimina todas las rutas existentes en la pila

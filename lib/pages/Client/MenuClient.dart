@@ -1,164 +1,130 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
+import 'package:lamundialapp/Utilidades/Class/Policy.dart';
+import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/pages/Client/ServicesClient.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:lamundialapp/pages/Client/test.dart';
+import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
+import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
+import 'package:lamundialapp/pages/rolPage.dart';
 
 import '../../Apis/apis.dart';
-import '../../Utilidades/Class/User.dart';
 
-class MenuClient extends StatelessWidget{
-  final User user;
-  const MenuClient(this.user,{Key? key}) : super(key: key);
 
+class MenuClient extends StatefulWidget {
+  final int index;
+  MenuClient(this.index,{Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:CustomAppBar(),
-      body: Menu(context,user),
-    );
-  }
+  MenuClientState createState() => MenuClientState();
 }
 
+class MenuClientState extends State<MenuClient>{
+  @override
+  int _selectedIndex = -1;
 
-Widget Menu(BuildContext context,user) {
-  return Container(
-      color: Colors.transparent,
-      child: Center(
-        child: Column(
-            children:
-            [
-              const SizedBox(height: 100),
-              Container(
-                //padding: EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Bienvenido/a',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromRGBO(15, 26, 90, 1),
-                          fontFamily: 'Poppins'),
-                    ),
-                  ],
-                ),
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+
+  Widget build(BuildContext context) {
+
+    List<Widget> _widgetOptions = <Widget>[
+      ServicesClient(),
+      MenuProducts(),
+      notifyPaymentsForm(),
+      Text('Página 4'),
+    ];
+
+    if(_selectedIndex == -1){
+      _selectedIndex = widget.index;
+    }
+    final search = TextEditingController();
+    FocusNode searchCodeFocus = FocusNode();
+    return Scaffold(
+      appBar:CustomAppBar(),
+      body: _widgetOptions.elementAt(_selectedIndex),
+      floatingActionButton: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Container(
+            alignment: Alignment.bottomLeft,
+            child: FloatingActionButton(
+              onPressed: () {
+                // Acción a realizar al presionar el botón
+                print('Botón presionado');
+              },
+              child: Image.asset(
+                'assets/sos.png', // Reemplaza con la ruta de tu imagen
+                width: 24, // Ajusta el ancho de la imagen
+                height: 24, // Ajusta la altura de la imagen
               ),
-              Container(
-                //padding: EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      user.name,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromRGBO(15, 26, 90, 1),
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins'),
-                    ),
-                  ],
-                ),
+              backgroundColor: Color.fromRGBO(232, 79, 81, 0.85), // Establecemos el color a rojo
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0), // Hacemos el botón redondo
               ),
-              const SizedBox(height: 30),
-              Container(
-                //padding: EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '¿Qué desea realizar?',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromRGBO(15, 26, 90, 1),
-                          fontFamily: 'Poppins'),
-                    ),
-                  ],
-                ),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 100,
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 30,
+                height: 30,
+                child: Image.asset('assets/polizas.png'),
               ),
-              const SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  apiConsultServices(context,GlobalVariables().cedulaUser);
-                },
-                child: Container(
-                  width: 320,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(232, 79, 81, 0.05),
-                      borderRadius: BorderRadius.only(
-                        topLeft:  Radius.circular(30.0),
-                        topRight:  Radius.circular(30.0),
-                        bottomLeft:  Radius.circular(30.0),
-                        bottomRight: Radius.circular(30.0),
-                      ),
-                      border: Border.all(
-                        color: Color.fromRGBO(232, 79, 81, 1),
-                      )),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 30),
-                        Image.asset('assets/gestionar.png',height: 60,),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Gestionar Servicios',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(15, 26, 90, 1),
-                                    fontFamily: 'Poppins'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              label: 'Polizas',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 30,
+                height: 30,
+                child: Image.asset('assets/compra.png'),
               ),
-              const SizedBox(height: 30),
-              Container(
-                width: 320,
-                height: 150,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(232, 79, 81, 0.05),
-                    borderRadius: BorderRadius.only(
-                      topLeft:  Radius.circular(30.0),
-                      topRight:  Radius.circular(30.0),
-                      bottomLeft:  Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                    ),
-                    border: Border.all(
-                      color: Color.fromRGBO(232, 79, 81, 1),
-                    )),
-                child: Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 30),
-                      Image.asset('assets/comprar.png',height: 60,),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Comprar Servicios',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color.fromRGBO(15, 26, 90, 1),
-                                  fontFamily: 'Poppins'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              label: 'Compra',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 30,
+                height: 30,
+                child: Image.asset('assets/informePago.png'),
               ),
-            ]
-        )
-      )
-  );
+              label: 'Notificar Pagar',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 30,
+                height: 30,
+                child: Image.asset('assets/estadisticas.png'),
+              ),
+              label: 'Estadisticas',
+            ),
+          ],
+          selectedLabelStyle: TextStyle(
+              color: Color.fromRGBO(15, 26, 90, 1),
+              fontSize: 12,
+              fontFamily: "Poppins"
+          ),
+          unselectedLabelStyle: TextStyle(
+              color: Color.fromRGBO(15, 26, 90, 1),
+              fontSize: 12,
+              fontFamily: "Poppins"
+          ), // Color del label no seleccionado
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: true,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ),
+      ),
+    );
+  }
 }

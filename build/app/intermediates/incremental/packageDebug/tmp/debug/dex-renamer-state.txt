@@ -1,4 +1,4 @@
-#Fri Nov 01 01:52:25 VET 2024
+#Mon Nov 11 01:20:34 VET 2024
 base.0=C\:\\Projects\\Flutter\\lamundial\\LaMundialApp\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Projects\\Flutter\\lamundial\\LaMundialApp\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.2=C\:\\Projects\\Flutter\\lamundial\\LaMundialApp\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex

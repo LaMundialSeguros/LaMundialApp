@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/Utilidades/Class/Poliza.dart';
+import 'package:lamundialapp/pages/Client/ClientPoliza.dart';
 import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
-import 'package:lamundialapp/pages/Client/MenuClient.dart';
+import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
 import 'package:lamundialapp/pages/dosfa_page.dart';
 
 import 'package:intl/intl.dart';
@@ -28,33 +30,15 @@ class GlobalVariables {
 
   GlobalVariables._internal();
 
-  late String nombreUser;
-  late String emailUser;
-  late String avatarUser;
-  late String cedulaUser;
-  late String marcaUser;
-  late String keyUser;
-  late String secretUser;
-  late int idUser;
-  late bool success;
-  late String message;
-  late int rolUser;
+
+  late User user;
+  late List<Poliza> polizas = [];
 
   // Agrega más variables según sea necesario
 
   // Métodos relacionados con las variables globales
   void resetVariables() {
-    nombreUser = '';
-    emailUser = '';
-    avatarUser = '';
-    cedulaUser = '';
-    marcaUser = '';
-    keyUser = '';
-    secretUser = '';
-    idUser = 0;
-    rolUser = 0;
-    message = '';
-    success;
+    polizas = [];
     // Reinicia otras variables según sea necesario
   }
 }
@@ -74,15 +58,7 @@ var dosfaFormatter =
     MaskTextInputFormatter(mask: '######', filter: {"#": RegExp(r'[0-9]')});
 var balances = 0;
 final cedula = TextEditingController();
-
 final dosfa = TextEditingController();
-String cadena = '';
-String ced = '';
-var txid = 0;
-var fecha = '';
-var valordosfa = '';
-var mon = '';
-var displayBalance = '';
 bool isButtonActive = true;
 bool isButtonActiveultimo = true;
 bool isButtonActivedia = true;
@@ -90,17 +66,6 @@ bool isInAsyncCall = false;
 var mensaje;
 var datos;
 int modelo = 0;
-var rif = '';
-var ultimotxnid = '';
-var ultimafecha = '';
-var ultimomontopago = '';
-var ultimouser = '';
-var listadotxnid = '';
-var listadofecha = '';
-var listadomontopago = '';
-var listadouser = '';
-double total = 0.00;
-double bur = 0;
 String fechaactual = DateFormat('dd-MM-yyy').format(DateTime.now());
 var coddosfa = '';
 //Instancia de pagar
@@ -129,14 +94,6 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
     switch (mensaje) {
       case 'true':
       case true:
-        //var valordosfa = decoded['dosfa'];
-        //coddosfa = decoded['coddosfa'];
-        //GlobalVariables().message = decoded['message'];
-        GlobalVariables().cedulaUser = decoded['user']['cedula'];
-        GlobalVariables().emailUser = decoded['user']['username'];
-        GlobalVariables().rolUser = decoded['user']['rol'];
-        GlobalVariables().idUser = decoded['user']['id'];
-        //GlobalVariables().avatarUser = decoded['avatar'] ?? 'No_tiene_Avatar';
 
 
         Navigator.of(context).pushAndRemoveUntil(
@@ -147,17 +104,6 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
           false, // Elimina todas las rutas existentes en la pila
         );
 
-        /*
-          if (valordosfa == 'SI') {
-            Navigator.of(context).pop();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const TwoFactorAuthPage()),
-            );
-          } else {
-            alertas.usuarioNoexiste(context).then((_) {});
-          }
-        */
 
         break;
       case 'clave_invalida':
@@ -195,46 +141,50 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
         'rol': rol
       }),
     );
+    GlobalVariables().resetVariables();
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
-    User user = User(
-                      decoded['user']['username'],
-                      decoded['user']['id']
-                    );
-    // ignore: avoid_print
-    mensaje = decoded['success'];
-    switch (mensaje) {
-      case 'true':
-      case true:
-      //var valordosfa = decoded['dosfa'];
-      //coddosfa = decoded['coddosfa'];
-      //GlobalVariables().message = decoded['message'];
-        GlobalVariables().cedulaUser = decoded['user']['cedula'];
-        GlobalVariables().emailUser = decoded['user']['username'];
-        GlobalVariables().rolUser = decoded['user']['rol'];
-        GlobalVariables().idUser = decoded['user']['id'];
-        //GlobalVariables().avatarUser = decoded['avatar'] ?? 'No_tiene_Avatar';
 
+    // ignore: avoid_print
+    mensaje = decoded['message'];
+    switch (mensaje) {
+      case 'Login successful':
+
+      User user = User(
+          decoded['user']['id'],
+          decoded['user']['username'],
+          decoded['user']['cedula'],
+          decoded['user']['rol']
+      );
+
+      GlobalVariables().user = user;
+
+      for(var poliza in decoded['polizas']) {
+        Poliza producto = Poliza(
+            poliza['ctenedor'],
+            poliza['nombre'],
+            poliza['apellido'],
+            poliza['xproducto'],
+            poliza['nopcion'],
+            poliza['xplan'],
+            poliza['cramo'],
+            poliza['diasMora'],
+            poliza['primaExt'],
+            poliza['primaLocal'],
+            poliza['cnrecibo'],
+            poliza['codigo']
+        );
+        GlobalVariables().polizas.add(producto);
+      }
 
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => MenuClient(user),
+            builder: (context) => WelcomeClient(),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
         );
 
-        /*
-          if (valordosfa == 'SI') {
-            Navigator.of(context).pop();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const TwoFactorAuthPage()),
-            );
-          } else {
-            alertas.usuarioNoexiste(context).then((_) {});
-          }
-        */
 
         break;
       case 'clave_invalida':
@@ -352,14 +302,14 @@ Future<dynamic> apiConsultServices(context,String cedula) async {
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
 
     datos = decoded['Polizas'];
-
-    Navigator.of(context).pushAndRemoveUntil(
+    return datos;
+    /*Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => ServicesClient(datos),
       ),
           (route) =>
       false, // Elimina todas las rutas existentes en la pila
-    );
+    );*/
 
   } catch (e) {
     // ignore: avoid_print
@@ -387,6 +337,36 @@ Future<dynamic> apiServiceManagerRCV(context,String cedula,int codigo) async {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => ClientVehiculosRCV(datos),
+      ),
+          (route) =>
+      true, // Elimina todas las rutas existentes en la pila
+    );
+
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    //alertas.sinConexion(context);
+  }
+}
+
+Future<dynamic> apiServiceOptions(context,int codigo) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://lmchat.lamundialdeseguros.com/services-options'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "codigo": codigo
+      }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+
+    datos = decoded['Servicios'];
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => ClientPoliza(datos),
       ),
           (route) =>
       false, // Elimina todas las rutas existentes en la pila

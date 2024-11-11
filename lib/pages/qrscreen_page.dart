@@ -230,7 +230,7 @@ class _QrScreenState extends State<QrScreen> {
       if (status == 1) {
         final token = generarTokenAleatorio();
         // ignore: unnecessary_string_interpolations
-        final codQr = {'cedula': GlobalVariables().cedulaUser, 'token': token};
+        final codQr = {'cedula': GlobalVariables().user.cedula, 'token': token};
         final codQrString = json.encode(codQr);
         // Encriptar el serial usando Base64
         final encryptedQR = base64.encode(utf8.encode(codQrString));
@@ -238,7 +238,7 @@ class _QrScreenState extends State<QrScreen> {
         qrEncriptado = encryptedQR;
       } else {
         // ignore: unnecessary_string_interpolations
-        final codQr = {'cedula': '${GlobalVariables().cedulaUser}', 'token': 0};
+        final codQr = {'cedula': '${GlobalVariables().user.cedula}', 'token': 0};
         final codQrString = json.encode(codQr);
         // Encriptar el serial usando Base64
         final encryptedQR = base64.encode(utf8.encode(codQrString));

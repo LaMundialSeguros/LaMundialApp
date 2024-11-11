@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class User {
-  final String name;
   final int id;
+  final String name;
+  final String cedula;
+  final int rol;
 
-  User(this.name, this.id);
+  User(this.id, this.name,this.cedula, this.rol);
 }

@@ -13,10 +13,10 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  late String cedula = GlobalVariables().cedulaUser;
-  late String email = GlobalVariables().emailUser;
-  late int rol = GlobalVariables().rolUser;
-  late int id = GlobalVariables().idUser;
+  late String cedula = GlobalVariables().user.cedula;
+  late String email = GlobalVariables().user.name;
+  late int rol = GlobalVariables().user.rol;
+  late int id = GlobalVariables().user.id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
