@@ -11,7 +11,7 @@ class Policy {
   final DetailsOwner detailsOwner;
   final Producer producer;
   final List<Beneficiary> beneficiaries;
-  final Vehicle vehicle;
+  final Vehicle? vehicle;
   final bool individual;
   final bool familiar;
   final bool dataPolicy;

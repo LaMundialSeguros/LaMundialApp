@@ -202,6 +202,9 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
       case 'error_inesperado':
         alertas.sinConexion(context).then((_) {});
         break;
+      case 'Server error':
+        alertas.sinConexion(context).then((_) {});
+        break;
     }
   } catch (e) {
     // ignore: avoid_print

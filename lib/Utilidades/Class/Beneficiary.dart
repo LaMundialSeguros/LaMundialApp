@@ -10,7 +10,7 @@ class Beneficiary {
   final String name;
   final String lastName;
   final Relationship relationship;
-  final int nothing;
+  final int percent;
 
   Beneficiary(
                 this.typeDoc,
@@ -18,6 +18,6 @@ class Beneficiary {
                 this.name,
                 this.lastName,
                 this.relationship,
-                this.nothing
+                this.percent
               );
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Relationship {
-  final String name;
   final int id;
+  final String name;
 
-  Relationship(this.name, this.id);
+  Relationship(this.id,this.name);
 }

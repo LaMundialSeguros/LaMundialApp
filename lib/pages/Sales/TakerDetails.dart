@@ -21,6 +21,7 @@ import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
+import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/secretCode.dart';
@@ -191,16 +192,19 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           email.text,
           selectedbeneficiary
       );
+      var vehicle = null;
+      if(widget.product.id == 6 || widget.product.id == 7){
+            vehicle = Vehicle(
+            brand.text,
+            model.text,
+            year.text,
+            color.text,
+            placa.text,
+            serial.text,
+            selectedTypeVehicle
+        );
+      }
 
-      Vehicle vehicle = Vehicle(
-        brand.text,
-        model.text,
-        year.text,
-        color.text,
-        placa.text,
-        serial.text,
-        selectedTypeVehicle
-      );
 
       List <Beneficiary> beneficiaries = [];
       PaymentFrequency paymentFrequency = PaymentFrequency(0,"");
@@ -227,7 +231,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               "");
 
 
-      //Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+      Navigator.push(context,MaterialPageRoute(builder: (context) => BeneficiariesFormPage(policy)));
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario
