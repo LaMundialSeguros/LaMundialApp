@@ -162,7 +162,7 @@ Widget Menu(BuildContext context) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Comprar Servicios',
+                                'Comprar Poliza',
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromRGBO(15, 26, 90, 1),

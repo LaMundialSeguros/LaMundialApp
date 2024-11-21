@@ -5,5 +5,5 @@ class PaymentFrequency {
   final int id;
   final String name;
 
-PaymentFrequency(this.id,this.name);
+  PaymentFrequency(this.id,this.name);
 }

@@ -9,6 +9,7 @@ import 'package:lamundialapp/Apis/apis.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
+import 'package:lamundialapp/Utilidades/Class/Amount.dart';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
 import 'package:lamundialapp/Utilidades/Class/Contry.dart';
 import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
@@ -16,12 +17,14 @@ import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/Producer.dart';
 import 'package:lamundialapp/Utilidades/Class/Product.dart';
+import 'package:lamundialapp/Utilidades/Class/Relative.dart';
 import 'package:lamundialapp/Utilidades/Class/Taker.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
+import 'package:lamundialapp/pages/Sales/RelativesForm.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/secretCode.dart';
@@ -114,8 +117,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedbeneficiary = null;
   var selectedProducer = null;
   var selectedTypeVehicle = null;
-  bool individual  =false;
-  bool familiar = false;
+  var selectedRelatives = null;
+
   List<TypeDoc> TypeDocs = [
     TypeDoc('V', 'V'),
     TypeDoc('E', 'E')
@@ -139,6 +142,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   List<bool> smoke = [false,true];
 
   List<int> beneficiaries = [0,1,2,3,4,5];
+  List<int> relatives = [1,2,3,4,5,6,7,8,9];
 
   List<Country> Paises = [
     Country("Venezuela", 1)
@@ -190,7 +194,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           country,
           phone.text,
           email.text,
-          selectedbeneficiary
+          selectedbeneficiary ?? 0
       );
       var vehicle = null;
       if(widget.product.id == 6 || widget.product.id == 7){
@@ -207,31 +211,50 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
 
       List <Beneficiary> beneficiaries = [];
+      List <Relative> relatives = [];
+      List <Amount> amounts = [];
       PaymentFrequency paymentFrequency = PaymentFrequency(0,"");
 
       Policy policy = Policy(
+                              widget.product,
                               taker,
                               owner,
                               selectedProducer,
                               beneficiaries,
+                              selectedRelatives,
+                              relatives,
                               vehicle,
-                              individual,
-                              familiar,
                               false,
                               false,
                               false,
                               false,
                               false,
+                              "",
                               false,
-                              0.00,
+                              "",
+                              false,
+                              "",
+                              false,
+                              amounts,
                               "cupon",
                               paymentFrequency,
                               false,
                               false,
                               "");
 
+      switch (widget.product.id) {
+        case 2:
+            Navigator.push(context,MaterialPageRoute(builder: (context) => RelativesFormPage(policy)));
+          break;
+        case 3:
+        case 4:
+        case 5:
+          Navigator.push(context,MaterialPageRoute(builder: (context) => BeneficiariesFormPage(policy)));
+          break;
+        default:
+      }
 
-      Navigator.push(context,MaterialPageRoute(builder: (context) => BeneficiariesFormPage(policy)));
+
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario
@@ -1176,8 +1199,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          const SizedBox(height: 30),
-          Container(
+          if(widget.product.id == 3 || widget.product.id == 4 || widget.product.id == 5)const SizedBox(height: 30),
+          if(widget.product.id == 3 || widget.product.id == 4 || widget.product.id == 5)Container(
                     width: 200,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -1217,6 +1240,65 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       }).toList(),
                       decoration: InputDecoration(
                         hintText: 'Beneficiarios',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(121, 116, 126, 1),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        suffixIcon: Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.keyboard_arrow_down_outlined),
+                        ),
+                      ),
+                    ),
+                  ),
+          if(widget.product.id == 2)const SizedBox(height: 30),
+          if(widget.product.id == 2)Container(
+                    width: 200,
+                    height: 40,
+                    decoration: BoxDecoration(// Color de fondo gris
+                        borderRadius: BorderRadius.only(
+                          topLeft:  Radius.zero,
+                          topRight:  Radius.circular(40.0),
+                          bottomLeft:  Radius.circular(40.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        border: Border.all(
+                          color: Color.fromRGBO(79, 127, 198, 1),
+                        )),
+                    child: DropdownButtonFormField<int>(
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.black,
+
+                      ),
+                      iconSize: 0,
+                      value: selectedRelatives,
+                      borderRadius: BorderRadius.only(
+                        topLeft:  Radius.zero,
+                        topRight:  Radius.circular(40.0),
+                        bottomLeft:  Radius.circular(40.0),
+                        bottomRight: Radius.zero,
+                      ),
+                      onChanged: (int? newValue) {
+                        setState(() {
+                          selectedRelatives = newValue;
+                        });
+                      },
+                      items: relatives.map((int b) {
+                        return DropdownMenuItem<int>(
+                          value: b,
+                          child: Text(b.toString()),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        hintText: 'Familiares',
                         hintStyle: TextStyle(
                           color: Color.fromRGBO(121, 116, 126, 1),
                           fontFamily: 'Poppins',
@@ -1655,55 +1737,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           if(widget.product.id == 3 || widget.product.id == 4)const SizedBox(height: 20),
-          if(widget.product.id == 3 || widget.product.id == 4)Padding(
-                    padding: const EdgeInsets.only(left: 50,right: 0),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 40,
-                          child: CheckboxListTile(
-                            title: Text(
-                                          'Individual',
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                                            fontSize: 10,
-                                                            color: Color.fromRGBO(0, 0, 0, 1),
-                                                            fontFamily: 'Poppins')
-                                                          ),
-                            value: individual,
-                            onChanged: (value) {
-                              setState(() {
-                                individual = value!;
-                                familiar = !value;
-                              });
-                            },
-                          )
-                        ),
-                        Container(
-                            width: 150,
-                            height: 40,
-                            child: CheckboxListTile(
-                              title: Text(
-                                  'Familiar',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color.fromRGBO(0, 0, 0, 1),
-                                      fontFamily: 'Poppins')
-                              ),
-                              value: familiar,
-                              onChanged: (value) {
-                                setState(() {
-                                  familiar = value!;
-                                  individual = !value;
-                                });
-                              },
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
           // Boton
           const SizedBox(height: 50),
           Container(

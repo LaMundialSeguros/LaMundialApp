@@ -22,6 +22,7 @@ import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
+import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/secretCode.dart';
@@ -48,7 +49,6 @@ class BeneficiariesFormPage extends StatefulWidget {
 }
 
 class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
-
   final List<TextEditingController> _identityCard = [];
   final List<TextEditingController> _name = [];
   final List<TextEditingController> _lastName = [];
@@ -61,7 +61,7 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
 
   final List _selectedRelationship = [null,null,null,null,null];
   final List _selectedTypeDocs = [null,null,null,null,null];
-
+  int beneficiaries = 0;
 
   bool isLoading = false;
 
@@ -91,8 +91,14 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
     try {
 
 
-      //Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-      // Resto del código...
+      Policy policy = widget.policy;
+
+      for (int i = 0; i < widget.policy.familyQuantity; i++) {
+        var beneficiary = Beneficiary(_selectedTypeDocs[i],_identityCard[i].text,_name[i].text,_lastName[i].text,_selectedRelationship[i],_percent[i].text);
+        policy.beneficiaries.add(beneficiary);
+      }
+
+      Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementPage(policy)));
     } catch (e) {
       // Manejar errores si es necesario
     } finally {
@@ -106,17 +112,6 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
   void initState() {
     super.initState();
 
-    print('ESTA MIERDA NO SIRVE!');
-    _identityCard.addAll(List.generate(5, (_) => TextEditingController()));
-    _name.addAll(List.generate(5, (_) => TextEditingController()));
-    _lastName.addAll(List.generate(5, (_) => TextEditingController()));
-    _percent.addAll(List.generate(5, (_) => TextEditingController()));
-    _identityCardCodeFocus.addAll(List.generate(5, (_) => FocusNode()));
-    _nameCodeFocus.addAll(List.generate(5, (_) => FocusNode()));
-    _lastNameCodeFocus.addAll(List.generate(5, (_) => FocusNode()));
-    _percentCodeFocus.addAll(List.generate(5, (_) => FocusNode()));
-    //_selectedRelationship.addAll(List.generate(2, (_) => TextEditingController()));
-    //_selectedTypeDocs.addAll(List.generate(2));
   }
 
   Widget build(BuildContext context) {
@@ -147,15 +142,25 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
   }
 
   Widget buildForm(BuildContext context) {
-    int b = 5;
-    int i = 0;
+
+    beneficiaries = widget.policy.detailsOwner.beneficiaries;
+    _identityCard.addAll(List.generate(beneficiaries, (_) => TextEditingController()));
+    _name.addAll(List.generate(beneficiaries, (_) => TextEditingController()));
+    _lastName.addAll(List.generate(beneficiaries, (_) => TextEditingController()));
+    _percent.addAll(List.generate(beneficiaries, (_) => TextEditingController()));
+    _identityCardCodeFocus.addAll(List.generate(5, (_) => FocusNode()));
+    _nameCodeFocus.addAll(List.generate(beneficiaries, (_) => FocusNode()));
+    _lastNameCodeFocus.addAll(List.generate(beneficiaries, (_) => FocusNode()));
+    _percentCodeFocus.addAll(List.generate(beneficiaries, (_) => FocusNode()));
+
+    int i=0;
     return Container(
         color: Colors.transparent,
         //margin: const EdgeInsets.only(top: 0),
         child: Form(
             child: Center(
                 child: ListView.builder(
-                itemCount: b, //// CAMBIAR POR LA CANTIDAD DE BENEFICIARIOS
+                itemCount: beneficiaries, //// CAMBIAR POR LA CANTIDAD DE BENEFICIARIOS
                 itemBuilder: (context, index) {
                   i++;
                   return Column(
@@ -462,8 +467,8 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                           ),
                         ),
                         // Boton
-                        if(b==i)const SizedBox(height: 50),
-                        if(b==i)Container(
+                        if(beneficiaries==i)const SizedBox(height: 50),
+                        if(beneficiaries==i)Container(
                           width: 380,
                           alignment: Alignment.center,
                           child: Stack(
@@ -495,7 +500,7 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                             ],
                           ),
                         ),
-                        if(b==i)const SizedBox(height: 30)
+                        if(beneficiaries==i)const SizedBox(height: 30)
                       ]
                   );
                 },

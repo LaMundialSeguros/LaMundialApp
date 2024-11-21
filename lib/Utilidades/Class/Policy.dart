@@ -1,44 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/Utilidades/Class/Amount.dart';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
 import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
 import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Producer.dart';
+import 'package:lamundialapp/Utilidades/Class/Product.dart';
+import 'package:lamundialapp/Utilidades/Class/Relative.dart';
 import 'package:lamundialapp/Utilidades/Class/Taker.dart';
 import 'package:lamundialapp/Utilidades/Class/Vehicle.dart';
 
 class Policy {
-  final Taker taker;
-  final DetailsOwner detailsOwner;
-  final Producer producer;
-  final List<Beneficiary> beneficiaries;
-  final Vehicle? vehicle;
-  final bool individual;
-  final bool familiar;
-  final bool dataPolicy;
-  final bool moneyPolitics;
-  final bool healthPolicy;
-  final bool currentHealthPolicy;
-  final bool hematologicalDiseasesPolicy;
-  final bool drugsPolicy;
-  final double basicSumInsured;
-  final String coupon;
-  final PaymentFrequency paymentFrequency;
-  final bool PoliticianExposed;
-  final bool currentHealth;
-  final String additionalText;
+  Product product;
+  Taker taker;
+  DetailsOwner detailsOwner;
+  Producer producer;
+  List<Beneficiary> beneficiaries;
+  int familyQuantity;
+  List<Relative> relatives;
+  Vehicle? vehicle;
+  bool dataPolicy;
+  bool moneyPolitics;
+  bool healthPolicy;
+  bool extremeSportsPolicy;
+  bool cardiovascularDiseasesPolicy;
+  String cardiovascularDiseasesPolicyDetails;
+  bool EndocrineDiseasesPolicy;
+  String EndocrineDiseasesPolicyDetails;
+  bool hematologicalDiseasesPolicy;
+  String hematologicalDiseasesPolicyDetails;
+  bool drugsPolicy;
+  List<Amount> basicSumInsured;
+  String coupon;
+  PaymentFrequency paymentFrequency;
+  bool PoliticianExposed;
+  bool currentHealth;
+  String additionalText;
+
   Policy(
+          this.product,
           this.taker,
           this.detailsOwner,
           this.producer,
           this.beneficiaries,
+          this.familyQuantity,
+          this.relatives,
           this.vehicle,
-          this.individual,
-          this.familiar,
           this.dataPolicy,
           this.moneyPolitics,
           this.healthPolicy,
-          this.currentHealthPolicy,
+          this.extremeSportsPolicy,
+          this.cardiovascularDiseasesPolicy,
+          this.cardiovascularDiseasesPolicyDetails,
+          this.EndocrineDiseasesPolicy,
+          this.EndocrineDiseasesPolicyDetails,
           this.hematologicalDiseasesPolicy,
+          this.hematologicalDiseasesPolicyDetails,
           this.drugsPolicy,
           this.basicSumInsured,
           this.coupon,

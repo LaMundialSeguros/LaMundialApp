@@ -3,6 +3,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
+import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
+import 'package:lamundialapp/pages/Sales/VerifyPayment.dart';
 import 'package:lamundialapp/pages/rolPage.dart';
 import 'pages/login_page.dart';
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         splashTransition: SplashTransition.scaleTransition,
         backgroundColor: const Color.fromARGB(255, 251, 251, 251),
         nextScreen: const RolPage(),
-        //nextScreen: const BeneficiariesFormPage(),
+        //nextScreen: const VerifyPaymentPage(),
         splashIconSize: MediaQuery.of(context).size.height,
       ),
       //home: LoginPage(),

@@ -38,7 +38,7 @@ class MenuClientState extends State<MenuClient>{
       ServicesClient(),
       MenuProducts(),
       notifyPaymentsForm(),
-      Text('Página 4'),
+      Text('No disponible'),
     ];
 
     if(_selectedIndex == -1){
