@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access to photos is required to upload images</string>
     <key>NSCameraUsageDescription</key>
-    <string>We need access to your camera to scan QR codes</string>
+    <string>We need access to your camera to scan QR codes. Camera access is required to scan documents</string>
     <key>NSFaceIDUsageDescription</key>
     <string>Coloque su rostro para ingresar a LA MUNDIAL</string>
     <key>NSLocationWhenInUseUsageDescription</key>
