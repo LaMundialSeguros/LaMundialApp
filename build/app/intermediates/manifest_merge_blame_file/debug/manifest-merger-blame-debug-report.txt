@@ -126,99 +126,139 @@
 86            android:name="flutterEmbedding"
 87            android:value="2" />
 88
-89        <uses-library
-89-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
-90            android:name="androidx.window.extensions"
-90-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
-91            android:required="false" />
-91-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
-92        <uses-library
-92-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
-93            android:name="androidx.window.sidecar"
-93-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
-94            android:required="false" />
-94-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
-95
-96        <provider
-96-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-97            android:name="androidx.startup.InitializationProvider"
-97-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-98            android:authorities="com.example.lamundialapp.androidx-startup"
-98-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-99            android:exported="false" >
-99-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-100            <meta-data
-100-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-101                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-101-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-102                android:value="androidx.startup" />
-102-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
-103            <meta-data
-103-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
-104                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-104-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
-105                android:value="androidx.startup" />
-105-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+89        <provider
+89-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:9:9-17:20
+90            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+90-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:13-82
+91            android:authorities="com.example.lamundialapp.flutter.image_provider"
+91-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+92            android:exported="false"
+92-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+93            android:grantUriPermissions="true" >
+93-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-47
+94            <meta-data
+94-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-16:75
+95                android:name="android.support.FILE_PROVIDER_PATHS"
+95-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:17-67
+96                android:resource="@xml/flutter_image_picker_file_paths" />
+96-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:17-72
+97        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+98        <service
+98-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:19:9-31:19
+99            android:name="com.google.android.gms.metadata.ModuleDependencies"
+99-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-78
+100            android:enabled="false"
+100-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:21:13-36
+101            android:exported="false" >
+101-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-37
+102            <intent-filter>
+102-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-26:29
+103                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+103-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-94
+103-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:25:25-91
+104            </intent-filter>
+105
 106            <meta-data
-106-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-107                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-107-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-108                android:value="androidx.startup" />
-108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-109        </provider>
+106-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:28:13-30:36
+107                android:name="photopicker_activity:0:required"
+107-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:29:17-63
+108                android:value="" />
+108-->[:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:30:17-33
+109        </service>
 110
-111        <receiver
-111-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-112            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-112-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-113            android:directBootAware="false"
-113-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-114            android:enabled="true"
-114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-115            android:exported="true"
-115-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-116            android:permission="android.permission.DUMP" >
-116-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-117            <intent-filter>
-117-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-118                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-119            </intent-filter>
-120            <intent-filter>
-120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-121                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-122            </intent-filter>
-123            <intent-filter>
-123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-124                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-125            </intent-filter>
-126            <intent-filter>
-126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-127                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-127-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-127-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-128            </intent-filter>
-129        </receiver>
-130
-131        <activity
-131-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
-132            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-132-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
-133            android:clearTaskOnLaunch="true"
-133-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
-134            android:screenOrientation="sensorLandscape"
-134-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
-135            android:stateNotNeeded="true"
-135-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
-136            android:theme="@style/zxing_CaptureTheme"
-136-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
-137            android:windowSoftInputMode="stateAlwaysHidden" />
-137-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
-138    </application>
-139
-140</manifest>
+111        <uses-library
+111-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+112            android:name="androidx.window.extensions"
+112-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+113            android:required="false" />
+113-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+114        <uses-library
+114-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+115            android:name="androidx.window.sidecar"
+115-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+116            android:required="false" />
+116-->[androidx.window:window:1.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e44cc48345e715caae851c7aa1497455\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+117
+118        <provider
+118-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+119            android:name="androidx.startup.InitializationProvider"
+119-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+120            android:authorities="com.example.lamundialapp.androidx-startup"
+120-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+121            android:exported="false" >
+121-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+122            <meta-data
+122-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+123                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+123-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+124                android:value="androidx.startup" />
+124-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\fba1ac03e29d65f94bd9208dcca3610a\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+125            <meta-data
+125-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+126                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+126-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+127                android:value="androidx.startup" />
+127-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Asus\.gradle\caches\transforms-3\fee0d69559a25110566b76a7614e1b60\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+128            <meta-data
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+129                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+130                android:value="androidx.startup" />
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+131        </provider>
+132
+133        <receiver
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+134            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+135            android:directBootAware="false"
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+136            android:enabled="true"
+136-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+137            android:exported="true"
+137-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+138            android:permission="android.permission.DUMP" >
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+139            <intent-filter>
+139-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+140                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+141            </intent-filter>
+142            <intent-filter>
+142-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+143                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+144            </intent-filter>
+145            <intent-filter>
+145-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+146                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+146-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+146-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+147            </intent-filter>
+148            <intent-filter>
+148-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+149                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+149-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+149-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Asus\.gradle\caches\transforms-3\c180a6c86ecd74b10f1a031bd6b9fb3d\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+150            </intent-filter>
+151        </receiver>
+152
+153        <activity
+153-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
+154            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+154-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
+155            android:clearTaskOnLaunch="true"
+155-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
+156            android:screenOrientation="sensorLandscape"
+156-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
+157            android:stateNotNeeded="true"
+157-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
+158            android:theme="@style/zxing_CaptureTheme"
+158-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
+159            android:windowSoftInputMode="stateAlwaysHidden" />
+159-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
+160    </application>
+161
+162</manifest>
