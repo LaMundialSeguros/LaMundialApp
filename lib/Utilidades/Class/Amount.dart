@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'Amount.g.dart';
+
+@JsonSerializable()
 class Amount {
 
   final int id;
@@ -9,4 +13,9 @@ class Amount {
   bool active;
 
   Amount(this.id,this.currency,this.amount,this.productId,this.active);
+
+
+  // Métodos generados automáticamente
+  factory Amount.fromJson(Map<String, dynamic> json) => _$AmountFromJson(json);
+  Map<String, dynamic> toJson() => _$AmountToJson(this);
 }

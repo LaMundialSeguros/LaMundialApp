@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Contry.dart';
 import 'package:lamundialapp/Utilidades/Class/Gender.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeDoc.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'DetailsOwner.g.dart';
+
+@JsonSerializable()
 class DetailsOwner {
   final TypeDoc typeDoc;
   final String idCard;
@@ -29,4 +33,8 @@ class DetailsOwner {
                 this.email,
                 this.beneficiaries
               );
+
+  // Métodos generados automáticamente
+  factory DetailsOwner.fromJson(Map<String, dynamic> json) => _$DetailsOwnerFromJson(json);
+  Map<String, dynamic> toJson() => _$DetailsOwnerToJson(this);
 }

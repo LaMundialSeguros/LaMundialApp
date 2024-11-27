@@ -10,51 +10,45 @@ class CustomAppBarServices extends StatelessWidget implements PreferredSizeWidge
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        flexibleSpace:
-          FlexibleSpaceBar(
-          centerTitle: true,
-          title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Image.asset(
-                    'assets/return.png', // Reemplaza con la ruta de tu imagen
-                    height: 40,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => MenuClient(0),
-                      ),
-                          (route) =>
-                      false, // Elimina todas las rutas existentes en la pila
-                    );
-                  },
-                ),
-                Text(
-                      "SERVICIOS",
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                ),),
-                IconButton(
-                  icon: Image.asset(
-                    'assets/helpAppBar.png', // Reemplaza con la ruta de tu imagen
-                    height: 40,
-                  ),
-                  onPressed: () {
-                    // Lógica para el nuevo botón
-                  },
-                ),
-              ],
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Text(
+              "   SERVICIOS ",
+              style: TextStyle(
+                fontSize: 26,
+                color: Color.fromRGBO(255, 255, 255, 1),
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.bold,
+              ),),
           ),
-        ),
-        backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+          IconButton(
+            icon: Image.asset(
+              'assets/helpAppBar.png', // Reemplaza con la ruta de tu imagen
+              height: 40,
+            ),
+            onPressed: () {
+              // Lógica para el nuevo botón
+            },
+          ),
+        ],
+      ),
+      centerTitle: true,
+      backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+      leading: IconButton(
+        icon: Image.asset(
+          'assets/return.png', // Reemplaza con la ruta de tu imagen
+          height: 40,
+        ), // Reemplaza con tu icono deseado
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(120);
+  Size get preferredSize => const Size.fromHeight(80);
 }

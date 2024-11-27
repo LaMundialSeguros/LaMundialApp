@@ -10,35 +10,20 @@ class CustomAppBarVehiculos extends StatelessWidget implements PreferredSizeWidg
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        flexibleSpace:
-          FlexibleSpaceBar(
-          centerTitle: true,
-          title: Row(
+            title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: Image.asset(
-                    'assets/return.png', // Reemplaza con la ruta de tu imagen
-                    height: 40,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => MenuClient(0),
-                      ),
-                          (route) =>
-                      false, // Elimina todas las rutas existentes en la pila
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Text(
+                    "   VEHÍCULOS \n ASEGURADOS ",
+                    style: TextStyle(
+                      fontSize: 26,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                    ),),
                 ),
-                Text(
-                      "   VEHÍCULOS \n ASEGURADOS ",
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                ),),
                 IconButton(
                   icon: Image.asset(
                     'assets/helpAppBar.png', // Reemplaza con la ruta de tu imagen
@@ -49,12 +34,21 @@ class CustomAppBarVehiculos extends StatelessWidget implements PreferredSizeWidg
                   },
                 ),
               ],
-          ),
-        ),
-        backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+            ),
+            centerTitle: true,
+            backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+            leading: IconButton(
+        icon: Image.asset(
+          'assets/return.png', // Reemplaza con la ruta de tu imagen
+          height: 40,
+        ), // Reemplaza con tu icono deseado
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(120);
+  Size get preferredSize => const Size.fromHeight(80);
 }
