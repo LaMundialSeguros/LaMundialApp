@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/Poliza.dart';
 import 'package:lamundialapp/pages/Client/ClientPoliza.dart';
 import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
@@ -226,6 +227,40 @@ Future<void> apiConsultaDosfa(context, String dosfa) async {
         'coddosfa': coddosfa,
         'dosfa': dosfa,
       }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+    // ignore: avoid_print
+    mensaje = decoded['msg'];
+    switch (mensaje) {
+      case 'True':
+        TwoFactorAuthPageState.twoFactorCodeController.text = '';
+        Navigator.of(context).pop();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MenuPage(),
+          ),
+        );
+        //alertas.usuarioExiste(context).then((_) {});
+        break;
+      case 'False':
+        alertas.usuarioNoexiste(context).then((_) {
+          TwoFactorAuthPageState.twoFactorCodeController.text = '';
+        });
+        break;
+    }
+  } catch (e) {
+    alertas.sinConexion(context);
+  }
+}
+
+Future<void> test(context,Policy policy) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://ncsac.test/api/testing'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(policy),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
     // ignore: avoid_print

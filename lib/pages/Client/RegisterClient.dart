@@ -1,16 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
-import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -19,7 +15,8 @@ import '../../Utilidades/Class/Gender.dart';
 import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../components/logo.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
+import 'package:image_picker/image_picker.dart';
+//import 'package:google_ml_kit/google_ml_kit.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -38,6 +35,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
   final telefono = TextEditingController();
   final correo = TextEditingController();
   final ocupacion = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   bool isLoading = false;
   FocusNode rolCodeFocus = FocusNode();
@@ -46,6 +44,23 @@ class RegisterClientPageState extends State<RegisterClientPage> {
   FocusNode telefonoCodeFocus = FocusNode();
   FocusNode correoCodeFocus = FocusNode();
   FocusNode ocupacionCodeFocus = FocusNode();
+
+  String recognizedText = '';
+
+  File? _imageFile;
+
+  String _recognizedText = '';
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   var typeDoc = null;
   var selectedGender = null;
@@ -159,6 +174,77 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                     ),
                   ),
           const SizedBox(height: 50),
+          Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImage();
+                        },
+                        child: Container(
+                            width: 300,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(246, 247, 255, 1),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                  spreadRadius: 1, // Extensión de la sombra
+                                  blurRadius: 4, // Difuminado de la sombra
+                                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Foto C.I.',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Color.fromRGBO(15, 26, 90, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins'),
+                                ),
+                                SizedBox(width: 8),
+                                Image.asset(
+                                  'assets/photo.png', // Replace with your image path
+                                  width: 35, // Set image width (optional)
+                                  height: 35, // Set image height (optional)
+                                  fit: BoxFit.cover, // Adjust image fitting (optional)
+                                ),
+                                /*IconButton(
+                    icon: Icon(Icons.camera_alt), // Replace with desired icon
+                    onPressed: _pickImage,
+                  ),*/
+                              ],
+                            )
+                        )),
+                  ),
+          const SizedBox(height: 20),
+          if(_imageFile != null) Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImage();
+                        },
+                        child: Container(
+                          width: 150,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(246, 247, 255, 1),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                spreadRadius: 1, // Extensión de la sombra
+                                blurRadius: 4, // Difuminado de la sombra
+                                offset: Offset(0, 3), // Desplazamiento de la sombra
+                              ),
+                            ],
+                          ),
+                          child: Image.file(_imageFile!),
+                        )),
+                  ),
+          const SizedBox(height: 20),
           Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(

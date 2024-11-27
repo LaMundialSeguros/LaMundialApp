@@ -4,8 +4,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
+import 'package:lamundialapp/pages/Sales/PaymentMethod.dart';
+import 'package:lamundialapp/pages/Sales/TermsAndConditions.dart';
 import 'package:lamundialapp/pages/Sales/VerifyPayment.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -31,6 +34,8 @@ class LegitimationPageState extends State<LegitimationPage> {
   bool isLoading = false;
 
   bool _selected = false;
+  bool _isCheckedSi = false;
+  bool _isCheckedNo = true;
   bool _currentHealth = false;
   Future<void> Save() async {
     setState(() {
@@ -38,10 +43,19 @@ class LegitimationPageState extends State<LegitimationPage> {
     });
 
     try {
+
       Policy policy = widget.policy;
 
+      if(_isCheckedSi){
+        policy.PoliticianExposed = true;
+      }else{
+        policy.PoliticianExposed = false;
+      }
 
-      Navigator.push(context,MaterialPageRoute(builder: (context) => VerifyPaymentPage(policy)));
+      policy.currentHealth = _currentHealth;
+      policy.additionalText = _currentHealthDetails.text;
+      //String a = jsonEncode(policy);
+      Navigator.push(context,MaterialPageRoute(builder: (context) => PaymentMethod(policy)));
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario
@@ -66,6 +80,17 @@ class LegitimationPageState extends State<LegitimationPage> {
   }
 
   Widget buildForm(BuildContext context) {
+    void _onCheckboxChanged(bool? value, bool isSi) {
+      setState(() {
+        if (isSi) {
+          _isCheckedSi = value!;
+          _isCheckedNo = !_isCheckedSi;
+        } else {
+          _isCheckedNo = value!;
+          _isCheckedSi = !_isCheckedNo;
+        }
+      });
+    }
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -88,22 +113,14 @@ class LegitimationPageState extends State<LegitimationPage> {
                     Expanded(child:
                     CheckboxListTile(
                       title: Text("Si"),
-                      value: _selected,
-                      onChanged: (value) {
-                        setState(() {
-                          _selected = !_selected;
-                        });
-                      },
+                      value: _isCheckedSi,
+                        onChanged: (value) => _onCheckboxChanged(value, true),
                     )),
                     Expanded( child:
                     CheckboxListTile(
                       title: Text("No"),
-                      value: !_selected,
-                      onChanged: (value) {
-                        setState(() {
-                          _selected = _selected;
-                        });
-                      },
+                      value: _isCheckedNo,
+                      onChanged: (value) => _onCheckboxChanged(value, false),
                     )),
                   ],
                 ),
@@ -118,12 +135,18 @@ class LegitimationPageState extends State<LegitimationPage> {
                     fontFamily: "Poppins"
                 ),
               ),
-              Text(
-                "Ver términos y condiciones",
-                //textAlign: TextAlign.justify,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "Poppins"
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => TermsAndConditionsPage(widget.policy)));
+                },
+                child: Text(
+                  "Ver términos y condiciones",
+                  //textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Poppins"
+                  ),
                 ),
               ),
               Divider(),

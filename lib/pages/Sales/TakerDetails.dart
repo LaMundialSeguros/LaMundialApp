@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,12 +26,14 @@ import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
 import 'package:lamundialapp/pages/Sales/RelativesForm.dart';
+import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
 import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../Utilidades/Class/Gender.dart';
 import '../../Utilidades/Class/Method.dart';
@@ -82,6 +85,9 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     final color = TextEditingController();
     final placa = TextEditingController();
 
+
+    final ImagePicker _picker = ImagePicker();
+
 // Taker
   FocusNode rolCodeFocus = FocusNode();
   FocusNode identityCardCodeFocus = FocusNode();
@@ -106,6 +112,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   FocusNode placaCodeFocus = FocusNode();
   //FocusNode phoneCodeFocus = FocusNode();
 
+  File? _imageFile;
 
   bool isLoading = false;
 
@@ -163,6 +170,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     return age;
   }
 
+
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile
+      = File(pickedFile.path);
+      } else {
+      print('No image selected.');
+      }
+    });
+  }
+
   Future<void> Save() async {
     setState(() {
       isLoading = true;
@@ -209,6 +230,9 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
         );
       }
 
+      if(selectedRelatives == null){
+        selectedRelatives = 0;
+      }
 
       List <Beneficiary> beneficiaries = [];
       List <Relative> relatives = [];
@@ -243,6 +267,11 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               "");
 
       switch (widget.product.id) {
+        case 1:
+        case 6:
+        case 7:
+            Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementPage(policy)));
+          break;
         case 2:
             Navigator.push(context,MaterialPageRoute(builder: (context) => RelativesFormPage(policy)));
           break;
@@ -309,7 +338,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
         initialDate: selectedDate,
         firstDate: DateTime(2000),
         lastDate: DateTime(2101),
-
       );
       if (picked != null && type == 1) {
         setState(() {
@@ -336,6 +364,77 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
             child: Center(
                 child: Column(children: [
           const SizedBox(height: 25),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                _pickImage();
+              },
+              child: Container(
+              width: 300,
+              height: 110,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(246, 247, 255, 1),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                    spreadRadius: 1, // Extensión de la sombra
+                    blurRadius: 4, // Difuminado de la sombra
+                    offset: Offset(0, 3), // Desplazamiento de la sombra
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Cargar Imagen',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color.fromRGBO(15, 26, 90, 1),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+                  SizedBox(width: 8),
+                  Image.asset(
+                    'assets/upload.png', // Replace with your image path
+                    width: 35, // Set image width (optional)
+                    height: 35, // Set image height (optional)
+                    fit: BoxFit.cover, // Adjust image fitting (optional)
+                  ),
+                  /*IconButton(
+                    icon: Icon(Icons.camera_alt), // Replace with desired icon
+                    onPressed: _pickImage,
+                  ),*/
+                ],
+              )
+            )),
+          ),
+          const SizedBox(height: 20),
+          if(_imageFile != null) Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImage();
+                        },
+                        child: Container(
+                            width: 150,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(246, 247, 255, 1),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                  spreadRadius: 1, // Extensión de la sombra
+                                  blurRadius: 4, // Difuminado de la sombra
+                                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                                ),
+                              ],
+                            ),
+                            child: Image.file(_imageFile!),
+                        )),
+                  ),
+          const SizedBox(height: 20),
           //Detalles del Tomador
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),

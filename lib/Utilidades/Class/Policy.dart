@@ -8,7 +8,11 @@ import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relative.dart';
 import 'package:lamundialapp/Utilidades/Class/Taker.dart';
 import 'package:lamundialapp/Utilidades/Class/Vehicle.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'Policy.g.dart';
+
+@JsonSerializable()
 class Policy {
   Product product;
   Taker taker;
@@ -63,4 +67,8 @@ class Policy {
           this.currentHealth,
           this.additionalText
         );
+
+  // Métodos generados automáticamente
+  factory Policy.fromJson(Map<String, dynamic> json) => _$PolicyFromJson(json);
+  Map<String, dynamic> toJson() => _$PolicyToJson(this);
 }

@@ -197,6 +197,15 @@ class LoginPageClientState extends State<LoginPageClient> {
           //toolbarHeight: 50,
           backgroundColor: Color.fromRGBO(15, 26, 90, 1),
           title: LogoWidget(),
+          leading: IconButton(
+            icon: Image.asset(
+              'assets/return.png', // Reemplaza con la ruta de tu imagen
+              height: 40,
+            ), // Reemplaza con tu icono deseado
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         ),
         preferredSize: Size.fromHeight(150),
