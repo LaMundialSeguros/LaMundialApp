@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
@@ -242,6 +243,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                     ), // Borde rojo
                   ),
                   child: TextField(
+                    maxLength: 50,  // Limita la longitud del texto (ajusta según tus necesidades)
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                    ],
                     maxLines: 5,
                     controller: cardiovascularDiseasesPolicyDetails,
                     focusNode: cardiovascularDiseasesPolicyDetailsFocus,
@@ -310,6 +315,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                     ), // Borde rojo
                   ),
                   child: TextField(
+                    maxLength: 50,  // Limita la longitud del texto (ajusta según tus necesidades)
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                    ],
                     maxLines: 5,
                     controller: endocrineDiseasesPolicyDetails,
                     focusNode: endocrineDiseasesPolicyDetailsFocus,
@@ -378,6 +387,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                     ), // Borde rojo
                   ),
                   child: TextField(
+                    maxLength: 50,  // Limita la longitud del texto (ajusta según tus necesidades)
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                    ],
                     maxLines: 5,
                     controller: hematologicalDiseasesPolicyDetails,
                     focusNode: hematologicalDiseasesPolicyDetailsFocus,

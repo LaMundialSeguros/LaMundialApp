@@ -3,14 +3,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
 import 'package:lamundialapp/pages/Client/MenuClient.dart';
 import 'package:lamundialapp/pages/Client/ServicesClient.dart';
+import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
 import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
+import 'package:lamundialapp/pages/statistics/ProducerStatisticsMenu.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../Apis/apis.dart';
 import '../../Utilidades/Class/User.dart';
 
-class WelcomeClient extends StatelessWidget{
-  const WelcomeClient({Key? key}) : super(key: key);
+class WelcomeProducer extends StatelessWidget{
+  const WelcomeProducer({Key? key}) : super(key: key);
   @override
 
   Widget build(BuildContext context) {
@@ -81,6 +83,7 @@ Widget Menu(BuildContext context) {
               const SizedBox(height: 30),
               GestureDetector(
                 onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => MenuProductor(2)));
                 },
                 child: Container(
                   width: 320,
@@ -123,13 +126,7 @@ Widget Menu(BuildContext context) {
               const SizedBox(height: 30),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => MenuClient(1),
-                    ),
-                        (route) =>
-                    false, // Elimina todas las rutas existentes en la pila
-                  );
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => MenuProductor(0)));
                 },
                 child: Container(
                   width: 320,

@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/AccountType.dart';
@@ -212,6 +213,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: identityCard,
                             focusNode: identityCardCodeFocus,
                             style: const TextStyle(
@@ -220,6 +225,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -258,6 +264,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters:	[
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: name,
                             focusNode: nameCodeFocus,
                             style: const TextStyle(
@@ -266,6 +276,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Titular',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -365,6 +376,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 25,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: cardNumber,
                             focusNode: cardNumberCodeFocus,
                             style: const TextStyle(
@@ -373,6 +388,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Número de tarjeta',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -386,6 +402,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                                   fontWeight: FontWeight.w700
                               ),
                             ),
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
@@ -411,6 +428,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 5,  // Limita la longitud a 5 caracteres (MM/AA)
+                            inputFormatters: [
+                              // Permite números y la barra '/' en el formato MM/AA
+                              FilteringTextInputFormatter.allow(RegExp(r'^\d{0,2}/?\d{0,2}$')),
+                            ],
                             controller: expirationDate,
                             focusNode: expirationDateCodeFocus,
                             style: const TextStyle(
@@ -419,6 +441,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'MM/AA',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -432,6 +455,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                                   fontWeight: FontWeight.w700
                               ),
                             ),
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                         Container(
@@ -449,6 +473,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 3,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: cvc,
                             focusNode: cvcCodeFocus,
                             style: const TextStyle(
@@ -457,6 +485,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'CVC',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -470,6 +499,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                                   fontWeight: FontWeight.w700
                               ),
                             ),
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
@@ -553,6 +583,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 6,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: pin,
                             focusNode: pinCodeFocus,
                             style: const TextStyle(
@@ -561,6 +595,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'PIN Tarjeta',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -574,6 +609,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                                   fontWeight: FontWeight.w700
                               ),
                             ),
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
@@ -599,6 +635,10 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 20,  // Limita la longitud del texto (ajusta según tus necesidades)
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                            ],
                             controller: description,
                             focusNode: descriptionCodeFocus,
                             style: const TextStyle(
@@ -607,6 +647,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Descripcion',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(

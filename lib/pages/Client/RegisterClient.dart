@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,11 +13,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../Utilidades/Class/Gender.dart';
-import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../components/logo.dart';
 import 'package:image_picker/image_picker.dart';
-//import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -31,6 +31,7 @@ class RegisterClientPage extends StatefulWidget {
 class RegisterClientPageState extends State<RegisterClientPage> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   final rol = TextEditingController();
+  final cedula = TextEditingController();
   final rif = TextEditingController();
   final telefono = TextEditingController();
   final correo = TextEditingController();
@@ -45,17 +46,81 @@ class RegisterClientPageState extends State<RegisterClientPage> {
   FocusNode correoCodeFocus = FocusNode();
   FocusNode ocupacionCodeFocus = FocusNode();
 
-  String recognizedText = '';
 
   File? _imageFile;
+  //final ImagePicker _picker = ImagePicker();
+  String _recognizedText = "Texto reconocido aparecerá aquí.";
 
-  String _recognizedText = '';
+  String extractSpecificText(String text) {
+    // RegEx para capturar cédulas con 5 a 9 dígitos (por ejemplo: "V 27.606.5" o "E 12.345.678")
+    final regex = RegExp(r'\b[VvEe]\s\d{1,2}(\.\d{3}){1,2}\b');
+    final match = regex.firstMatch(text);
+    if(match != null){
+      return match.group(0)!;
+    }
+    return match != null ? match.group(0)! : 'No detectado';
+  }
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  String cleanID(String id) {
+    // Elimina la letra V, E (mayúsculas o minúsculas) y los espacios iniciales
+    id = id.replaceAll(RegExp(r'[VvEe]\s'), '');
+
+    // Elimina los puntos
+    id = id.replaceAll('.', '');
+
+    return id;
+  }
+
+  String extractOnlyPrefix(String id) {
+    // Busca solo el prefijo V o E al inicio de la cadena
+    final match = RegExp(r'^[VvEe]').firstMatch(id);
+
+    // Devuelve la letra encontrada en mayúscula o un mensaje si no hay prefijo
+    return match != null ? match.group(0)!.toUpperCase() : 'Prefijo no encontrado';
+  }
+
+  Future<void> _recognizeText(File image) async {
+    final inputImage = InputImage.fromFile(image);
+    final textRecognizer = TextRecognizer();
+
+    try {
+      final recognizedText = await textRecognizer.processImage(inputImage);
+      List<String> datos = recognizedText.text.split('\n');
+      for (String dato in datos) {
+        String texto = extractSpecificText(dato);
+        if(texto != 'No detectado'){
+
+          cedula.text = cleanID(texto);
+          for(TypeDoc t in TypeDocs){
+            String prefix = extractOnlyPrefix(texto);
+            if(t.name == prefix){
+              setState(() {
+                typeDoc = t;
+              });
+              break;
+            }
+          }
+          break;
+        }
+      }
+    } catch (e) {
+      print('Error al reconocer texto: $e');
+    } finally {
+      textRecognizer.close();
+    }
+  }
+
+
+
+  Future<void> _pickImage(ImageSource source) async {
+    //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    //final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
+        _recognizeText(_imageFile!);
+        //_getImageAndRecognizeText(_imageFile);
       } else {
         print('No image selected.');
       }
@@ -117,6 +182,15 @@ class RegisterClientPageState extends State<RegisterClientPage> {
           //toolbarHeight: 50,
           backgroundColor: Color.fromRGBO(15, 26, 90, 1),
           title: LogoWidget(),
+          leading: IconButton(
+            icon: Image.asset(
+              'assets/return.png', // Reemplaza con la ruta de tu imagen
+              height: 40,
+            ), // Reemplaza con tu icono deseado
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         ),
         preferredSize: Size.fromHeight(150),
@@ -150,6 +224,12 @@ class RegisterClientPageState extends State<RegisterClientPage> {
   }
 
   Widget buildForm(BuildContext context) {
+    // Expresión regular para validar el correo electrónico
+    bool _isValidEmail(String email) {
+      final emailRegex = RegExp(
+          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+      return emailRegex.hasMatch(email);
+    }
     return Container(
         color: Colors.transparent,
         //margin: const EdgeInsets.only(top: 0),
@@ -177,7 +257,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
           Center(
                     child: GestureDetector(
                         onTap: () {
-                          _pickImage();
+                          _pickImage(ImageSource.camera);
                         },
                         child: Container(
                             width: 300,
@@ -224,7 +304,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
           if(_imageFile != null) Center(
                     child: GestureDetector(
                         onTap: () {
-                          _pickImage();
+                          _pickImage(ImageSource.gallery);
                         },
                         child: Container(
                           width: 150,
@@ -315,6 +395,10 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: cedula,
                             focusNode: cedulaCodeFocus,
                             style: const TextStyle(
@@ -323,6 +407,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -357,6 +442,10 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 12,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                      ],
                       controller: rif,
                       focusNode: rifCodeFocus,
                       style: const TextStyle(
@@ -365,6 +454,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Ingrese su RIF',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -406,6 +496,10 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 11,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                      ],
                       controller: telefono,
                       focusNode: telefonoCodeFocus,
                       style: const TextStyle(
@@ -414,6 +508,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Ingrese su teléfono',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -504,6 +599,10 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 20,  // Limita la longitud del texto a 50 caracteres
+                      inputFormatters:	[
+                        FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                      ],
                       controller: ocupacion,
                       focusNode: ocupacionCodeFocus,
                       style: const TextStyle(
@@ -512,6 +611,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Ingrese su Ocupación',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -605,8 +705,15 @@ class RegisterClientPageState extends State<RegisterClientPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    //print(selectedRol.name);
-                    RegisterClient();
+                    // Realiza la validación cuando el usuario presione el botón
+                    if (!_isValidEmail(correo.text)) {
+                      // Correo inválido
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Correo inválido')),
+                      );
+                    }else{
+                      RegisterClient();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(10),

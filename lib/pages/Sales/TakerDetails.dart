@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 //import 'package:lamundialapp/components/square_tile.dart';
@@ -40,7 +41,8 @@ import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../Utilidades/Class/Vehicle.dart';
 import '../../components/logo.dart';
-
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:intl/intl.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -112,8 +114,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   FocusNode placaCodeFocus = FocusNode();
   //FocusNode phoneCodeFocus = FocusNode();
 
-  File? _imageFile;
-
   bool isLoading = false;
 
   var typeDoc = null;
@@ -125,6 +125,151 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedProducer = null;
   var selectedTypeVehicle = null;
   var selectedRelatives = null;
+
+  File? _imageFile;
+  //final ImagePicker _picker = ImagePicker();
+  String _recognizedText = "Texto reconocido aparecerá aquí.";
+
+  String extractSpecificId(String text) {
+    // RegEx para capturar cédulas con 5 a 9 dígitos (por ejemplo: "V 27.606.5" o "E 12.345.678")
+    final regex = RegExp(r'\b[VvEe]\s\d{1,2}(\.\d{3}){1,2}\b');
+    final match = regex.firstMatch(text);
+    if(match != null){
+      return match.group(0)!;
+    }
+    return match != null ? match.group(0)! : 'No detectado';
+  }
+
+  String cleanID(String id) {
+    // Elimina la letra V, E (mayúsculas o minúsculas) y los espacios iniciales
+    id = id.replaceAll(RegExp(r'[VvEe]\s'), '');
+
+    // Elimina los puntos
+    id = id.replaceAll('.', '');
+
+    return id;
+  }
+
+  String extractOnlyPrefix(String id) {
+    // Busca solo el prefijo V o E al inicio de la cadena
+    final match = RegExp(r'^[VvEe]').firstMatch(id);
+
+    // Devuelve la letra encontrada en mayúscula o un mensaje si no hay prefijo
+    return match != null ? match.group(0)!.toUpperCase() : 'Prefijo no encontrado';
+  }
+
+  String extractName(String text) {
+    // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
+    final regex = RegExp(r'NOMBRES\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final match = regex.firstMatch(text);
+
+    if (match != null) {
+      // Devuelve los apellidos encontrados después de "APELLIDOS"
+      return match.group(1)!;
+    } else {
+      return 'No detectado';
+    }
+  }
+
+  String extractLastName(String text) {
+    // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
+    final regex = RegExp(r'APELLIDOS\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final match = regex.firstMatch(text);
+
+    if (match != null) {
+      // Devuelve los apellidos encontrados después de "APELLIDOS"
+      return match.group(1)!;
+    } else {
+      return 'No detectado';
+    }
+  }
+
+  String extractDateOfBirth(String text) {
+    // RegEx para buscar una fecha en formato DD/MM/YYYY o DD-MM-YYYY
+    final regex = RegExp(r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b');
+    final match = regex.firstMatch(text);
+
+    if (match != null) {
+      // Devuelve la fecha de nacimiento encontrada
+      String date = '${match.group(1)}/${match.group(2)}/${match.group(3)}';
+      DateFormat format = DateFormat('dd/MM/yyyy');
+      DateTime dateTime = format.parse(date);
+      setState(() {
+        dateBirth = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(dateTime!)}");
+        age = TextEditingController(text: "${dateTime != null ? calculateAge(dateTime!) : 'N/A'}");
+      });
+      return date;
+    } else {
+      return 'No detectado';
+    }
+  }
+
+  Future<void> _recognizeText(File image) async {
+    final inputImage = InputImage.fromFile(image);
+    final textRecognizer = TextRecognizer();
+
+    try {
+      final recognizedText = await textRecognizer.processImage(inputImage);
+      List<String> datos = recognizedText.text.split('\n');
+        String  id            = 'No detectado';
+        String  lastNames     = 'No detectado';
+        String  names         = 'No detectado';
+        String  dateBirthDay  = 'No detectado';
+      for (String dato in datos){
+
+        // Captura cedula
+        if(id == 'No detectado'){
+          id  = extractSpecificId(dato);
+          identityCard.text = cleanID(id);
+          for(TypeDoc t in TypeDocs){
+            String prefix = extractOnlyPrefix(id);
+            if(t.name == prefix){
+              setState(() {
+                typeDoc = t;
+              });
+            }
+          }
+        }
+        // Captura nombres
+        if(names ==  'No detectado'){
+          names   =  extractName(dato);
+          name.text = names;
+        }
+        // Captura apellidos
+        if(lastNames ==  'No detectado'){
+          lastNames   =  extractLastName(dato);
+          lastName.text = lastNames;
+        }
+
+        // Fecha de nacimiento
+        if(dateBirthDay ==  'No detectado'){
+          dateBirthDay    = extractDateOfBirth(dato);
+          dateBirth.text  = dateBirthDay;
+        }
+      }
+    } catch (e) {
+      print('Error al reconocer texto: $e');
+    } finally {
+      textRecognizer.close();
+    }
+  }
+
+
+
+  Future<void> _pickImage(ImageSource source) async {
+    //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    //final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+        _recognizeText(_imageFile!);
+        //_getImageAndRecognizeText(_imageFile);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   List<TypeDoc> TypeDocs = [
     TypeDoc('V', 'V'),
@@ -142,8 +287,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   ];
 
   List<Producer> Producers = [
-    Producer(1,'test 1'),
-    Producer(2,'test 2')
+    Producer(1,'test 1','','','','',''),
+    Producer(2,'test 2','','','','','')
   ];
 
   List<bool> smoke = [false,true];
@@ -170,19 +315,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     return age;
   }
 
-
-
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile
-      = File(pickedFile.path);
-      } else {
-      print('No image selected.');
-      }
-    });
-  }
 
   Future<void> Save() async {
     setState(() {
@@ -336,7 +468,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2000),
+        firstDate: DateTime(1930),
         lastDate: DateTime(2101),
       );
       if (picked != null && type == 1) {
@@ -355,6 +487,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
     }
 
+    // Expresión regular para validar el correo electrónico
+    bool _isValidEmail(String email) {
+      final emailRegex = RegExp(
+          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+      return emailRegex.hasMatch(email);
+    }
+
 
 
     return Container(
@@ -367,7 +506,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           Center(
             child: GestureDetector(
               onTap: () {
-                _pickImage();
+                _pickImage(ImageSource.camera);
               },
               child: Container(
               width: 300,
@@ -414,7 +553,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           if(_imageFile != null) Center(
                     child: GestureDetector(
                         onTap: () {
-                          _pickImage();
+                          _pickImage(ImageSource.gallery);
                         },
                         child: Container(
                             width: 150,
@@ -523,6 +662,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: identityCard,
                             focusNode: identityCardCodeFocus,
                             style: const TextStyle(
@@ -531,6 +674,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -569,6 +713,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: name,
                             focusNode: nameCodeFocus,
                             style: const TextStyle(
@@ -577,6 +725,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Nombre',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -607,6 +756,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: lastName,
                             focusNode: lastNameCodeFocus,
                             style: const TextStyle(
@@ -615,6 +768,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Apellido',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -817,6 +971,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: idCard,
                             focusNode: idCardCodeFocus,
                             style: const TextStyle(
@@ -825,6 +983,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -863,6 +1022,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters:	[
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: nameOwner,
                             focusNode: nameOwnerCodeFocus,
                             style: const TextStyle(
@@ -871,6 +1034,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Nombre',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -901,6 +1065,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters:	[
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: lastNameOwner,
                             focusNode: lastNameOwnerCodeFocus,
                             style: const TextStyle(
@@ -909,6 +1077,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Apellido',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -1225,8 +1394,9 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                       decoration: InputDecoration(
                         hintText: 'Ingrese su correo',
+                        //errorText: _isValidEmail(email.text) ? null : 'Correo inválido',
                         prefixIcon: Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(1),
                           child: SvgPicture.asset(
                             '', // Ruta de tu archivo SVG
                             colorFilter: const ColorFilter.mode(
@@ -1265,6 +1435,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 11,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                      ],
                       controller: phone,
                       focusNode: phoneCodeFocus,
                       style: const TextStyle(
@@ -1273,6 +1447,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Ingrese su teléfono',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -1444,6 +1619,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 20,  // Limita la longitud del texto (ajusta según tus necesidades)
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                      ],
                       controller: brand,
                       focusNode: brandCodeFocus,
                       style: const TextStyle(
@@ -1452,6 +1631,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Marca',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -1493,6 +1673,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 20,  // Limita la longitud del texto (ajusta según tus necesidades)
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                      ],
                       controller: model,
                       focusNode: modelCodeFocus,
                       style: const TextStyle(
@@ -1501,6 +1685,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Modelo',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -1546,6 +1731,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 4,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: year,
                             focusNode: yearCodeFocus,
                             style: const TextStyle(
@@ -1554,6 +1743,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Año',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -1584,6 +1774,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 20,  // Limita la longitud del texto a 50 caracteres
+                            inputFormatters:	[
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                            ],
                             controller: color,
                             focusNode: colorCodeFocus,
                             style: const TextStyle(
@@ -1592,6 +1786,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Color',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -1630,6 +1825,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,  // Limita la longitud del texto (ajusta según tus necesidades)
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                            ],
                             controller: placa,
                             focusNode: placaCodeFocus,
                             style: const TextStyle(
@@ -1638,6 +1837,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Placa',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -1668,6 +1868,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 30,  // Limita la longitud del texto (ajusta según tus necesidades)
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                            ],
                             controller: serial,
                             focusNode: serialCodeFocus,
                             style: const TextStyle(
@@ -1676,6 +1880,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Serial',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -1846,8 +2051,15 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    //print(selectedRol.name);
-                    Save();
+                    // Realiza la validación cuando el usuario presione el botón
+                    if (!_isValidEmail(email.text)) {
+                      // Correo inválido
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Correo inválido')),
+                      );
+                    }else{
+                      Save();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(10),

@@ -8,6 +8,7 @@ import 'package:lamundialapp/pages/Client/test.dart';
 import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
 import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
 import 'package:lamundialapp/pages/rolPage.dart';
+import 'package:lamundialapp/pages/statistics/ClientStatisticsMenu.dart';
 
 import '../../Apis/apis.dart';
 
@@ -37,8 +38,8 @@ class MenuClientState extends State<MenuClient>{
     List<Widget> _widgetOptions = <Widget>[
       ServicesClient(),
       MenuProducts(),
-      notifyPaymentsForm(),
-      Text('No disponible'),
+      NotifyPaymentsForm(),
+      ClientStatisticsMenu(),
     ];
 
     if(_selectedIndex == -1){

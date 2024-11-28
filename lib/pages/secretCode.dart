@@ -88,6 +88,15 @@ class secretCodePageState extends State<SecretCodePage> {
                             fontFamily: 'Poppins'
                           )
                   ),
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/return.png', // Reemplaza con la ruta de tu imagen
+            height: 40,
+          ), // Reemplaza con tu icono deseado
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),/*AppBar(
 
       )*/

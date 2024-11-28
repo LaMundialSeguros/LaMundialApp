@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
@@ -192,6 +193,10 @@ class LegitimationPageState extends State<LegitimationPage> {
                     ), // Borde rojo
                   ),
                   child: TextField(
+                    maxLength: 50,  // Limita la longitud del texto (ajusta según tus necesidades)
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
+                    ],
                     maxLines: 5,
                     controller: _currentHealthDetails,
                     focusNode: _currentHealthDetailsFocus,

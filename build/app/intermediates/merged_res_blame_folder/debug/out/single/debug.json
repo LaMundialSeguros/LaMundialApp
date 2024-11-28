@@ -20,12 +20,12 @@
         "source": "com.example.lamundialapp-main-1:/mipmap-xxhdpi/ic_launcher_background.png"
     },
     {
-        "merged": "com.example.lamundialapp-merged_res-7:/mipmap-hdpi_ic_launcher_background.png.flat",
-        "source": "com.example.lamundialapp-main-1:/mipmap-hdpi/ic_launcher_background.png"
-    },
-    {
         "merged": "com.example.lamundialapp-merged_res-7:/mipmap-xxhdpi_ic_launcher_monochrome.png.flat",
         "source": "com.example.lamundialapp-main-1:/mipmap-xxhdpi/ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.example.lamundialapp-merged_res-7:/mipmap-hdpi_ic_launcher_background.png.flat",
+        "source": "com.example.lamundialapp-main-1:/mipmap-hdpi/ic_launcher_background.png"
     },
     {
         "merged": "com.example.lamundialapp-merged_res-7:/mipmap-hdpi_ic_launcher_foreground.png.flat",

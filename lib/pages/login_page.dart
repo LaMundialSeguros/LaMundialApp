@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/bannerAdmin.dart';
 import 'package:lamundialapp/pages/ForgotPassword.dart';
+import 'package:lamundialapp/pages/Productor/RegisterProductor.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -198,6 +199,15 @@ class LoginPageState extends State<LoginPage> {
           //toolbarHeight: 50,
           backgroundColor: Color.fromRGBO(15, 26, 90, 1),
           title: LogoWidget(),
+          leading: IconButton(
+                    icon: Image.asset(
+                        'assets/return.png', // Reemplaza con la ruta de tu imagen
+                        height: 40,
+                    ), // Reemplaza con tu icono deseado
+                    onPressed: () {
+                        Navigator.pop(context);
+                    },
+          ),
         ),
         ),
         preferredSize: Size.fromHeight(150),
@@ -231,6 +241,14 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget buildForm(BuildContext context) {
+
+    // Expresión regular para validar el correo electrónico
+    bool _isValidEmail(String email) {
+      final emailRegex = RegExp(
+          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+      return emailRegex.hasMatch(email);
+    }
+
     return Container(
         color: Colors.transparent,
         //margin: const EdgeInsets.only(top: 0),
@@ -386,7 +404,15 @@ class LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     usernameCodeFocus.unfocus();
                     passwordCodeFocus.unfocus();
-                    signUserIn();
+                    // Realiza la validación cuando el usuario presione el botón
+                    if (!_isValidEmail(username.text)) {
+                      // Correo inválido
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Correo inválido')),
+                      );
+                    }else{
+                      signUserIn();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(10),
@@ -431,13 +457,18 @@ class LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          '¿No tiene una cuenta? Cree una.',
-                          style: TextStyle(
-                              fontSize: 9,
-                              color: Color.fromRGBO(121, 116, 126, 1),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins'),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterProductorPage()));
+                          },
+                          child: Text(
+                            '¿No tiene una cuenta? Cree una.',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins'),
+                          ),
                         ),
                       ],
                     ),

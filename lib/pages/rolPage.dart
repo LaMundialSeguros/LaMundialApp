@@ -37,9 +37,9 @@ class RolPageState extends State<RolPage> {
 
 
   List<Rol> Roles = [
-    Rol('Ejecutivo', 1),
+    //Rol('Ejecutivo', 1),
     Rol('Productor', 2),
-    Rol('Asegurado', 3),
+    //Rol('Asegurado', 3),
   ];
 
 

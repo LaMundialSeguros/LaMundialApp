@@ -35,13 +35,7 @@ class MenuProducts extends StatelessWidget{
         for (var product in products)
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => TakerDetailsPage(product),
-                ),
-                    (route) =>
-                false, // Elimina todas las rutas existentes en la pila
-              );
+              Navigator.push(context,MaterialPageRoute(builder: (context) => TakerDetailsPage(product)));
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

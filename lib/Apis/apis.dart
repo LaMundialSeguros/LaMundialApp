@@ -3,24 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/Poliza.dart';
+import 'package:lamundialapp/Utilidades/Class/Producer.dart';
 import 'package:lamundialapp/pages/Client/ClientPoliza.dart';
 import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
 import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
+import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
+import 'package:lamundialapp/pages/Productor/WelcomeProducer.dart';
 import 'package:lamundialapp/pages/dosfa_page.dart';
 
 import 'package:intl/intl.dart';
+import 'package:lamundialapp/pages/rolPage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 
 import 'package:lamundialapp/Alertas/alertaspos.dart';
 import 'package:lamundialapp/pages/menu_page.dart';
-import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:win32/win32.dart';
-
 import '../Utilidades/Class/User.dart';
-import '../pages/Client/ServicesClient.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -79,27 +79,53 @@ TwoFactorAuthPageState twofa = TwoFactorAuthPageState();
 Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) async {
   try {
     final response = await http.post(
-      Uri.parse('https://lmchat.lamundialdeseguros.com/login'),
+      Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/app/getCorredor'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
-        'username': usuario,
-        'password': generateMd5(clave),
-        'rol': rol
+        'xcorreo': usuario,
+        'xcontrasena': clave//generateMd5(clave)
       }),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
+    //final Map<String, dynamic> jsonResponse = json.decode(response.body);
     // ignore: avoid_print
-    mensaje = decoded['success'];
+    mensaje = decoded['status'];
+    var result = decoded['result'];
     switch (mensaje) {
-      case 'true':
       case true:
 
+      // Extrae los registros
+        final List<dynamic> records = decoded['result']['records'];
+        int cusuario      = -1;
+        String xnombre    = '';
+        String xapellido  = '';
+        String xlogin     = '';
+        String ccorredor     = '';
+        String istatus    = '';
+        for (var record in records) {
+           cusuario = record['cusuario'];
+           xnombre = record['xnombre'] ?? '';
+           xapellido = record['xapellido'] ?? '';
+           xlogin = record['xlogin'] ?? '';
+           ccorredor = record['ccorredor'].toString() ?? '';
+           istatus = record['istatus'];
+        }
+
+        User user = User(
+            cusuario,
+            xnombre+""+xapellido,
+            xlogin,
+            ccorredor,
+            rol
+        );
+
+        GlobalVariables().user = user;
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => const MenuPage(),
+            builder: (context) => WelcomeProducer(),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
@@ -120,6 +146,51 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
         alertas.usuarioNoexiste(context).then((_) {});
         break;
       case 'error_inesperado':
+        alertas.sinConexion(context).then((_) {});
+        break;
+    }
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    alertas.sinConexion(context);
+  }
+}
+
+Future<void> apiRegisterProducer(context, Producer productor) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/app/createCorredor'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'xcliente': productor.name,
+        'xapellido': productor.lastName,
+        'xlogin': productor.email,
+        'xcorreo': productor.email,
+        'xcontrasena': productor.password,
+        'ccorredor':productor.cedula
+      }),
+    );
+    final decoded = json.decode(response.body) as Map<Object, dynamic>;
+    //final Map<String, dynamic> jsonResponse = json.decode(response.body);
+    // ignore: avoid_print
+    mensaje = decoded['status'];
+    //var result = decoded['result'];
+    switch (mensaje) {
+      case true:
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => RolPage(),
+          ),
+              (route) =>
+          false, // Elimina todas las rutas existentes en la pila
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Se creo con exito el usuario')),
+        );
+        break;
+      case false:
         alertas.sinConexion(context).then((_) {});
         break;
     }
@@ -153,6 +224,7 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
       User user = User(
           decoded['user']['id'],
           decoded['user']['username'],
+          "",
           decoded['user']['cedula'],
           decoded['user']['rol']
       );
@@ -416,5 +488,8 @@ Future<dynamic> apiServiceOptions(context,int codigo) async {
     //alertas.sinConexion(context);
   }
 }
+
+
+
 
 

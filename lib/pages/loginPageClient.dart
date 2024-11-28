@@ -332,6 +332,10 @@ class LoginPageClientState extends State<LoginPageClient> {
                       ), // Borde rojo
                   ),
                   child: TextField(
+                    maxLength: 10,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                    ],
                     controller: cedula,
                     focusNode: cedulaCodeFocus,
                     style: const TextStyle(
@@ -340,6 +344,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                       // Otros estilos de texto que desees aplicar
                     ),
                     decoration: InputDecoration(
+                      counterText: '',
                       hintText: 'Cédula de Identidad',
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
@@ -422,6 +427,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                       ],
                     ),
                   ),
+          const SizedBox(height: 10),
           Padding(
                     padding: EdgeInsets.symmetric(horizontal: 45.0),
                     child: Row(
@@ -445,7 +451,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                   ),
           const SizedBox(height: 20),
           const SizedBox(height: 15),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Container(
             width: 380,
             alignment: Alignment.center,
@@ -494,6 +500,7 @@ class LoginPageClientState extends State<LoginPageClient> {
               ],
             ),
           ),
+          const SizedBox(height: 10),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
@@ -515,7 +522,6 @@ class LoginPageClientState extends State<LoginPageClient> {
                       ],
                     ),
                   ),
-          const SizedBox(height: 10),
           const SizedBox(height: 20),
           FutureBuilder<Uint8List>(
                     future: _loadImage(),
@@ -561,7 +567,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                       }
                     },
                   ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
@@ -610,6 +616,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 10),
         ]))));
   }
 }

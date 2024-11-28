@@ -1,21 +1,27 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lamundialapp/Utilidades/Class/Currency.dart';
 import 'package:lamundialapp/Utilidades/Class/TypePayment.dart';
 import 'package:lamundialapp/components/bannerNotifyPayments.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:core';
+import 'package:image_picker/image_picker.dart';
 
-
-class notifyPaymentsForm extends StatefulWidget {
-  const notifyPaymentsForm({Key? key}) : super(key: key);
+class NotifyPaymentsForm extends StatefulWidget {
+  const NotifyPaymentsForm({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
   NotifyPaymentsFormState createState() => NotifyPaymentsFormState();
 }
 
-class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
+class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
 
   final reference = TextEditingController();
   final currency = TextEditingController();
@@ -28,6 +34,97 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
 
   var selectedTypePayment = null;
   var selectedCurrency = null;
+  var selectedBankRec = null;
+  var selectedBank = null;
+
+  final ImagePicker _picker = ImagePicker();
+  File? _imageFile;
+
+  // Lista para almacenar los bancos
+  List<Map<String, dynamic>> BankReceptors = [];  // Lista de elementos para el dropdown
+  List<Map<String, dynamic>> Banks = [];  // Lista de elementos para el dropdown
+  // Función para obtener datos de la API
+  Future<void> apiServiceBankReceptors() async {
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "ctipopago": 2,
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/target-bank'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetBank = jsonResponse['data']['targetBank'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            BankReceptors = targetBank.map((bank) {
+              return {
+                'id': bank['cbanco_destino'],
+                'name': bank['xbanco'],
+              };
+            }).toList();
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
+
+  Future<void> apiServiceBanks() async {
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "itipo": "V",
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/bank'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetBank = jsonResponse['data']['bank'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            Banks = targetBank.map((bank) {
+              return {
+                'id': bank['cbanco_destino'],
+                'name': bank['xbanco'],
+              };
+            }).toList();
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
 
   List<TypePayment> Genders = [
     TypePayment(1,'Transferencia Bancaria'),
@@ -38,7 +135,28 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
     Currency(1,'USD'),
     Currency(2,'Bs')
   ];
+
+  Future<void> _pickImage(ImageSource source) async {
+    //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    //final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
   @override
+  void initState() {
+    super.initState();
+    apiServiceBankReceptors();
+    apiServiceBanks();
+  }
+
   Widget build(BuildContext context) {
 
     DateTime? selectedDate = DateTime.now();
@@ -64,7 +182,7 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
     final search = TextEditingController();
     FocusNode searchCodeFocus = FocusNode();
 
-    return Container(
+    return SingleChildScrollView(child:Container(
         color: Colors.transparent,
         //margin: const EdgeInsets.only(top: 0),
         child: Form(
@@ -188,6 +306,10 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                             ), // Borde rojo
                           ),
                           child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
                             controller: amount,
                             focusNode: amountCodeFocus,
                             style: const TextStyle(
@@ -196,6 +318,7 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                               // Otros estilos de texto que desees aplicar
                             ),
                             decoration: InputDecoration(
+                              counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
@@ -275,6 +398,124 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                   ),
                   const SizedBox(height: 20),
                   Container(
+                      width: 300,
+                      height: 40,
+                      decoration: BoxDecoration(// Color de fondo gris
+                          borderRadius: BorderRadius.only(
+                            topLeft:  Radius.zero,
+                            topRight:  Radius.circular(30.0),
+                            bottomLeft:  Radius.circular(30.0),
+                            bottomRight: Radius.zero,
+                          ),
+                          border: Border.all(
+                            color: Color.fromRGBO(79, 127, 198, 1),
+                          )),
+                      child: DropdownButtonFormField<Map<String, dynamic>>(
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 8,
+                          color: Colors.black,
+                        ),
+                        iconSize: 0,
+                        value: selectedBank,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.zero,
+                          topRight: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedBank = newValue;
+                          });
+                        },
+                        items: Banks.map((bank) {
+                          return DropdownMenuItem(
+                            value: bank,
+                            child: Text(bank['name'] ?? 'Nombre no disponible'), // Arreglo aquí
+                          );
+                        }).toList(),
+                        decoration: InputDecoration(
+                          hintText: 'Banco Emisor',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(121, 116, 126, 1),
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent)),
+                          suffixIcon: Container(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.keyboard_arrow_down_outlined),
+                          ),
+                        ),
+                      )
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                      width: 300,
+                      height: 40,
+                      decoration: BoxDecoration(// Color de fondo gris
+                          borderRadius: BorderRadius.only(
+                            topLeft:  Radius.zero,
+                            topRight:  Radius.circular(30.0),
+                            bottomLeft:  Radius.circular(30.0),
+                            bottomRight: Radius.zero,
+                          ),
+                          border: Border.all(
+                            color: Color.fromRGBO(79, 127, 198, 1),
+                          )),
+                      child: DropdownButtonFormField<Map<String, dynamic>>(
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 10,
+                          color: Colors.black,
+                        ),
+                        iconSize: 0,
+                        value: selectedBankRec,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.zero,
+                          topRight: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedBankRec = newValue;
+                          });
+                        },
+                        items: BankReceptors.map((bank) {
+                          return DropdownMenuItem(
+                            value: bank,
+                            child: Text(bank['name'] ?? 'Nombre no disponible'), // Arreglo aquí
+                          );
+                        }).toList(),
+                        decoration: InputDecoration(
+                          hintText: 'Banco Receptor',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(121, 116, 126, 1),
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent)),
+                          suffixIcon: Container(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.keyboard_arrow_down_outlined),
+                          ),
+                        ),
+                      )
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
@@ -289,6 +530,10 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                       ), // Borde rojo
                     ),
                     child: TextField(
+                      maxLength: 20,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                      ],
                       controller: reference,
                       focusNode: referenceCodeFocus,
                       style: const TextStyle(
@@ -297,6 +542,7 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                         // Otros estilos de texto que desees aplicar
                       ),
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Referencia',
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
@@ -322,7 +568,78 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImage(ImageSource.gallery);
+                        },
+                        child: Container(
+                            width: 300,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(246, 247, 255, 1),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                  spreadRadius: 1, // Extensión de la sombra
+                                  blurRadius: 4, // Difuminado de la sombra
+                                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Cargar Imagen',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Color.fromRGBO(15, 26, 90, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins'),
+                                ),
+                                SizedBox(width: 8),
+                                Image.asset(
+                                  'assets/upload.png', // Replace with your image path
+                                  width: 35, // Set image width (optional)
+                                  height: 35, // Set image height (optional)
+                                  fit: BoxFit.cover, // Adjust image fitting (optional)
+                                ),
+                                /*IconButton(
+                    icon: Icon(Icons.camera_alt), // Replace with desired icon
+                    onPressed: _pickImage,
+                  ),*/
+                              ],
+                            )
+                        )),
+                  ),
+                  const SizedBox(height: 20),
+                  if(_imageFile != null) Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImage(ImageSource.gallery);
+                        },
+                        child: Container(
+                          width: 150,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(246, 247, 255, 1),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                spreadRadius: 1, // Extensión de la sombra
+                                blurRadius: 4, // Difuminado de la sombra
+                                offset: Offset(0, 3), // Desplazamiento de la sombra
+                              ),
+                            ],
+                          ),
+                          child: Image.file(_imageFile!),
+                        )),
+                  ),
+                  const SizedBox(height: 20),
                   // Boton
                   Container(
                     width: 380,
@@ -356,6 +673,6 @@ class NotifyPaymentsFormState extends State<notifyPaymentsForm> {
                       ],
                     ),
                   ),
-                ]))));
+                ])))));
   }
 }

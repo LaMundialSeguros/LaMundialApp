@@ -88,6 +88,15 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                             fontFamily: 'Poppins'
                           )
                   ),
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/return.png', // Reemplaza con la ruta de tu imagen
+            height: 40,
+          ), // Reemplaza con tu icono deseado
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),/*AppBar(
 
       )*/
