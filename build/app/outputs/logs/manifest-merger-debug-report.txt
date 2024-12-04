@@ -51,7 +51,6 @@ MERGED from [:image_picker_android] C:\Projects\Flutter\lamundial\LaMundialApp\b
 MERGED from [:local_auth_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\local_auth_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_secure_storage] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_secure_storage\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-10:12
-MERGED from [:flutter_tesseract_ocr] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_tesseract_ocr\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:google_mlkit_text_recognition] C:\Projects\Flutter\lamundial\LaMundialApp\build\google_mlkit_text_recognition\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:google_mlkit_commons] C:\Projects\Flutter\lamundial\LaMundialApp\build\google_mlkit_commons\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider_android] C:\Projects\Flutter\lamundial\LaMundialApp\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
@@ -108,7 +107,6 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Asus\.gradle\cac
 MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Asus\.gradle\caches\transforms-3\e4b828aa5f7a520018d3ce15ef2e5944\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\396d5fd35b8fa73a5846e240efc37bb9\transformed\jetified-core-1.0.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\22670db4e2b57ab0d82176a7a68de36a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:2:1-14:12
 MERGED from [com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:17:1-56:12
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Asus\.gradle\caches\transforms-3\f64bfe7a02d0d06fdebf0e21d1ac9dd3\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Asus\.gradle\caches\transforms-3\52a7acddf6672a7f64ff869e3cc005b4\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:2:1-9:12
@@ -137,14 +135,10 @@ MERGED from [com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle
 		ADDED from C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:34:22-62
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:35:5-80
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:11:5-81
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:11:5-81
 	android:name
 		ADDED from C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:35:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:36:5-79
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:12:5-80
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:12:5-80
 	android:name
 		ADDED from C:\Projects\Flutter\lamundial\LaMundialApp\android\app\src\main\AndroidManifest.xml:36:22-77
 uses-permission#android.permission.INTERNET
@@ -183,8 +177,6 @@ MERGED from [:flutter_plugin_android_lifecycle] C:\Projects\Flutter\lamundial\La
 MERGED from [:flutter_plugin_android_lifecycle] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_secure_storage] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_secure_storage\intermediates\merged_manifest\debug\AndroidManifest.xml:6:5-8:53
 MERGED from [:flutter_secure_storage] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_secure_storage\intermediates\merged_manifest\debug\AndroidManifest.xml:6:5-8:53
-MERGED from [:flutter_tesseract_ocr] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_tesseract_ocr\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:flutter_tesseract_ocr] C:\Projects\Flutter\lamundial\LaMundialApp\build\flutter_tesseract_ocr\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_mlkit_text_recognition] C:\Projects\Flutter\lamundial\LaMundialApp\build\google_mlkit_text_recognition\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_mlkit_text_recognition] C:\Projects\Flutter\lamundial\LaMundialApp\build\google_mlkit_text_recognition\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_mlkit_commons] C:\Projects\Flutter\lamundial\LaMundialApp\build\google_mlkit_commons\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
@@ -297,8 +289,6 @@ MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Asus\.gradle\c
 MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\396d5fd35b8fa73a5846e240efc37bb9\transformed\jetified-core-1.0.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\22670db4e2b57ab0d82176a7a68de36a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Asus\.gradle\caches\transforms-3\22670db4e2b57ab0d82176a7a68de36a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:7:5-9:41
-MERGED from [:tesseract4android-release:] C:\Users\Asus\.gradle\caches\transforms-3\62763ea6c8bc5b0a73d3a4896022f448\transformed\jetified-tesseract4android-release\AndroidManifest.xml:7:5-9:41
 MERGED from [com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:20:5-44
 MERGED from [com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Asus\.gradle\caches\transforms-3\52706ab4c214a924681e2160a494615e\transformed\jetified-zxing-android-embedded-4.3.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Asus\.gradle\caches\transforms-3\f64bfe7a02d0d06fdebf0e21d1ac9dd3\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44

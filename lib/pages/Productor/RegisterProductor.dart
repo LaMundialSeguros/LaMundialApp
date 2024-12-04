@@ -17,7 +17,6 @@ import '../../Utilidades/Class/Gender.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../components/logo.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 final localAuth = LocalAuthentication();
@@ -26,7 +25,7 @@ class RegisterProductorPage extends StatefulWidget {
   const RegisterProductorPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
+
   RegisterProductorPageState createState() => RegisterProductorPageState();
 }
 
@@ -90,6 +89,32 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
     return match != null ? match.group(0)!.toUpperCase() : 'Prefijo no encontrado';
   }
 
+  String extractName(String text) {
+    // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
+    final regex = RegExp(r'NOMBRES\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final match = regex.firstMatch(text);
+
+    if (match != null) {
+      // Devuelve los apellidos encontrados después de "APELLIDOS"
+      return match.group(1)!;
+    } else {
+      return 'No detectado';
+    }
+  }
+
+  String extractLastName(String text) {
+    // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
+    final regex = RegExp(r'APELLIDOS\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final match = regex.firstMatch(text);
+
+    if (match != null) {
+      // Devuelve los apellidos encontrados después de "APELLIDOS"
+      return match.group(1)!;
+    } else {
+      return 'No detectado';
+    }
+  }
+
   Future<void> _recognizeText(File image) async {
     final inputImage = InputImage.fromFile(image);
     final textRecognizer = TextRecognizer();
@@ -97,21 +122,32 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
     try {
       final recognizedText = await textRecognizer.processImage(inputImage);
       List<String> datos = recognizedText.text.split('\n');
+      String  id            = 'No detectado';
+      String  lastNames     = 'No detectado';
+      String  names         = 'No detectado';
       for (String dato in datos) {
-        String texto = extractSpecificText(dato);
-        if(texto != 'No detectado'){
-
-          cedula.text = cleanID(texto);
+        // Captura cedula
+        if(id == 'No detectado'){
+          id  = extractSpecificText(dato);
+          cedula.text = cleanID(id);
           for(TypeDoc t in TypeDocs){
-            String prefix = extractOnlyPrefix(texto);
+            String prefix = extractOnlyPrefix(id);
             if(t.name == prefix){
               setState(() {
                 typeDoc = t;
               });
-              break;
             }
           }
-          break;
+        }
+        // Captura nombres
+        if(names ==  'No detectado'){
+          names   =  extractName(dato);
+          name.text = names;
+        }
+        // Captura apellidos
+        if(lastNames ==  'No detectado'){
+          lastNames   =  extractLastName(dato);
+          lastName.text = lastNames;
         }
       }
     } catch (e) {
@@ -182,6 +218,9 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
       }
 
       Producer producer = Producer(1,correo.text,name.text,lastName.text,correo.text,cedula.text,password.text);
+        if(_imageFile != null){
+          await sendImageToApi(context,_imageFile!,cedula.text);
+        }
       // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
         await apiRegisterProducer(context,producer);
       // Resto del código...

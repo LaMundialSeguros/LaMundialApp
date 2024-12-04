@@ -6,8 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/Class/Currency.dart';
+import 'package:lamundialapp/Utilidades/Class/TypeDoc.dart';
 import 'package:lamundialapp/Utilidades/Class/TypePayment.dart';
+import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
 import 'package:lamundialapp/components/bannerNotifyPayments.dart';
 import 'package:http/http.dart' as http;
 import 'dart:core';
@@ -24,25 +27,39 @@ class NotifyPaymentsForm extends StatefulWidget {
 class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
 
   final reference = TextEditingController();
-  final currency = TextEditingController();
+  //final currency = TextEditingController();
   final amount = TextEditingController();
   var date = TextEditingController();
+  final identityCard = TextEditingController();
+
+  FocusNode identityCardCodeFocus = FocusNode();
   FocusNode currencyCodeFocus = FocusNode();
   FocusNode dateCodeFocus = FocusNode();
   FocusNode amountCodeFocus = FocusNode();
   FocusNode referenceCodeFocus = FocusNode();
 
+  var typeDoc = null;
   var selectedTypePayment = null;
   var selectedCurrency = null;
   var selectedBankRec = null;
   var selectedBank = null;
 
+  List<TypeDoc> TypeDocs = [
+    TypeDoc('V', 'V'),
+    TypeDoc('E', 'E')
+  ];
+
   final ImagePicker _picker = ImagePicker();
   File? _imageFile;
 
+  bool isLoading = false;
+
   // Lista para almacenar los bancos
   List<Map<String, dynamic>> BankReceptors = [];  // Lista de elementos para el dropdown
-  List<Map<String, dynamic>> Banks = [];  // Lista de elementos para el dropdown
+  List<Map<String, dynamic>> Banks = [];
+  //List<Map<String, dynamic>> TypePayments = [];
+  List<TypePayment> TypePayments = [];
+  // Lista de elementos para el dropdown
   // Función para obtener datos de la API
   Future<void> apiServiceBankReceptors() async {
     // Cuerpo de la petición en formato JSON
@@ -126,14 +143,56 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
     }
   }
 
-  List<TypePayment> Genders = [
-    TypePayment(1,'Transferencia Bancaria'),
-    TypePayment(2,'Pago movil')
-  ];
+  Future<void> apiStypeOfPayment() async {
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "itipo": "V",
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/type-of-payment'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetBank = jsonResponse['data']['typePayment'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            /*TypePayments = targetBank.map((bank) {
+              return {
+                'id': bank['ctipopago'],
+                'name': bank['xtipopago'],
+              };
+            }).toList();*/
+
+            // Convertimos cada elemento en una instancia de TypePayment
+            TypePayments = targetBank.map((bank) {
+              return TypePayment.fromJsonApi(bank);
+            }).toList();
+
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
 
   List<Currency> coins = [
-    Currency(1,'USD'),
-    Currency(2,'Bs')
+    Currency(1,'USD','\$'),
+    Currency(2,'Bs','Bs')
   ];
 
   Future<void> _pickImage(ImageSource source) async {
@@ -149,12 +208,49 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
     });
   }
 
+  Future<void> save() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+
+      // Validar campos nulos
+      if (selectedTypePayment == null ||  selectedCurrency == null ||  selectedBankRec == null ||  selectedBank == null) {
+        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
+        await alertas.usuarioNoexiste(context);
+        return;
+      }
+
+      if (reference.text.isEmpty || amount.text.isEmpty || date.text.isEmpty || identityCard.text.isEmpty) {
+        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
+        await alertas.usuarioNoexiste(context);
+        return;
+      }
+
+      NotifyPayment notifyPayment = NotifyPayment(1,typeDoc,identityCard.text,amount.text,date.text,reference.text,selectedTypePayment,selectedCurrency,selectedBankRec,selectedBank);
+      /*if(_imageFile != null){
+        await sendImageToApi(context,_imageFile!,cedula.text);
+      }*/
+      // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
+      await apiRegisterPayment(context,notifyPayment);
+      // Resto del código...
+    } catch (e) {
+      // Manejar errores si es necesario
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
 
   @override
   void initState() {
     super.initState();
     apiServiceBankReceptors();
     apiServiceBanks();
+    apiStypeOfPayment();
   }
 
   Widget build(BuildContext context) {
@@ -253,6 +349,108 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                               border: Border.all(
                                 color: Color.fromRGBO(79, 127, 198, 1),
                               )),
+                          child: DropdownButtonFormField<TypeDoc>(
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.black,
+                            ),
+                            iconSize: 0,
+                            value: typeDoc,
+                            borderRadius: BorderRadius.only(
+                              topLeft:  Radius.zero,
+                              topRight:  Radius.circular(30.0),
+                              bottomLeft:  Radius.circular(30.0),
+                              bottomRight: Radius.zero,
+                            ),
+                            onChanged: (TypeDoc? newValue) {
+                              setState(() {
+                                typeDoc = newValue;
+                              });
+                            },
+                            items: TypeDocs.map((TypeDoc tipoDoc) {
+                              return DropdownMenuItem<TypeDoc>(
+                                value: tipoDoc,
+                                child: Text(tipoDoc.name),
+                              );
+                            }).toList(),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.transparent)),
+                              suffixIcon: Container(
+                                padding: EdgeInsets.only(right: 0),
+                                child: Icon(Icons.keyboard_arrow_down_outlined),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft:  Radius.zero,
+                              topRight:  Radius.circular(40.0),
+                              bottomLeft:  Radius.circular(40.0),
+                              bottomRight: Radius.zero,
+                            ),
+                            border: Border.all(
+                              color: Color.fromRGBO(79, 127, 198, 1),
+                            ), // Borde rojo
+                          ),
+                          child: TextField(
+                            maxLength: 10,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,  // Solo permite números
+                            ],
+                            controller: identityCard,
+                            focusNode: identityCardCodeFocus,
+                            style: const TextStyle(
+                              color: Colors.black, // Color del texto
+                              fontFamily: 'Poppins',
+                              // Otros estilos de texto que desees aplicar
+                            ),
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: 'Cédula de Identidad',
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 20.0,
+                              ),
+                              hintStyle:
+                              TextStyle(
+                                  color: Color.fromRGBO(121, 116, 126, 1),
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50,right: 0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(// Color de fondo gris
+                              borderRadius: BorderRadius.only(
+                                topLeft:  Radius.zero,
+                                topRight:  Radius.circular(30.0),
+                                bottomLeft:  Radius.circular(30.0),
+                                bottomRight: Radius.zero,
+                              ),
+                              border: Border.all(
+                                color: Color.fromRGBO(79, 127, 198, 1),
+                              )),
                           child: DropdownButtonFormField<Currency>(
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -319,7 +517,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                             ),
                             decoration: InputDecoration(
                               counterText: '',
-                              hintText: 'Cédula de Identidad',
+                              hintText: 'Monto',
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10,
@@ -370,7 +568,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                           selectedTypePayment = newValue;
                         });
                       },
-                      items: Genders.map((TypePayment typePayment) {
+                      items: TypePayments.map((TypePayment typePayment) {
                         return DropdownMenuItem<TypePayment>(
                           value: typePayment,
                           child: Text(typePayment.name),
@@ -650,7 +848,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                         ElevatedButton(
                           onPressed: () {
                             //print(selectedRol.name);
-                            //Save();
+                            save();
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(10),
@@ -673,6 +871,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
                 ])))));
   }
 }

@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/Poliza.dart';
 import 'package:lamundialapp/Utilidades/Class/Producer.dart';
+import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
 import 'package:lamundialapp/pages/Client/ClientPoliza.dart';
 import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
 import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
+import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
 import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
 import 'package:lamundialapp/pages/Productor/WelcomeProducer.dart';
 import 'package:lamundialapp/pages/dosfa_page.dart';
@@ -21,6 +24,7 @@ import 'package:lamundialapp/Alertas/alertaspos.dart';
 import 'package:lamundialapp/pages/menu_page.dart';
 import 'package:crypto/crypto.dart';
 import '../Utilidades/Class/User.dart';
+import 'package:path/path.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -75,11 +79,17 @@ AlertaState alertas = AlertaState();
 TwoFactorAuthPageState twofa = TwoFactorAuthPageState();
 //Fin de Instancia
 
+String obtenerFechaActual() {
+  final DateTime ahora = DateTime.now();
+  final DateFormat formato = DateFormat('yyyy-MM-dd'); // Cambia el formato según lo necesites
+  return formato.format(ahora);
+}
+
 //Rutina para consumir la API de establecimiento
 Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) async {
   try {
     final response = await http.post(
-      Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/app/getCorredor'),
+      Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/app/loginCorredor'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -198,6 +208,99 @@ Future<void> apiRegisterProducer(context, Producer productor) async {
     // ignore: avoid_print
     print(e);
     alertas.sinConexion(context);
+  }
+}
+
+Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
+  // URL de la API
+  final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/collection/receipts/notification');
+
+  // Estructura del body
+  final Map<String, dynamic> body = {
+    "freporte": notifyPayment.date,//obtenerFechaActual(),
+    "cmoneda_pago": notifyPayment.currency.cod,
+    "ctenedor": notifyPayment.idCard,
+    "mpago": double.parse(notifyPayment.amount),
+    "mpagoext": 0,
+    "cprog": "origenProg",
+    "recibos": [],
+    "soporte": [
+      {
+        "cmoneda": notifyPayment.currency.cod,
+        "cbanco": notifyPayment.bank.id,
+        "ctipopago": notifyPayment.typePayment.id,
+        "cbanco_destino": notifyPayment.bankRec.id,
+        "mpago": notifyPayment.amount,
+        "mpagoext": 0,
+        "mpagoigtf": 0,
+        "mpagoigtfext": 0,
+        "mtotal": notifyPayment.amount,
+        "mtotalext": "0",
+        "xreferencia": notifyPayment.reference,
+        "ximage": "21-2024-10-28-06545345.png" // Se debe cambiar
+      }
+    ]
+  };
+
+  try {
+    // Realizar la solicitud POST
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+
+    // Verificar la respuesta
+    if (response.statusCode == 200) {
+      print('Datos enviados con éxito: ${response.body}');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('message')),
+      );
+      Navigator.push(context,MaterialPageRoute(builder: (context) => NotifyPaymentsForm()));
+
+    } else {
+      print('Error al enviar datos: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Excepción: $e');
+  }
+}
+
+Future<void> sendImageToApi(context, File imageFile,String id) async {
+  try {
+    // URL de la API
+    final Uri apiUrl = Uri.parse('https://lmchat.lamundialdeseguros.com/ftp-poliza'); // Cambia a tu API
+
+    // Crear la solicitud multipart
+    var request = http.MultipartRequest('POST', apiUrl);
+
+    // Adjuntar el archivo de imagen al campo 'prueba'
+    var fileStream = await http.MultipartFile.fromPath(
+      'imagen',  // Campo esperado para la imagen
+      imageFile.path,
+      filename: basename(imageFile.path), // Nombre del archivo
+    );
+
+    // Agregar la imagen a la solicitud
+    request.files.add(fileStream);
+
+    // Agregar el campo 'casegurado' como un campo de texto
+    request.fields['casegurado'] = id;  // Cambia por el valor real
+
+    // Enviar la solicitud
+    var response = await request.send();
+
+    // Manejar la respuesta
+    if (response.statusCode == 200) {
+      print('Image uploaded successfully.');
+      var responseData = await http.Response.fromStream(response);
+      print('Response: ${responseData.body}');
+    } else {
+      print('Failed to upload image. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error uploading image: $e');
   }
 }
 //Fin de Rutina

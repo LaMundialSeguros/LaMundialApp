@@ -408,14 +408,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.10+1"
-  flutter_tesseract_ocr:
-    dependency: "direct main"
-    description:
-      name: flutter_tesseract_ocr
-      sha256: "67889f3c59cfe8dc5f933cfcbbfc283c2d0c8c25165eeeda057895f5ee86f257"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.9"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -771,7 +763,7 @@ packages:
     source: hosted
     version: "2.1.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"
