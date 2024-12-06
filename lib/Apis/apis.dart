@@ -89,7 +89,7 @@ String obtenerFechaActual() {
 Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) async {
   try {
     final response = await http.post(
-      Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/app/loginCorredor'),
+      Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/app/loginCorredor'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

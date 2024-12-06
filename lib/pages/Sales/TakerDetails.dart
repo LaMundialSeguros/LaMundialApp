@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Amount.dart';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
+import 'package:lamundialapp/Utilidades/Class/Brand.dart';
 import 'package:lamundialapp/Utilidades/Class/Contry.dart';
 import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
 import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
@@ -22,27 +22,19 @@ import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relative.dart';
 import 'package:lamundialapp/Utilidades/Class/Taker.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
-import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
-import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
 import 'package:lamundialapp/pages/Sales/RelativesForm.dart';
 import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
-import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../Utilidades/Class/Gender.dart';
-import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../Utilidades/Class/Vehicle.dart';
-import '../../components/logo.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 final localAuth = LocalAuthentication();
 
@@ -125,6 +117,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedProducer = null;
   var selectedTypeVehicle = null;
   var selectedRelatives = null;
+  var selectedBrand = null;
+  var selectedModel = null;
+  var selectedVersion = null;
+  var selectedColor = null;
 
   File? _imageFile;
   //final ImagePicker _picker = ImagePicker();
@@ -254,8 +250,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     }
   }
 
-
-
   Future<void> _pickImage(ImageSource source) async {
     //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
     final XFile? pickedFile = await _picker.pickImage(source: source);
@@ -291,6 +285,10 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     Producer(2,'test 2','','','','','')
   ];
 
+  List<Map<String, dynamic>> models = [];
+  List<Map<String, dynamic>> versions = [];
+  List<Map<String, dynamic>> colors = [];
+
   List<bool> smoke = [false,true];
 
   List<int> beneficiaries = [0,1,2,3,4,5];
@@ -302,6 +300,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
   // Poliza a gestionar
 
+  List<Brand> Brands = [];
 
 
   int calculateAge(DateTime birthDate) {
@@ -315,6 +314,173 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     return age;
   }
 
+  Future<void> apiServiceBrand(int year) async {
+    selectedBrand = null;
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "qano": year,
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/brand'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetBrand = jsonResponse['data']['brand'];
+
+          setState(() {
+
+            // Convertimos cada elemento en una instancia de TypePayment
+            Brands = targetBrand.map((brand) {
+              return Brand.fromJsonApi(brand);
+            }).toList();
+
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
+
+  Future<void> apiServiceModels(int year,int brandId) async {
+    selectedModel = null;
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "qano": year,
+      "cmarca": brandId
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/model'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetModel = jsonResponse['data']['model'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            models = targetModel.map((model) {
+              return {
+                'id': model['cmodelo'],
+                'name': model['xmodelo'],
+              };
+            }).toList();
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
+
+  Future<void> apiServiceVersion(int year,int brandId,int modelId) async {
+    selectedVersion = null;
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({
+      "qano": year,
+      "cmarca": brandId,
+      "cmodelo": modelId
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/version'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetModel = jsonResponse['data']['version'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            versions = targetModel.map((model) {
+              return {
+                'id': model['cversion'],
+                'name': model['xversion'],
+              };
+            }).toList();
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
+
+  Future<void> apiServiceColor() async {
+    selectedVersion = null;
+    // Cuerpo de la petición en formato JSON
+    final body = jsonEncode({});
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://qaapisys2000.lamundialdeseguros.com//api/v1/valrep/color'),
+        headers: {
+          'Content-Type': 'application/json', // Define el tipo de contenido
+          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == true) {
+          final List<dynamic> targetColor = jsonResponse['data']['color'];
+
+          setState(() {
+            // Convertimos cada elemento en un Map
+            colors = targetColor.map((color) {
+              return {
+                'id': color['ccolor'],
+                'name': color['xcolor'],
+              };
+            }).toList();
+          });
+        }
+      } else {
+        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+      }
+
+    } catch (e) {
+      print('Excepción: $e');
+    }
+  }
 
   Future<void> Save() async {
     setState(() {
@@ -429,6 +595,23 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 // Crear una instancia de FlutterSecureStorage
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
+  @override
+  void initState() {
+    super.initState();
+    apiServiceColor();
+    yearCodeFocus.addListener(() {
+      if (!yearCodeFocus.hasFocus) {
+        // El TextField perdió el foco
+        apiServiceBrand(int.parse(year.text));
+      }
+    });
+  }
+  @override
+  void dispose() {
+    brandCodeFocus.dispose();
+    year.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1604,120 +1787,12 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
-                    width: 300,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft:  Radius.zero,
-                        topRight:  Radius.circular(40.0),
-                        bottomLeft:  Radius.circular(40.0),
-                        bottomRight: Radius.zero,
-                      ),
-                      border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
-                      ), // Borde rojo
-                    ),
-                    child: TextField(
-                      maxLength: 20,  // Limita la longitud del texto (ajusta según tus necesidades)
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
-                      ],
-                      controller: brand,
-                      focusNode: brandCodeFocus,
-                      style: const TextStyle(
-                        color: Colors.black, // Color del texto
-                        fontFamily: 'Poppins',
-                        // Otros estilos de texto que desees aplicar
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'Marca',
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.all(16),
-                          child: SvgPicture.asset(
-                            '', // Ruta de tu archivo SVG
-                            colorFilter: const ColorFilter.mode(
-                                Color.fromRGBO(105, 111, 140, 1), BlendMode.srcIn),
-                            width: 20, // Tamaño deseado en ancho
-                            height: 18,
-                          ),
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12.0,
-                        ),
-                        hintStyle:
-                        TextStyle(
-                            color: Color.fromRGBO(121, 116, 126, 1),
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700
-                        ),
-                      ),
-                    ),
-                  ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
-                    width: 300,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft:  Radius.zero,
-                        topRight:  Radius.circular(40.0),
-                        bottomLeft:  Radius.circular(40.0),
-                        bottomRight: Radius.zero,
-                      ),
-                      border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
-                      ), // Borde rojo
-                    ),
-                    child: TextField(
-                      maxLength: 20,  // Limita la longitud del texto (ajusta según tus necesidades)
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),  // Solo letras y números
-                      ],
-                      controller: model,
-                      focusNode: modelCodeFocus,
-                      style: const TextStyle(
-                        color: Colors.black, // Color del texto
-                        fontFamily: 'Poppins',
-                        // Otros estilos de texto que desees aplicar
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'Modelo',
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.all(16),
-                          child: SvgPicture.asset(
-                            '', // Ruta de tu archivo SVG
-                            colorFilter: const ColorFilter.mode(
-                                Color.fromRGBO(105, 111, 140, 1), BlendMode.srcIn),
-                            width: 20, // Tamaño deseado en ancho
-                            height: 18,
-                          ),
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12.0,
-                        ),
-                        hintStyle:
-                        TextStyle(
-                            color: Color.fromRGBO(121, 116, 126, 1),
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700
-                        ),
-                      ),
-                    ),
-                  ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
           if(widget.product.id == 6 || widget.product.id == 7)Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
                         Container(
-                          width: 150,
+                          width: 100,
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -1757,47 +1832,65 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                                   fontWeight: FontWeight.w700
                               ),
                             ),
+                            /*onEditingComplete: () {
+                              apiServiceBrand(int.parse(year.text));
+                            },*/
                           ),
                         ),
                         Container(
-                          width: 150,
+                          width: 200,
                           height: 40,
-                          decoration: BoxDecoration(
+                          decoration: BoxDecoration(// Color de fondo gris
+                              borderRadius: BorderRadius.only(
+                                topLeft:  Radius.zero,
+                                topRight:  Radius.circular(40.0),
+                                bottomLeft:  Radius.circular(40.0),
+                                bottomRight: Radius.zero,
+                              ),
+                              border: Border.all(
+                                color: Color.fromRGBO(79, 127, 198, 1),
+                              )),
+                          child: DropdownButtonFormField<Map<String, dynamic>>(
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.black,
+                            ),
+                            iconSize: 0,
+                            value: selectedColor,
                             borderRadius: BorderRadius.only(
                               topLeft:  Radius.zero,
-                              topRight:  Radius.circular(40.0),
-                              bottomLeft:  Radius.circular(40.0),
+                              topRight:  Radius.circular(30.0),
+                              bottomLeft:  Radius.circular(30.0),
                               bottomRight: Radius.zero,
                             ),
-                            border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
-                            ), // Borde rojo
-                          ),
-                          child: TextField(
-                            maxLength: 20,  // Limita la longitud del texto a 50 caracteres
-                            inputFormatters:	[
-                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
-                            ],
-                            controller: color,
-                            focusNode: colorCodeFocus,
-                            style: const TextStyle(
-                              color: Colors.black, // Color del texto
-                              fontFamily: 'Poppins',
-                              // Otros estilos de texto que desees aplicar
-                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedColor = newValue;
+
+                              });
+                            },
+                            items: colors.map((color) {
+                              return DropdownMenuItem(
+                                value: color,
+                                child: Text(color['name'] ?? 'Color no disponible',style:TextStyle(fontSize: 10)), // Arreglo aquí
+                              );
+                            }).toList(),
                             decoration: InputDecoration(
-                              counterText: '',
                               hintText: 'Color',
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 20.0,
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
                               ),
-                              hintStyle:
-                              TextStyle(
-                                  color: Color.fromRGBO(121, 116, 126, 1),
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700
+                              contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.transparent)),
+                              suffixIcon: Container(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Icon(Icons.keyboard_arrow_down_outlined),
                               ),
                             ),
                           ),
@@ -1806,12 +1899,192 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
+          if(widget.product.id == 6 || widget.product.id == 7)Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(// Color de fondo gris
+                        borderRadius: BorderRadius.only(
+                          topLeft:  Radius.zero,
+                          topRight:  Radius.circular(40.0),
+                          bottomLeft:  Radius.circular(40.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        border: Border.all(
+                          color: Color.fromRGBO(79, 127, 198, 1),
+                        )),
+                    child: DropdownButtonFormField<Brand>(
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.black,
+
+                      ),
+                      iconSize: 0,
+                      value: selectedBrand,
+                      borderRadius: BorderRadius.only(
+                        topLeft:  Radius.zero,
+                        topRight:  Radius.circular(40.0),
+                        bottomLeft:  Radius.circular(40.0),
+                        bottomRight: Radius.zero,
+                      ),
+                      onChanged: (Brand? newValue) {
+                        setState(() {
+                          selectedBrand = newValue;
+                          apiServiceModels(int.parse(year.text),selectedBrand.id);
+                        });
+                      },
+                      items: Brands.map((Brand brand) {
+                        return DropdownMenuItem<Brand>(
+                          value: brand,
+                          child: Text(brand.name),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        hintText: 'Marcas',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(121, 116, 126, 1),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        suffixIcon: Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.keyboard_arrow_down_outlined),
+                        ),
+                      ),
+                    ),
+                  ),
+          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
+          if(widget.product.id == 6 || widget.product.id == 7)Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(// Color de fondo gris
+                        borderRadius: BorderRadius.only(
+                          topLeft:  Radius.zero,
+                          topRight:  Radius.circular(40.0),
+                          bottomLeft:  Radius.circular(40.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        border: Border.all(
+                          color: Color.fromRGBO(79, 127, 198, 1),
+                        )),
+                    child: DropdownButtonFormField<Map<String, dynamic>>(
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.black,
+
+                      ),
+                      iconSize: 0,
+                      value: selectedModel,
+                      borderRadius: BorderRadius.only(
+                        topLeft:  Radius.zero,
+                        topRight:  Radius.circular(40.0),
+                        bottomLeft:  Radius.circular(40.0),
+                        bottomRight: Radius.zero,
+                      ),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedModel = newValue;
+                          apiServiceVersion(int.parse(year.text),selectedBrand.id,selectedModel["id"]);
+                        });
+                      },
+                      items: models.map((model) {
+                        return DropdownMenuItem(
+                          value: model,
+                          child: Text(model['name'] ?? 'Nombre no disponible'), // Arreglo aquí
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        hintText: 'Modelo',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(121, 116, 126, 1),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        suffixIcon: Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.keyboard_arrow_down_outlined),
+                        ),
+                      ),
+                    ),
+                  ),
+          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
+          if(widget.product.id == 6 || widget.product.id == 7)Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(// Color de fondo gris
+                        borderRadius: BorderRadius.only(
+                          topLeft:  Radius.zero,
+                          topRight:  Radius.circular(40.0),
+                          bottomLeft:  Radius.circular(40.0),
+                          bottomRight: Radius.zero,
+                        ),
+                        border: Border.all(
+                          color: Color.fromRGBO(79, 127, 198, 1),
+                        )),
+                    child: DropdownButtonFormField<Map<String, dynamic>>(
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.black,
+
+                      ),
+                      iconSize: 0,
+                      value: selectedVersion,
+                      borderRadius: BorderRadius.only(
+                        topLeft:  Radius.zero,
+                        topRight:  Radius.circular(40.0),
+                        bottomLeft:  Radius.circular(40.0),
+                        bottomRight: Radius.zero,
+                      ),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedVersion = newValue;
+
+                        });
+                      },
+                      items: versions.map((version) {
+                        return DropdownMenuItem(
+                          value: version,
+                          child: Text(version['name'] ?? 'Vehiculo no disponible'), // Arreglo aquí
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        hintText: 'Version',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(121, 116, 126, 1),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        suffixIcon: Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.keyboard_arrow_down_outlined),
+                        ),
+                      ),
+                    ),
+                  ),
+          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
           if(widget.product.id == 6 || widget.product.id == 7)Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
                         Container(
-                          width: 100,
+                          width: 150,
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -1854,7 +2127,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           ),
                         ),
                         Container(
-                          width: 200,
+                          width: 150,
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -1900,7 +2173,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          /*if(widget.product.id == 6 || widget.product.id == 7)Container(
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -1957,8 +2230,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                         ),
                       ),
                     ),
-                  ),
-          const SizedBox(height: 30),
+                  ),*/
           if(GlobalVariables().user.rol==3)Container(
                     child: Text(
                       "Productor",
