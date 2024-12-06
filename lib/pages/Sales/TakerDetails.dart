@@ -70,6 +70,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     final lastNameOwner = TextEditingController();
     final email = TextEditingController();
     final phone = TextEditingController();
+    final typeVehicle = TextEditingController();
+
 //vehicle
 
     final brand = TextEditingController();
@@ -98,6 +100,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   FocusNode emailCodeFocus = FocusNode();
   FocusNode phoneCodeFocus = FocusNode();
 //vehicle
+  FocusNode typeVehicleCodeFocus = FocusNode();
   FocusNode brandCodeFocus = FocusNode();
   FocusNode modelCodeFocus = FocusNode();
   FocusNode yearCodeFocus = FocusNode();
@@ -115,7 +118,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedGender = null;
   var selectedbeneficiary = null;
   var selectedProducer = null;
-  var selectedTypeVehicle = null;
+  //var selectedTypeVehicle = null;
   var selectedRelatives = null;
   var selectedBrand = null;
   var selectedModel = null;
@@ -429,6 +432,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
               return {
                 'id': model['cversion'],
                 'name': model['xversion'],
+                'type': model['xclase_rcv'],
               };
             }).toList();
           });
@@ -524,7 +528,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
             color.text,
             placa.text,
             serial.text,
-            selectedTypeVehicle
+            typeVehicle.text
         );
       }
 
@@ -2049,13 +2053,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       onChanged: (newValue) {
                         setState(() {
                           selectedVersion = newValue;
-
+                          if(selectedVersion['type'] != null){
+                            typeVehicle.text = selectedVersion['type'];
+                          }else{
+                            typeVehicle.text = "Vehículo no está configurado.";
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Vehículo no está configurado. Contactar con el administardor')),
+                            );
+                          }
                         });
                       },
                       items: versions.map((version) {
                         return DropdownMenuItem(
                           value: version,
-                          child: Text(version['name'] ?? 'Vehiculo no disponible'), // Arreglo aquí
+                          child: Text(version['name'] ?? 'Vehiculo no disponible',style: TextStyle(fontSize: 10)), // Arreglo aquí
                         );
                       }).toList(),
                       decoration: InputDecoration(
@@ -2173,64 +2184,57 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          /*if(widget.product.id == 6 || widget.product.id == 7)Container(
-                    width: 300,
-                    height: 40,
-                    decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
-                          topLeft:  Radius.zero,
-                          topRight:  Radius.circular(40.0),
-                          bottomLeft:  Radius.circular(40.0),
-                          bottomRight: Radius.zero,
-                        ),
-                        border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
-                        )),
-                    child: DropdownButtonFormField<TypeVehicle>(
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.black,
-
-                      ),
-                      iconSize: 0,
-                      value: selectedTypeVehicle,
-                      borderRadius: BorderRadius.only(
-                        topLeft:  Radius.zero,
-                        topRight:  Radius.circular(40.0),
-                        bottomLeft:  Radius.circular(40.0),
-                        bottomRight: Radius.zero,
-                      ),
-                      onChanged: (TypeVehicle? newValue) {
-                        setState(() {
-                          selectedTypeVehicle = newValue;
-                        });
-                      },
-                      items: TypeVehicles.map((TypeVehicle typeVehicle) {
-                        return DropdownMenuItem<TypeVehicle>(
-                          value: typeVehicle,
-                          child: Text(typeVehicle.name),
-                        );
-                      }).toList(),
-                      decoration: InputDecoration(
-                        hintText: 'Tipo de Vehículo',
-                        hintStyle: TextStyle(
-                          color: Color.fromRGBO(121, 116, 126, 1),
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        suffixIcon: Container(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Icon(Icons.keyboard_arrow_down_outlined),
-                        ),
-                      ),
+          if(widget.product.id == 6 || widget.product.id == 7)Container(
+              width: 300,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft:  Radius.zero,
+                  topRight:  Radius.circular(40.0),
+                  bottomLeft:  Radius.circular(40.0),
+                  bottomRight: Radius.zero,
+                ),
+                border: Border.all(
+                  color: Color.fromRGBO(79, 127, 198, 1),
+                ), // Borde rojo
+              ),
+              child: TextField(
+                controller: typeVehicle,
+                focusNode: typeVehicleCodeFocus,
+                enabled: false,
+                style: const TextStyle(
+                  color: Colors.black, // Color del texto
+                  fontFamily: 'Poppins',
+                  // Otros estilos de texto que desees aplicar
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Tipo de Vehiculo',
+                  //errorText: _isValidEmail(email.text) ? null : 'Correo inválido',
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.all(1),
+                    child: SvgPicture.asset(
+                      '', // Ruta de tu archivo SVG
+                      colorFilter: const ColorFilter.mode(
+                          Color.fromRGBO(105, 111, 140, 1), BlendMode.srcIn),
+                      width: 20, // Tamaño deseado en ancho
+                      height: 18,
                     ),
-                  ),*/
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 12.0,
+                  ),
+                  hintStyle:
+                  TextStyle(
+                      color: Color.fromRGBO(121, 116, 126, 1),
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700
+                  ),
+                ),
+              ),
+            ),
+          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
           if(GlobalVariables().user.rol==3)Container(
                     child: Text(
                       "Productor",

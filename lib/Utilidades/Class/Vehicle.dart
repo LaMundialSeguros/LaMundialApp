@@ -13,7 +13,7 @@ class Vehicle {
   final String color;
   final String placa;
   final String serial;
-  final TypeVehicle typeVehicle;
+  final String typeVehicle;
 
   Vehicle(this.brand,this.model,this.year,this.color,this.placa,this.serial,this.typeVehicle);
 

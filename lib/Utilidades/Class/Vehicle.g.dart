@@ -13,7 +13,7 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
       json['color'] as String,
       json['placa'] as String,
       json['serial'] as String,
-      TypeVehicle.fromJson(json['typeVehicle'] as Map<String, dynamic>),
+      json['serial'] as String
     );
 
 Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
