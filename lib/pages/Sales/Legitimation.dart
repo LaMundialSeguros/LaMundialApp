@@ -8,7 +8,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
+import 'package:lamundialapp/pages/Sales/BancoPlazaForm.dart';
 import 'package:lamundialapp/pages/Sales/PaymentMethod.dart';
+import 'package:lamundialapp/pages/Sales/SyPagoForm.dart';
 import 'package:lamundialapp/pages/Sales/TermsAndConditions.dart';
 import 'package:lamundialapp/pages/Sales/VerifyPayment.dart';
 import 'package:local_auth/local_auth.dart';
@@ -55,8 +57,9 @@ class LegitimationPageState extends State<LegitimationPage> {
 
       policy.currentHealth = _currentHealth;
       policy.additionalText = _currentHealthDetails.text;
-      //String a = jsonEncode(policy);
-      Navigator.push(context,MaterialPageRoute(builder: (context) => PaymentMethod(policy)));
+
+      //Navigator.push(context,MaterialPageRoute(builder: (context) => PaymentMethod(policy)));
+      Navigator.push(context,MaterialPageRoute(builder: (context) => SyPagoFormPage(policy)));
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario

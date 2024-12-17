@@ -32,12 +32,11 @@ Policy _$PolicyFromJson(Map<String, dynamic> json) => Policy(
       json['hematologicalDiseasesPolicy'] as bool,
       json['hematologicalDiseasesPolicyDetails'] as String,
       json['drugsPolicy'] as bool,
-      (json['basicSumInsured'] as List<dynamic>)
-          .map((e) => Amount.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      json['plan'] as String,
+      (json['basicSumInsured'] as num).toDouble(),
+      (json['basicSumInsuredUSD'] as num).toDouble(),
       json['coupon'] as String,
-      PaymentFrequency.fromJson(
-          json['paymentFrequency'] as Map<String, dynamic>),
+      json['paymentFrequency'] as String,
       json['PoliticianExposed'] as bool,
       json['currentHealth'] as bool,
       json['additionalText'] as String,
@@ -65,7 +64,9 @@ Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
       'hematologicalDiseasesPolicyDetails':
           instance.hematologicalDiseasesPolicyDetails,
       'drugsPolicy': instance.drugsPolicy,
+      'plan': instance.plan,
       'basicSumInsured': instance.basicSumInsured,
+      'basicSumInsuredUSD': instance.basicSumInsuredUSD,
       'coupon': instance.coupon,
       'paymentFrequency': instance.paymentFrequency,
       'PoliticianExposed': instance.PoliticianExposed,

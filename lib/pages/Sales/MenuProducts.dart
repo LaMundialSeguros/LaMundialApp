@@ -1,22 +1,27 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/Utilidades/Class/Policy.dart';
+import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/Class/Product.dart';
-import 'package:lamundialapp/pages/Client/test.dart';
 import 'package:lamundialapp/pages/Sales/TakerDetails.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
-
-import '../../Apis/apis.dart';
+import 'package:http/http.dart' as http;
 
 
-class MenuProducts extends StatelessWidget{
+class MenuProducts extends StatefulWidget{
     const MenuProducts({Key? key}) : super(key: key);
+    @override
 
-  @override
-  Widget build(BuildContext context) {
+    MenuProductsPageState createState() => MenuProductsPageState();
+}
+class MenuProductsPageState extends State<MenuProducts>{
+    List<Product> products = [];
 
-    List<Product> products = [
+    @override
+    void initState() {
+      super.initState();
+      apiServiceGetRamos();
+    }
+
+    /*List<Product> products = [
       Product('Salud Individual', 1),
       Product('Salud Familiar', 2),
       Product('Seguro Funerario', 3),
@@ -24,7 +29,44 @@ class MenuProducts extends StatelessWidget{
       Product('Póliza de Vida', 5),
       Product('R.C.V. Autos', 6),
       Product('R.C.V. Motos', 7),
-    ];
+    ];*/
+
+    Future<void> apiServiceGetRamos() async {
+      products = [];
+      final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/app/getPlanesCorredor');
+      final headers = {'Content-Type': 'application/json'};
+      final body = jsonEncode({
+        'xcorreo': GlobalVariables().user.email,
+      });
+
+      try {
+        final response = await http.post(url,headers: headers,body: body);
+
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+          if (jsonResponse['status'] == true) {
+            var records =jsonResponse['result']['records'];
+            final List<dynamic> targetProduct = records[0];
+
+            setState(() {
+              products = targetProduct.map((product) {
+                return Product.fromJsonApi(product);
+              }).toList();
+
+            });
+          }
+        } else {
+          throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        }
+
+      } catch (e) {
+        print('Excepción: $e');
+      }
+    }
+
+  @override
+  Widget build(BuildContext context) {
 
     final search = TextEditingController();
     FocusNode searchCodeFocus = FocusNode();
@@ -72,7 +114,7 @@ class MenuProducts extends StatelessWidget{
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              product.name,
+                              product.product,
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Color.fromRGBO(15, 26, 90, 1),

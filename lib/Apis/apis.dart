@@ -113,20 +113,22 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
         String xapellido  = '';
         String xlogin     = '';
         String ccorredor     = '';
+        String correo     = '';
         String istatus    = '';
         for (var record in records) {
-           cusuario = record['cusuario'];
-           xnombre = record['xnombre'] ?? '';
-           xapellido = record['xapellido'] ?? '';
-           xlogin = record['xlogin'] ?? '';
-           ccorredor = record['ccorredor'].toString() ?? '';
-           istatus = record['istatus'];
+           cusuario   = record['cusuario'];
+           xnombre    = record['xnombre'] ?? '';
+           xapellido  = record['xapellido'] ?? '';
+           xlogin     = record['xlogin'] ?? '';
+           correo     = usuario;
+           ccorredor  = record['ccorredor'].toString() ?? '';
+           istatus    = record['istatus'];
         }
 
         User user = User(
             cusuario,
             xnombre+""+xapellido,
-            xlogin,
+            correo,
             ccorredor,
             rol
         );

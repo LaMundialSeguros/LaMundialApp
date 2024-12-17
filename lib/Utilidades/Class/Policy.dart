@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Amount.dart';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
@@ -17,7 +19,7 @@ class Policy {
   Product product;
   Taker taker;
   DetailsOwner detailsOwner;
-  Producer producer;
+  Producer? producer;
   List<Beneficiary> beneficiaries;
   int familyQuantity;
   List<Relative> relatives;
@@ -33,9 +35,11 @@ class Policy {
   bool hematologicalDiseasesPolicy;
   String hematologicalDiseasesPolicyDetails;
   bool drugsPolicy;
-  List<Amount> basicSumInsured;
+  String plan;
+  double basicSumInsured;
+  double basicSumInsuredUSD;
   String coupon;
-  PaymentFrequency paymentFrequency;
+  String paymentFrequency;
   bool PoliticianExposed;
   bool currentHealth;
   String additionalText;
@@ -60,7 +64,9 @@ class Policy {
           this.hematologicalDiseasesPolicy,
           this.hematologicalDiseasesPolicyDetails,
           this.drugsPolicy,
+          this.plan,
           this.basicSumInsured,
+          this.basicSumInsuredUSD,
           this.coupon,
           this.paymentFrequency,
           this.PoliticianExposed,

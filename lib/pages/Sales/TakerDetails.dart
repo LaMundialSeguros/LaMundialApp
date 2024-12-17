@@ -25,6 +25,7 @@ import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
 import 'package:lamundialapp/pages/Sales/RelativesForm.dart';
 import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
+import 'package:lamundialapp/pages/Sales/RiskStatementAuto.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -124,6 +125,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedModel = null;
   var selectedVersion = null;
   var selectedColor = null;
+
+  int auto = 24;
+  int moto = 22;
+  int fourInOne = 5;
+  int funeral = -1;
+  int family = 7;
+  int life = 3;
 
   File? _imageFile;
   //final ImagePicker _picker = ImagePicker();
@@ -520,12 +528,16 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           selectedbeneficiary ?? 0
       );
       var vehicle = null;
-      if(widget.product.id == 6 || widget.product.id == 7){
+      if(widget.product.id == auto || widget.product.id == moto){
             vehicle = Vehicle(
-            brand.text,
-            model.text,
+            selectedBrand,
+            selectedModel['name'],
+            selectedModel['id'],
+            selectedVersion['name'],
+            selectedVersion['id'],
             year.text,
-            color.text,
+            selectedColor['name'],
+            selectedColor['id'],
             placa.text,
             serial.text,
             typeVehicle.text
@@ -539,7 +551,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       List <Beneficiary> beneficiaries = [];
       List <Relative> relatives = [];
       List <Amount> amounts = [];
-      PaymentFrequency paymentFrequency = PaymentFrequency(0,"");
 
       Policy policy = Policy(
                               widget.product,
@@ -561,24 +572,25 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               false,
                               "",
                               false,
-                              amounts,
-                              "cupon",
-                              paymentFrequency,
+                              "",
+                              0,
+                              0,
+                              "xxxxxx",
+                              "",
                               false,
                               false,
                               "");
 
       switch (widget.product.id) {
-        case 1:
-        case 6:
-        case 7:
-            Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementPage(policy)));
+        case 14:
+        case 22:
+        case 24:
+            Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementAutoPage(policy)));
           break;
-        case 2:
+        case 15:
             Navigator.push(context,MaterialPageRoute(builder: (context) => RelativesFormPage(policy)));
           break;
         case 3:
-        case 4:
         case 5:
           Navigator.push(context,MaterialPageRoute(builder: (context) => BeneficiariesFormPage(policy)));
           break;
@@ -588,7 +600,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
       // Resto del código...
     } catch (e) {
-      // Manejar errores si es necesario
+     print(e);
     } finally {
       setState(() {
         isLoading = false;
@@ -619,7 +631,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarSales(widget.product.name),
+      appBar: CustomAppBarSales(widget.product.product),
       body: Padding(
         padding: const EdgeInsets.only(top: 1),
         child: ModalProgressHUD(
@@ -648,7 +660,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
   Widget buildForm(BuildContext context) {
     DateTime? selectedDate = DateTime.now();
-
 
     Future<void> _selectDate(BuildContext context,int type) async {
       final DateTime? picked = await
@@ -1660,8 +1671,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          if(widget.product.id == 3 || widget.product.id == 4 || widget.product.id == 5)const SizedBox(height: 30),
-          if(widget.product.id == 3 || widget.product.id == 4 || widget.product.id == 5)Container(
+          if(widget.product.id == funeral || widget.product.id == fourInOne || widget.product.id == life)const SizedBox(height: 30),
+          if(widget.product.id == funeral || widget.product.id == fourInOne || widget.product.id == life)Container(
                     width: 200,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -1719,8 +1730,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          if(widget.product.id == 2)const SizedBox(height: 30),
-          if(widget.product.id == 2)Container(
+          if(widget.product.id == family)const SizedBox(height: 30),
+          if(widget.product.id == family)Container(
                     width: 200,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -1779,8 +1790,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           //RCV
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 30),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 30),
+          if(widget.product.id == auto || widget.product.id == moto)Container(
                     child: Text(
                       "Datos del Vehículo",
                       style: TextStyle(
@@ -1790,8 +1801,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           fontFamily: 'Poppins'),
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Padding(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
@@ -1902,8 +1913,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ],
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Container(
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -1962,8 +1973,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Container(
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -2022,8 +2033,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Container(
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
@@ -2089,8 +2100,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Padding(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
@@ -2183,8 +2194,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ],
                     ),
                   ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
-          if(widget.product.id == 6 || widget.product.id == 7)Container(
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)Container(
               width: 300,
               height: 40,
               decoration: BoxDecoration(
@@ -2234,7 +2245,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                 ),
               ),
             ),
-          if(widget.product.id == 6 || widget.product.id == 7)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
           if(GlobalVariables().user.rol==3)Container(
                     child: Text(
                       "Productor",
@@ -2305,8 +2316,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           // Funerario
-          if(widget.product.id == 3 || widget.product.id == 4)const SizedBox(height: 30),
-          if(widget.product.id == 3 || widget.product.id == 4)Container(
+          if(widget.product.id == funeral || widget.product.id == fourInOne)const SizedBox(height: 30),
+          if(widget.product.id == funeral || widget.product.id == fourInOne)Container(
                     child: Text(
                       "Tipo de Póliza",
                       style: TextStyle(
@@ -2316,7 +2327,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           fontFamily: 'Poppins'),
                     ),
                   ),
-          if(widget.product.id == 3 || widget.product.id == 4)const SizedBox(height: 20),
+          if(widget.product.id == funeral || widget.product.id == fourInOne)const SizedBox(height: 20),
           // Boton
           const SizedBox(height: 50),
           Container(
