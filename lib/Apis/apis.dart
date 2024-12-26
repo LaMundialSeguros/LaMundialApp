@@ -142,27 +142,17 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
         );
-
-
         break;
-      case 'clave_invalida':
+      case false:
         alertas.usuarioNoexiste(context).then((_) {});
         break;
-      case 'usuario_no_existe':
-        alertas.usuarioNoexiste(context).then((_) {});
-        break;
-      case 'sin_conexion':
+      default:
         alertas.sinConexion(context).then((_) {});
-        break;
-      case 'datos_invalidos':
-        alertas.usuarioNoexiste(context).then((_) {});
-        break;
-      case 'error_inesperado':
-        alertas.sinConexion(context).then((_) {});
-        break;
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
     }
   } catch (e) {
-    // ignore: avoid_print
+    SnackBar(content: Text('Error de conecxion al cargar los datos.'));
     print(e);
     alertas.sinConexion(context);
   }
@@ -204,6 +194,8 @@ Future<void> apiRegisterProducer(context, Producer productor) async {
         break;
       case false:
         alertas.sinConexion(context).then((_) {});
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        //throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
         break;
     }
   } catch (e) {
@@ -254,12 +246,12 @@ Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
 
     // Verificar la respuesta
     if (response.statusCode == 200) {
-      print('Datos enviados con éxito: ${response.body}');
 
+      //Navigator.push(context,MaterialPageRoute(builder: (context) => NotifyPaymentsForm()));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('message')),
+        SnackBar(content: Text('Pago notificado')),
       );
-      Navigator.push(context,MaterialPageRoute(builder: (context) => NotifyPaymentsForm()));
+      Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomeProducer()));
 
     } else {
       print('Error al enviar datos: ${response.statusCode}');

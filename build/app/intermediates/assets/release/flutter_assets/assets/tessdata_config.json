@@ -1,0 +1,9 @@
+{
+  "language": "spa",
+  "engine_mode": 1,
+  "page_segmentation_mode": 1,
+  "files": [
+    "spa.traineddata",
+    "eng.traineddata"
+  ]
+}

@@ -60,8 +60,6 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     var age = TextEditingController();
     var dateBirth = TextEditingController();
 
-
-
   //Owner
 
     final idCard = TextEditingController();
@@ -134,6 +132,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   int life = 3;
 
   File? _imageFile;
+  File? _imageFileAuto;
+  File? _imageFileRif;
   //final ImagePicker _picker = ImagePicker();
   String _recognizedText = "Texto reconocido aparecerá aquí.";
 
@@ -204,10 +204,94 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       setState(() {
         dateBirth = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(dateTime!)}");
         age = TextEditingController(text: "${dateTime != null ? calculateAge(dateTime!) : 'N/A'}");
+        dateBirthOwner = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(dateTime!)}");
+        ageOwner = TextEditingController(text: "${dateTime != null ? calculateAge(dateTime!) : 'N/A'}");
       });
       return date;
     } else {
       return 'No detectado';
+    }
+  }
+
+
+  String? extractSerial(String input) {
+
+    final regex = RegExp(r'Serial\s+N(?:[\.\s]*[A-Za-z]+)*[\.\s]*:?([A-Za-z0-9]+)');
+    final match = regex.firstMatch(input);
+
+    // Si se encuentra el prefijo y el serial, lo devuelve sin el prefijo
+    if (match != null) {
+      return match.group(1); // Retorna el serial limpio
+    }else{
+      return 'No detectado';
+    }
+
+  }
+
+  String? extractPlaca(String input) {
+    // Patrón para detectar "Placa:" seguido de letras y números
+    final regex = RegExp(r'Placa:\s*([A-Za-z0-9]+)');
+    final match = regex.firstMatch(input);
+
+    // Si se encuentra el prefijo y el valor, devuelve el texto limpio
+    if (match != null) {
+      return match.group(1); // Retorna el valor de la placa
+    }else{
+      return 'No detectado';
+    }
+  }
+
+  String? extractYear(String input) {
+    // Patrón para detectar un número de 4 dígitos (año)
+    final regex = RegExp(r'\b(\d{4})\b');
+    final match = regex.firstMatch(input);
+
+    // Si se encuentra un año, devolver la parte capturada
+    if (match != null) {
+      return match.group(1); // Retorna el año
+    }else{
+      return 'No detectado';
+    }
+
+  }
+
+  Future<void> _recognizeTextAuto(File image) async {
+    final inputImage = InputImage.fromFile(image);
+    final textRecognizer = TextRecognizer();
+
+    try {
+      final recognizedText = await textRecognizer.processImage(inputImage);
+      List<String> datos = recognizedText.text.split('\n');
+      String  xserial = 'No detectado';
+      String  xplaca  = 'No detectado';
+      String  xyear  = 'No detectado';
+      for (String dato in datos){
+
+        // Captura cedula
+        if(xserial == 'No detectado'){
+          xserial  = extractSerial(dato)!;
+          serial.text = xserial;
+        }
+
+        // Captura cedula
+        if(xplaca == 'No detectado'){
+          xplaca  = extractPlaca(dato)!;
+          placa.text = xplaca;
+        }
+
+        // Captura cedula
+        if(xyear == 'No detectado'){
+          xyear  = extractYear(dato)!;
+          year.text = xyear;
+          if(xyear != 'No detectado'){
+            apiServiceBrand(year.text as int);
+          }
+        }
+      }
+    } catch (e) {
+      print('Error al reconocer texto: $e');
+    } finally {
+      textRecognizer.close();
     }
   }
 
@@ -228,11 +312,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
         if(id == 'No detectado'){
           id  = extractSpecificId(dato);
           identityCard.text = cleanID(id);
+          idCard.text = cleanID(id);
           for(TypeDoc t in TypeDocs){
             String prefix = extractOnlyPrefix(id);
             if(t.name == prefix){
               setState(() {
                 typeDoc = t;
+                typeDocOwner = t;
               });
             }
           }
@@ -241,17 +327,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
         if(names ==  'No detectado'){
           names   =  extractName(dato);
           name.text = names;
+          nameOwner.text = names;
         }
         // Captura apellidos
         if(lastNames ==  'No detectado'){
           lastNames   =  extractLastName(dato);
           lastName.text = lastNames;
+          lastNameOwner.text = lastNames;
         }
 
         // Fecha de nacimiento
         if(dateBirthDay ==  'No detectado'){
           dateBirthDay    = extractDateOfBirth(dato);
           dateBirth.text  = dateBirthDay;
+          dateBirthOwner.text = dateBirthDay;
         }
       }
     } catch (e) {
@@ -269,6 +358,36 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
         _recognizeText(_imageFile!);
+        //_getImageAndRecognizeText(_imageFile);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> _pickImageRif(ImageSource source) async {
+    //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    //final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFileRif = File(pickedFile.path);
+        //_recognizeText(_imageFileRif!);
+        //_getImageAndRecognizeText(_imageFile);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> _pickImageAuto(ImageSource source) async {
+    //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    //final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFileAuto = File(pickedFile.path);
+        _recognizeTextAuto(_imageFileAuto!);
         //_getImageAndRecognizeText(_imageFile);
       } else {
         print('No image selected.');
@@ -358,7 +477,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           });
         }
       } else {
-        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
       }
 
     } catch (e) {
@@ -401,7 +521,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           });
         }
       } else {
-        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
       }
 
     } catch (e) {
@@ -446,7 +567,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           });
         }
       } else {
-        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
       }
 
     } catch (e) {
@@ -486,7 +608,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           });
         }
       } else {
-        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
       }
 
     } catch (e) {
@@ -500,12 +623,36 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     });
 
     try {
+
       // Validar campos nulos
-      if (identityCard == null) {
+      if (identityCard == null ||
+          identityCard== null ||
+          name == null ||
+          lastName == null ||
+          dateBirth == null ||
+          idCard == null ||
+          typeDocOwner == null ||
+          nameOwner == null ||
+          lastNameOwner == null ||
+          dateBirth == null ||
+          phone == null) {
         // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
         await alertas.usuarioNoexiste(context);
         return;
       }
+
+      if(placa == null || serial == null || brand == null || color == null || model == null || year ==null){
+        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
+        await alertas.usuarioNoexiste(context);
+        return;
+      }
+
+
+      if (smoker == null) {
+        smoker = false;
+      }
+
+
       Taker taker = Taker(
                             typeDoc,
                             idCard.text,
@@ -521,7 +668,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           lastNameOwner.text,
           selectedGender,
           dateBirthOwner.text,
-          smoker,
+          smoker ?? false,
           country,
           phone.text,
           email.text,
@@ -579,7 +726,11 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               "",
                               false,
                               false,
-                              "");
+                              "",
+                              _imageFile,
+                              _imageFileRif,
+                              _imageFileAuto
+                            );
 
       switch (widget.product.id) {
         case 14:
@@ -1449,7 +1600,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
-                        Container(
+                        if(widget.product.id == funeral || widget.product.id == fourInOne || widget.product.id == life)Container(
                           width: 150,
                           height: 40,
                           decoration: BoxDecoration(// Color de fondo gris
@@ -1671,6 +1822,74 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       ),
                     ),
                   ),
+          const SizedBox(height: 25),
+          Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImageRif(ImageSource.camera);
+                        },
+                        child: Container(
+                            width: 300,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(246, 247, 255, 1),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                  spreadRadius: 1, // Extensión de la sombra
+                                  blurRadius: 4, // Difuminado de la sombra
+                                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Cargar Rif',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Color.fromRGBO(15, 26, 90, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins'),
+                                ),
+                                SizedBox(width: 8),
+                                Image.asset(
+                                  'assets/upload.png', // Replace with your image path
+                                  width: 35, // Set image width (optional)
+                                  height: 35, // Set image height (optional)
+                                  fit: BoxFit.cover, // Adjust image fitting (optional)
+                                ),
+                              ],
+                            )
+                        )),
+                  ),
+          const SizedBox(height: 20),
+          if(_imageFileRif != null) Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImageRif(ImageSource.gallery);
+                        },
+                        child: Container(
+                          width: 150,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(246, 247, 255, 1),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                spreadRadius: 1, // Extensión de la sombra
+                                blurRadius: 4, // Difuminado de la sombra
+                                offset: Offset(0, 3), // Desplazamiento de la sombra
+                              ),
+                            ],
+                          ),
+                          child: Image.file(_imageFileRif!),
+                        )),
+                  ),
+          const SizedBox(height: 20),
           if(widget.product.id == funeral || widget.product.id == fourInOne || widget.product.id == life)const SizedBox(height: 30),
           if(widget.product.id == funeral || widget.product.id == fourInOne || widget.product.id == life)Container(
                     width: 200,
@@ -1790,7 +2009,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                     ),
                   ),
           //RCV
-          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 30),
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 25),
           if(widget.product.id == auto || widget.product.id == moto)Container(
                     child: Text(
                       "Datos del Vehículo",
@@ -1800,6 +2019,76 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Poppins'),
                     ),
+                  ),
+          if(widget.product.id == auto || widget.product.id == moto)Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImageAuto(ImageSource.camera);
+                        },
+                        child: Container(
+                            width: 300,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(246, 247, 255, 1),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                  spreadRadius: 1, // Extensión de la sombra
+                                  blurRadius: 4, // Difuminado de la sombra
+                                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Certificado de circulacion',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color.fromRGBO(15, 26, 90, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins'),
+                                ),
+                                SizedBox(width: 8),
+                                Image.asset(
+                                  'assets/upload.png', // Replace with your image path
+                                  width: 35, // Set image width (optional)
+                                  height: 35, // Set image height (optional)
+                                  fit: BoxFit.cover, // Adjust image fitting (optional)
+                                ),
+                                /*IconButton(
+                    icon: Icon(Icons.camera_alt), // Replace with desired icon
+                    onPressed: _pickImage,
+                  ),*/
+                              ],
+                            )
+                        )),
+                  ),
+          if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
+          if(widget.product.id == auto || widget.product.id == moto)if(_imageFileAuto != null) Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _pickImageAuto(ImageSource.gallery);
+                        },
+                        child: Container(
+                          width: 150,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(246, 247, 255, 1),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
+                                spreadRadius: 1, // Extensión de la sombra
+                                blurRadius: 4, // Difuminado de la sombra
+                                offset: Offset(0, 3), // Desplazamiento de la sombra
+                              ),
+                            ],
+                          ),
+                          child: Image.file(_imageFileAuto!),
+                        )),
                   ),
           if(widget.product.id == auto || widget.product.id == moto)const SizedBox(height: 20),
           if(widget.product.id == auto || widget.product.id == moto)Padding(

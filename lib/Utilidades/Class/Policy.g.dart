@@ -40,6 +40,9 @@ Policy _$PolicyFromJson(Map<String, dynamic> json) => Policy(
       json['PoliticianExposed'] as bool,
       json['currentHealth'] as bool,
       json['additionalText'] as String,
+      json['id'] as File,
+      json['rif'] as File,
+      json['auto'] as File,
     );
 
 Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
@@ -72,4 +75,7 @@ Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
       'PoliticianExposed': instance.PoliticianExposed,
       'currentHealth': instance.currentHealth,
       'additionalText': instance.additionalText,
+      'id': instance.id,
+      'rif': instance.rif,
+      'auto': instance.auto,
     };

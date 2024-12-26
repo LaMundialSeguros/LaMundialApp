@@ -114,7 +114,8 @@ class VerifyPaymentPageState extends State<VerifyPaymentPage> {
         });
 
       } else {
-        throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
+        SnackBar(content: Text('Error de conecxion al cargar los datos. Código: ${response.statusCode}'));
+        throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
       }
 
     } catch (e) {

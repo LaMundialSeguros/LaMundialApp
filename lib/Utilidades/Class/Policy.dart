@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Amount.dart';
@@ -43,6 +44,9 @@ class Policy {
   bool PoliticianExposed;
   bool currentHealth;
   String additionalText;
+  File? id;
+  File? rif;
+  File? auto;
 
   Policy(
           this.product,
@@ -71,7 +75,10 @@ class Policy {
           this.paymentFrequency,
           this.PoliticianExposed,
           this.currentHealth,
-          this.additionalText
+          this.additionalText,
+          this.id,
+          this.rif,
+          this.auto,
         );
 
   // Métodos generados automáticamente

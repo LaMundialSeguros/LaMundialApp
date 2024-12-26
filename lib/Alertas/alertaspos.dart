@@ -111,7 +111,7 @@ class AlertaState extends State<Alerta> {
       style: alertStyle,
       context: context,
 
-      //title: "Error de conexión",
+      title: "Error de conexión",
       buttons: [
         DialogButton(
             onPressed: () {
