@@ -74,7 +74,7 @@ class otpCodePageState extends State<otpCodePage> {
           if(decoded['success'] == true){
             switch (widget.policy.product.id) {
               case 24:
-                apiServiceAuto();
+                apiServiceAuto(decoded['transaction_id']);
                 break;
             }
           }
@@ -106,7 +106,7 @@ class otpCodePageState extends State<otpCodePage> {
 
 
 
-  Future<void> apiServiceAuto() async {
+  Future<void> apiServiceAuto(String transactionId) async {
       final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/emissions/auto');
       final headers = {
                         'Content-Type': 'application/json',
@@ -173,11 +173,11 @@ class otpCodePageState extends State<otpCodePage> {
               widget.policy.taker.iDcard,
               widget.amount.toString(),
               formattedDate,
-              decoded['transaction_id'],
+              transactionId,
               TypePayment(2,'Transferencia'),
               Currency(2,'Bs','Bs'),
-              Default(2,"Banca Amiga"),
-              Banco(code: 'widget.banco', name: 'Banco emisor')
+              Default(31,"Sypago"),
+              Default(31,"Sypago"),
           );
 
           await apiRegisterPayment(context,notifyPayment);
