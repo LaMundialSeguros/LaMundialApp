@@ -38,7 +38,7 @@ class MenuProductorState extends State<MenuProductor>{
     List<Widget> _widgetOptions = <Widget>[
       MenuProducts(),
       NotifyPaymentsForm(),
-      ProducerStatisticsMenu(),
+      //ProducerStatisticsMenu(),
     ];
 
     if(_selectedIndex == -1){
@@ -92,14 +92,14 @@ class MenuProductorState extends State<MenuProductor>{
               ),
               label: 'Notificar Pagar',
             ),
-            BottomNavigationBarItem(
+            /*BottomNavigationBarItem(
               icon: SizedBox(
                 width: 30,
                 height: 30,
                 child: Image.asset('assets/estadisticas.png'),
               ),
               label: 'Estadisticas',
-            ),
+            ),*/ //Estadisticas comentado
           ],
           selectedLabelStyle: TextStyle(
               color: Color.fromRGBO(15, 26, 90, 1),

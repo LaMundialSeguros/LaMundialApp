@@ -77,7 +77,13 @@ class MenuProductsPageState extends State<MenuProducts>{
         for (var product in products)
           GestureDetector(
             onTap: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => TakerDetailsPage(product)));
+              if(product.id == 22 || product.id == 24){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => TakerDetailsPage(product)));
+              }else{
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('En mantenimiento.')),
+                );
+              }
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

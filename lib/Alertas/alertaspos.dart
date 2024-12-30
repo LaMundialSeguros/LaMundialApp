@@ -208,6 +208,7 @@ class AlertaState extends State<Alerta> {
     Alert(
       style: alertStyle,
       context: context,
+      title: "DATOS INVÁLIDOS",
       buttons: [
         DialogButton(
             onPressed: () {
@@ -216,10 +217,10 @@ class AlertaState extends State<Alerta> {
               //cedula.text = '';
               //dosfa.text = '';
             },
-            color: Colors.white,
+            color: Color.fromRGBO(232, 79, 81, 1),
             child: const Text("Aceptar",
                 style: TextStyle(
-                    color: Color.fromRGBO(3, 134, 208, 1),
+                    color: Colors.white,
                     fontFamily: 'Poppins',
                     fontSize: 20))),
       ],

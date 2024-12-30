@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/pages/Client/MenuClient.dart';
-import 'package:lamundialapp/pages/Client/ServicesClient.dart';
+import 'package:lamundialapp/Utilidades/AppBarWelcome.dart';
 import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
-import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
 import 'package:lamundialapp/pages/statistics/ProducerStatisticsMenu.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../Apis/apis.dart';
 import '../../Utilidades/Class/User.dart';
@@ -18,7 +14,7 @@ class WelcomeProducer extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar:CustomAppBar(),
+      appBar:CustomAppBarWelcome(),
       body: Menu(context),
     );
   }
@@ -81,7 +77,7 @@ Widget Menu(BuildContext context) {
                 ),
               ),
               const SizedBox(height: 30),
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => MenuProductor(2)));
                 },
@@ -122,7 +118,7 @@ Widget Menu(BuildContext context) {
                     ),
                   ),
                 ),
-              ),
+              ),*/ // Estadisticas comentado
               const SizedBox(height: 30),
               GestureDetector(
                 onTap: () {
@@ -152,7 +148,7 @@ Widget Menu(BuildContext context) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Vender Servicios',
+                                'Vender Poliza',
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromRGBO(15, 26, 90, 1),

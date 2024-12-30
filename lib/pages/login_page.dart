@@ -518,6 +518,25 @@ class LoginPageState extends State<LoginPage> {
                       }
                     },
                   ),
+          Container(
+                    //padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            'Usar huella',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           const SizedBox(height: 20),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),

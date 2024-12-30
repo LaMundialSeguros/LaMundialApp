@@ -40,6 +40,14 @@ class LegitimationPageState extends State<LegitimationPage> {
   bool _isCheckedSi = false;
   bool _isCheckedNo = true;
   bool _currentHealth = false;
+
+  int auto = 24;
+  int moto = 22;
+  int fourInOne = 5;
+  int funeral = -1;
+  int family = 7;
+  int life = 3;
+
   Future<void> Save() async {
     setState(() {
       isLoading = true;
@@ -154,7 +162,7 @@ class LegitimationPageState extends State<LegitimationPage> {
                 ),
               ),
               Divider(),
-              Row(
+              /*if(widget.policy.product.id != auto || widget.policy.id != auto)Row(
                 children: [
                   Checkbox(
                     value: _currentHealth,
@@ -177,9 +185,9 @@ class LegitimationPageState extends State<LegitimationPage> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 10),
-              Visibility(
+              ),*/
+              /*if(widget.policy.product.id != auto || widget.policy.product.id != moto)const SizedBox(height: 10),*/
+              /*if(widget.policy.product.id != auto || widget.policy.product.id != moto)Visibility(
                 visible: _currentHealth,
                 child: Container(
                   width: 300,
@@ -224,7 +232,7 @@ class LegitimationPageState extends State<LegitimationPage> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
               const SizedBox(height: 50),
               Container(
                 width: 380,

@@ -53,6 +53,9 @@ class otpCodePageState extends State<otpCodePage> {
     FocusNode codeCodeFocus = FocusNode();
 
   Future<void> apiServiceOTP() async {
+      setState(() {
+        isLoading = true;
+      });
       final url = Uri.parse('https://lmchat.lamundialdeseguros.com/send-otp');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
@@ -107,6 +110,9 @@ class otpCodePageState extends State<otpCodePage> {
 
 
   Future<void> apiServiceAuto(String transactionId) async {
+      setState(() {
+        isLoading = true;
+      });
       final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/emissions/auto');
       final headers = {
                         'Content-Type': 'application/json',
@@ -142,7 +148,7 @@ class otpCodePageState extends State<otpCodePage> {
           'placa':widget.policy.vehicle!.placa,
           'serial_carroceria':widget.policy.vehicle!.serial,
           'dec_persona_politica':widget.policy.PoliticianExposed,
-          'dec_term_y_cod':widget.policy.currentHealth,
+          'dec_term_y_cod':true,
           'productor':productor,
           'frecuencia':widget.policy.paymentFrequency,
           'fecha_emision':formattedDate
@@ -340,7 +346,9 @@ class otpCodePageState extends State<otpCodePage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    //print(selectedRol.name);
+                    setState(() {
+                      isLoading = true;
+                    });
                     Save();
                     //apiServiceAuto();
                   },

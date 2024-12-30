@@ -1,4 +1,4 @@
-#Fri Dec 27 11:08:53 VET 2024
+#Sun Dec 29 15:39:10 VET 2024
 base.0=C\:\\Projects\\Flutter\\lamundial\\LaMundialApp\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

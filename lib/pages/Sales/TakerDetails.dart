@@ -144,7 +144,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     if(match != null){
       return match.group(0)!;
     }
-    return match != null ? match.group(0)! : 'No detectado';
+    return match != null ? match.group(0)! : '';
   }
 
   String cleanID(String id) {
@@ -174,7 +174,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       // Devuelve los apellidos encontrados después de "APELLIDOS"
       return match.group(1)!;
     } else {
-      return 'No detectado';
+      return '';
     }
   }
 
@@ -187,7 +187,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       // Devuelve los apellidos encontrados después de "APELLIDOS"
       return match.group(1)!;
     } else {
-      return 'No detectado';
+      return '';
     }
   }
 
@@ -209,7 +209,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       });
       return date;
     } else {
-      return 'No detectado';
+      return '';
     }
   }
 
@@ -223,7 +223,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     if (match != null) {
       return match.group(1); // Retorna el serial limpio
     }else{
-      return 'No detectado';
+      return '';
     }
 
   }
@@ -237,7 +237,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     if (match != null) {
       return match.group(1); // Retorna el valor de la placa
     }else{
-      return 'No detectado';
+      return '';
     }
   }
 
@@ -250,7 +250,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     if (match != null) {
       return match.group(1); // Retorna el año
     }else{
-      return 'No detectado';
+      return '';
     }
 
   }
@@ -262,28 +262,28 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     try {
       final recognizedText = await textRecognizer.processImage(inputImage);
       List<String> datos = recognizedText.text.split('\n');
-      String  xserial = 'No detectado';
-      String  xplaca  = 'No detectado';
-      String  xyear  = 'No detectado';
+      String  xserial = '';
+      String  xplaca  = '';
+      String  xyear  = '';
       for (String dato in datos){
 
         // Captura cedula
-        if(xserial == 'No detectado'){
+        if(xserial == ''){
           xserial  = extractSerial(dato)!;
           serial.text = xserial;
         }
 
         // Captura cedula
-        if(xplaca == 'No detectado'){
+        if(xplaca == ''){
           xplaca  = extractPlaca(dato)!;
           placa.text = xplaca;
         }
 
         // Captura cedula
-        if(xyear == 'No detectado'){
+        if(xyear == ''){
           xyear  = extractYear(dato)!;
           year.text = xyear;
-          if(xyear != 'No detectado'){
+          if(xyear != ''){
             apiServiceBrand(year.text as int);
           }
         }
@@ -302,14 +302,14 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     try {
       final recognizedText = await textRecognizer.processImage(inputImage);
       List<String> datos = recognizedText.text.split('\n');
-        String  id            = 'No detectado';
-        String  lastNames     = 'No detectado';
-        String  names         = 'No detectado';
-        String  dateBirthDay  = 'No detectado';
+        String  id            = '';
+        String  lastNames     = '';
+        String  names         = '';
+        String  dateBirthDay  = '';
       for (String dato in datos){
 
         // Captura cedula
-        if(id == 'No detectado'){
+        if(id == ''){
           id  = extractSpecificId(dato);
           identityCard.text = cleanID(id);
           idCard.text = cleanID(id);
@@ -324,20 +324,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           }
         }
         // Captura nombres
-        if(names ==  'No detectado'){
+        if(names ==  ''){
           names   =  extractName(dato);
           name.text = names;
           nameOwner.text = names;
         }
         // Captura apellidos
-        if(lastNames ==  'No detectado'){
+        if(lastNames ==  ''){
           lastNames   =  extractLastName(dato);
           lastName.text = lastNames;
           lastNameOwner.text = lastNames;
         }
 
         // Fecha de nacimiento
-        if(dateBirthDay ==  'No detectado'){
+        if(dateBirthDay ==  ''){
           dateBirthDay    = extractDateOfBirth(dato);
           dateBirth.text  = dateBirthDay;
           dateBirthOwner.text = dateBirthDay;
@@ -635,7 +635,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           nameOwner == null ||
           lastNameOwner == null ||
           dateBirth == null ||
-          phone == null) {
+          phone == null ||
+          selectedGender == null) {
         // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
         await alertas.usuarioNoexiste(context);
         return;
@@ -876,7 +877,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Cargar Imagen',
+                    'Cargar Cedula',
                     style: TextStyle(
                         fontSize: 24,
                         color: Color.fromRGBO(15, 26, 90, 1),
