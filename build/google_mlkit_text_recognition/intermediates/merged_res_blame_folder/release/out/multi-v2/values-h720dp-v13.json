@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.google_mlkit_text_recognition-mergeReleaseResources-3:/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "com.google_mlkit_text_recognition-mergeReleaseResources-30:/values-h720dp-v13/values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-3\\d59302f567c84c4834544a55dc524862\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
+                    "source": "C:\\Users\\Darkr\\.gradle\\caches\\transforms-3\\6a373ceb3b811fe58f73cc80cdfda43f\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "com.google_mlkit_text_recognition-merged_res-5:/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "com.google_mlkit_text_recognition-merged_res-32:/values-h720dp-v13/values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-3\\d59302f567c84c4834544a55dc524862\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
+                    "source": "C:\\Users\\Darkr\\.gradle\\caches\\transforms-3\\6a373ceb3b811fe58f73cc80cdfda43f\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

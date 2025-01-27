@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Acceder</string>
     <string name="common_signin_button_text_long">Acceder con Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Usar contraseña"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Se copió el vínculo al portapapeles"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Error desconocido"</string>
+    <string name="exo_download_completed">Se completó la descarga</string>
+    <string name="exo_download_description">Descargar</string>
+    <string name="exo_download_downloading">Descargando</string>
+    <string name="exo_download_failed">No se pudo descargar</string>
+    <string name="exo_download_notification_channel_name">Descargas</string>
+    <string name="exo_download_paused">Se pausaron las descargas</string>
+    <string name="exo_download_paused_for_network">Esperando red para descargas</string>
+    <string name="exo_download_paused_for_wifi">Esperando Wi-Fi para descargas</string>
+    <string name="exo_download_removing">Quitando descargas</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Copiar vínculo"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Abrir en el navegador"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Compartir vínculo"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Toca el sensor de huellas dig."</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"El hardware para detectar huellas digitales no está disponible."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Este dispositivo no tiene sensor de huellas digitales"</string>

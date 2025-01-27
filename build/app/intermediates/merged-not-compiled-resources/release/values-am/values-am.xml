@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">ግባ</string>
     <string name="common_signin_button_text_long">በGoogle ይግቡ</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"የይለፍ ቃል ተጠቀም"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"አገናኝ ወደ ቅንጥብ ሰሌዳ ተቀድቷል"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"ያልታወቀ ስህተት"</string>
+    <string name="exo_download_completed">ማውረድ ተጠናቋል</string>
+    <string name="exo_download_description">አውርድ</string>
+    <string name="exo_download_downloading">በማውረድ ላይ</string>
+    <string name="exo_download_failed">ማውረድ አልተሳካም</string>
+    <string name="exo_download_notification_channel_name">የወረዱ</string>
+    <string name="exo_download_paused">ውርዶች ባሉበት ቆመዋል</string>
+    <string name="exo_download_paused_for_network">አውታረ መረቦችን በመጠባበቅ ላይ ያሉ ውርዶች</string>
+    <string name="exo_download_paused_for_wifi">WiFiን በመጠባበቅ ላይ ያሉ ውርዶች</string>
+    <string name="exo_download_removing">ውርዶችን በማስወገድ ላይ</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"አገናኝ ቅዳ"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"በአሳሽ ውስጥ ክፈት"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"አገናኝ አጋራ"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"የጣት አሻራ ዳሳሹን ይንኩ"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"የጣት አሻራ ሃርድዌር የለም።"</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"ይህ መሣሪያ የጣት አሻራ ዳሳሽ የለውም"</string>

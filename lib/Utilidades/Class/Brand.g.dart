@@ -7,11 +7,11 @@ part of 'Brand.dart';
 // **************************************************************************
 
 Brand _$BrandFromJson(Map<String, dynamic> json) => Brand(
-      json['id'],
+      (json['id'] as num).toInt(),
       json['name'] as String,
     );
 
 Map<String, dynamic> _$BrandToJson(Brand instance) => <String, dynamic>{
-      'name': instance.name,
       'id': instance.id,
+      'name': instance.name,
     };

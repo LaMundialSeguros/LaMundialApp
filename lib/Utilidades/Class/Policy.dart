@@ -44,9 +44,19 @@ class Policy {
   bool PoliticianExposed;
   bool currentHealth;
   String additionalText;
+
+ 
+  @JsonKey(ignore: true)
   File? id;
+  
+  @JsonKey(ignore: true)
   File? rif;
+  
+  @JsonKey(ignore: true)
   File? auto;
+
+  @JsonKey(ignore: true)
+File? ownerId; // For "cargar cédula titular"
 
   Policy(
           this.product,
@@ -76,9 +86,12 @@ class Policy {
           this.PoliticianExposed,
           this.currentHealth,
           this.additionalText,
-          this.id,
-          this.rif,
-          this.auto,
+      {this.id,
+      this.rif,
+      this.auto,
+      this.ownerId // Owner’s ID
+} // Optional named parameters for File fields
+
         );
 
   // Métodos generados automáticamente

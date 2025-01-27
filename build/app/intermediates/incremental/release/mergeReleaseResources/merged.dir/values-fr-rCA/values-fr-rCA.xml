@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Se connecter</string>
     <string name="common_signin_button_text_long">Se connecter avec Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Utiliser le mot de passe"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Lien copié dans le presse-papiers"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Erreur inconnue"</string>
+    <string name="exo_download_completed">Téléchargement terminé</string>
+    <string name="exo_download_description">Télécharger</string>
+    <string name="exo_download_downloading">Téléchargement en cours…</string>
+    <string name="exo_download_failed">Échec du téléchargement</string>
+    <string name="exo_download_notification_channel_name">Téléchargements</string>
+    <string name="exo_download_paused">Téléchargements interrompus</string>
+    <string name="exo_download_paused_for_network">Téléchargements en attente du réseau</string>
+    <string name="exo_download_paused_for_wifi">Téléchargements en attente du Wi-Fi</string>
+    <string name="exo_download_removing">Suppression des téléchargements en cours…</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Copier le lien"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Ouvrir dans le navigateur"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Partager le lien"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Touch. capteur empr. digitales"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Le matériel de lecture d\'empreintes digitales n\'est pas accessible."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Cet appareil ne possède pas de capteur d\'empreintes digitales"</string>

@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Accedi</string>
     <string name="common_signin_button_text_long">Accedi con Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Utilizza password"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Link copiato negli appunti"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Errore sconosciuto"</string>
+    <string name="exo_download_completed">Download completato</string>
+    <string name="exo_download_description">Scarica</string>
+    <string name="exo_download_downloading">Download in corso…</string>
+    <string name="exo_download_failed">Download non riuscito</string>
+    <string name="exo_download_notification_channel_name">Download</string>
+    <string name="exo_download_paused">Download in pausa</string>
+    <string name="exo_download_paused_for_network">Download in attesa di rete</string>
+    <string name="exo_download_paused_for_wifi">Download in attesa di Wi-Fi</string>
+    <string name="exo_download_removing">Rimozione dei download…</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Copia link"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Apri nel browser"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Condividi link"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Tocca sensore impronte"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Hardware per l\'impronta non disponibile."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Questo dispositivo non è dotato di sensore di impronte"</string>
@@ -66,8 +79,4 @@
     <string msgid="7309881387583143581" name="generic_error_user_canceled">"Autenticazione annullata dall\'utente."</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Cerca"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
-    <string name="zxing_app_name">Barcode Scanner</string>
-    <string name="zxing_button_ok">OK</string>
-    <string name="zxing_msg_camera_framework_bug">Spiacenti, la fotocamera Android ha riscontrato un problema. Potrebbe essere necessario riavviare il dispositivo.</string>
-    <string name="zxing_msg_default_status">Posiziona un codice a barre dentro il mirino rettangolare per la scansione.</string>
 </resources>

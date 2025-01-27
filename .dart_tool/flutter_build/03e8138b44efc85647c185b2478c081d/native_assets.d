@@ -1,0 +1,1 @@
+ C:\\app\\LaMundialApp\\.dart_tool\\flutter_build\\03e8138b44efc85647c185b2478c081d\\native_assets.yaml: 

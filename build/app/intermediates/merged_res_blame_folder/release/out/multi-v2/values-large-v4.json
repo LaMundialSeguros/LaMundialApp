@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.lamundialapp-mergeReleaseResources-5:/values-large-v4/values-large-v4.xml",
+            "outputFile": "com.example.lamundialapp-mergeReleaseResources-34:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-3\\d59302f567c84c4834544a55dc524862\\transformed\\appcompat-1.6.1\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "C:\\Users\\Darkr\\.gradle\\caches\\transforms-3\\6a373ceb3b811fe58f73cc80cdfda43f\\transformed\\appcompat-1.6.1\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

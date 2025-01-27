@@ -1,13 +1,13 @@
 <lint-module
     format="1"
-    dir="C:\Projects\Flutter\lamundial\LaMundialApp\android\app"
+    dir="C:\app\LaMundialApp\android\app"
     name=":app"
     type="APP"
     maven="android:app:"
-    gradle="7.4.2"
-    buildFolder="C:\Projects\Flutter\lamundial\LaMundialApp\build\app"
-    bootClassPath="C:\Users\Asus\AppData\Local\Android\sdk\platforms\android-34\android.jar;C:\Users\Asus\AppData\Local\Android\sdk\build-tools\30.0.3\core-lambda-stubs.jar"
-    javaSourceLevel="1.8"
+    agpVersion="8.1.0"
+    buildFolder="C:\app\LaMundialApp\build\app"
+    bootClassPath="C:\Users\Darkr\AppData\Local\Android\Sdk\platforms\android-34\android.jar;C:\Users\Darkr\AppData\Local\Android\Sdk\build-tools\33.0.1\core-lambda-stubs.jar"
+    javaSourceLevel="11"
     compileTarget="android-34">
   <lintOptions
       abortOnError="true"

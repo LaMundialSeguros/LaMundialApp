@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Вход</string>
     <string name="common_signin_button_text_long">Вход с Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Използване на парола"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Връзката е копирана в буферната памет"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Неизвестна грешка"</string>
+    <string name="exo_download_completed">Изтеглянето завърши</string>
+    <string name="exo_download_description">Изтегляне</string>
+    <string name="exo_download_downloading">Изтегля се</string>
+    <string name="exo_download_failed">Изтеглянето не бе успешно</string>
+    <string name="exo_download_notification_channel_name">Изтегляния</string>
+    <string name="exo_download_paused">Изтеглянията са на пауза</string>
+    <string name="exo_download_paused_for_network">Изтеглянията чакат връзка с интернет</string>
+    <string name="exo_download_paused_for_wifi">Изтеглянията чакат връзка с Wi-Fi</string>
+    <string name="exo_download_removing">Изтеглянията се премахват</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Копиране на връзката"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Отваряне в браузър"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Споделяне на връзката"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Докоснете сензора за отпечатъци"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Хардуерът за отпечатъци не е налице."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Това устройство няма сензор за отпечатъци"</string>
@@ -66,8 +79,4 @@
     <string msgid="7309881387583143581" name="generic_error_user_canceled">"Удостоверяването е анулирано от потребителя."</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Търсене"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
-    <string name="zxing_app_name">Баркод Скенер</string>
-    <string name="zxing_button_ok">ОК</string>
-    <string name="zxing_msg_camera_framework_bug">Съжаляваме, срещнахме проблем с камерата. Може да се наложи да рестартирате устройството си.</string>
-    <string name="zxing_msg_default_status">Сложете баркода вътре в правоъгълника за да го сканирате.</string>
 </resources>

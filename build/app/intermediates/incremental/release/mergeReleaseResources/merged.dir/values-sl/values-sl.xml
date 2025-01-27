@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Prijava</string>
     <string name="common_signin_button_text_long">Prijava z računom Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Uporaba gesla"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Povezava je kopirana v odložišče"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Neznana napaka"</string>
+    <string name="exo_download_completed">Prenos je končan</string>
+    <string name="exo_download_description">Prenos</string>
+    <string name="exo_download_downloading">Prenašanje</string>
+    <string name="exo_download_failed">Prenos ni uspel</string>
+    <string name="exo_download_notification_channel_name">Prenosi</string>
+    <string name="exo_download_paused">Prenosi so začasno zaustavljeni.</string>
+    <string name="exo_download_paused_for_network">Prenosi čakajo na povezavo z omrežjem.</string>
+    <string name="exo_download_paused_for_wifi">Prenosi čakajo na povezavo Wi-Fi.</string>
+    <string name="exo_download_removing">Odstranjevanje prenosov</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Kopiraj povezavo"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Odpri v brskalniku"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Deli povezavo"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Dotaknite se tipala prst. odt."</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Strojna oprema za prstne odtise ni na voljo."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Ta naprava nima tipala prstnih odtisov"</string>
@@ -66,8 +79,4 @@
     <string msgid="7309881387583143581" name="generic_error_user_canceled">"Preverjanje pristnosti je preklical uporabnik."</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Iskanje"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
-    <string name="zxing_app_name">Barcode Scanner</string>
-    <string name="zxing_button_ok">V redu</string>
-    <string name="zxing_msg_camera_framework_bug">Oprostite, Android kamera je naletela na težave. Mogoče boste morali ponovno zagnati napravo.</string>
-    <string name="zxing_msg_default_status">Za branje postavite črtno kodo znotraj iskala.</string>
 </resources>

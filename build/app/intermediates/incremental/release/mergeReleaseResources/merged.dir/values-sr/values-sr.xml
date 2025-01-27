@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">Пријави ме</string>
     <string name="common_signin_button_text_long">Пријави ме на Google</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"Користите лозинку"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Линк је копиран у привремену меморију"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"Непозната грешка"</string>
+    <string name="exo_download_completed">Преузимање је завршено</string>
+    <string name="exo_download_description">Преузми</string>
+    <string name="exo_download_downloading">Преузима се</string>
+    <string name="exo_download_failed">Преузимање није успело</string>
+    <string name="exo_download_notification_channel_name">Преузимања</string>
+    <string name="exo_download_paused">Преузимања су паузирана</string>
+    <string name="exo_download_paused_for_network">Преузимања чекају на мрежу</string>
+    <string name="exo_download_paused_for_wifi">Преузимања чекају на WiFi</string>
+    <string name="exo_download_removing">Преузимања се уклањају</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Копирај линк"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Отвори у прегледачу"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Дели линк"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Додирн. сензор за отисак прста"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Хардвер за отиске прстију није доступан."</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Овај уређај нема сензор за отисак прста"</string>

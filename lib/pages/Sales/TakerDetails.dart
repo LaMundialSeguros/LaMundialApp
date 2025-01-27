@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:camera/camera.dart'; 
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +24,7 @@ import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relative.dart';
 import 'package:lamundialapp/Utilidades/Class/Taker.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
+import 'package:lamundialapp/Utilidades/Class/CameraOverlayPage.dart';
 import 'package:lamundialapp/pages/Sales/BeneficiariesForm.dart';
 import 'package:lamundialapp/pages/Sales/RelativesForm.dart';
 import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
@@ -109,6 +112,11 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   //FocusNode phoneCodeFocus = FocusNode();
 
   bool isLoading = false;
+  bool _areDifferent = false;
+
+  bool _isUpdatingFromTaker = false;
+  bool _isUpdatingFromOwner = false;
+
 
   var typeDoc = null;
   var country = null;
@@ -124,8 +132,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   var selectedVersion = null;
   var selectedColor = null;
 
-  int auto = 24;
-  int moto = 22;
+  int auto = 57;
+  int moto = 56;
   int fourInOne = 5;
   int funeral = -1;
   int family = 7;
@@ -136,6 +144,14 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   File? _imageFileRif;
   //final ImagePicker _picker = ImagePicker();
   String _recognizedText = "Texto reconocido aparecerá aquí.";
+
+  // For Titular/Asegurado
+  File? _imageFileOwner;
+  final ImagePicker _pickerOwner = ImagePicker();
+
+  // FocusNode for Owner's fields (if needed)
+  FocusNode idCardOwnerCodeFocus = FocusNode();
+
 
   String extractSpecificId(String text) {
     // RegEx para capturar cédulas con 5 a 9 dígitos (por ejemplo: "V 27.606.5" o "E 12.345.678")
@@ -167,7 +183,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
   String extractName(String text) {
     // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
-    final regex = RegExp(r'NOMBRES\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final regex = RegExp(r'NOMBRES?\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
     final match = regex.firstMatch(text);
 
     if (match != null) {
@@ -180,7 +196,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
   String extractLastName(String text) {
     // RegEx que busca "APELLIDOS" seguido de dos apellidos en mayúsculas
-    final regex = RegExp(r'APELLIDOS\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
+    final regex = RegExp(r'APELLIDOS?\s+([A-ZÁÉÍÓÚÑ]+(?:\s[A-ZÁÉÍÓÚÑ]+)*)');
     final match = regex.firstMatch(text);
 
     if (match != null) {
@@ -191,27 +207,23 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     }
   }
 
-  String extractDateOfBirth(String text) {
-    // RegEx para buscar una fecha en formato DD/MM/YYYY o DD-MM-YYYY
-    final regex = RegExp(r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b');
-    final match = regex.firstMatch(text);
+  String? extractDateOfBirth(String text) {
+  final regex = RegExp(r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b');
+  final match = regex.firstMatch(text);
 
-    if (match != null) {
-      // Devuelve la fecha de nacimiento encontrada
-      String date = '${match.group(1)}/${match.group(2)}/${match.group(3)}';
+  if (match != null) {
+    try {
+      final date = '${match.group(1)}/${match.group(2)}/${match.group(3)}';
       DateFormat format = DateFormat('dd/MM/yyyy');
       DateTime dateTime = format.parse(date);
-      setState(() {
-        dateBirth = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(dateTime!)}");
-        age = TextEditingController(text: "${dateTime != null ? calculateAge(dateTime!) : 'N/A'}");
-        dateBirthOwner = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(dateTime!)}");
-        ageOwner = TextEditingController(text: "${dateTime != null ? calculateAge(dateTime!) : 'N/A'}");
-      });
-      return date;
-    } else {
-      return '';
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    } catch(e) {
+      return null;
     }
   }
+  return null;
+}
+
 
 
   String? extractSerial(String input) {
@@ -229,26 +241,25 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   }
 
   String? extractPlaca(String input) {
-    // Patrón para detectar "Placa:" seguido de letras y números
-    final regex = RegExp(r'Placa:\s*([A-Za-z0-9]+)');
-    final match = regex.firstMatch(input);
+  // First, try to find a license plate following the word "Placa:"
+  // Case-insensitive pattern to detect "Placa:" followed by alphanumeric characters.
+  final regex = RegExp(r'Pl?aca:?\s*([A-Za-z0-9]+)', caseSensitive: false);
+  final match = regex.firstMatch(input);
 
-    // Si se encuentra el prefijo y el valor, devuelve el texto limpio
-    if (match != null) {
-      return match.group(1); // Retorna el valor de la placa
-    }else{
-      return '';
-    }
+  if (match != null) {
+    return match.group(1); // Returns the matched license plate value.
   }
+  return '';
+}
+
 
   String? extractYear(String input) {
     // Patrón para detectar un número de 4 dígitos (año)
-    final regex = RegExp(r'\b(\d{4})\b');
-    final match = regex.firstMatch(input);
-
-    // Si se encuentra un año, devolver la parte capturada
-    if (match != null) {
-      return match.group(1); // Retorna el año
+   // Regex matches numbers from 1900 to 2100
+  final regex = RegExp(r'(?<!\d)((19|20)\d{2}|2100)(?!\d)');
+     final match = regex.firstMatch(input);
+     if (match != null) {
+       return match.group(0); // Retorna el año
     }else{
       return '';
     }
@@ -256,66 +267,77 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   }
 
   Future<void> _recognizeTextAuto(File image) async {
-    final inputImage = InputImage.fromFile(image);
-    final textRecognizer = TextRecognizer();
+  final inputImage = InputImage.fromFile(image);
+  final textRecognizer = TextRecognizer();
 
-    try {
-      final recognizedText = await textRecognizer.processImage(inputImage);
-      List<String> datos = recognizedText.text.split('\n');
-      String  xserial = '';
-      String  xplaca  = '';
-      String  xyear  = '';
-      for (String dato in datos){
+  try {
+    final recognizedText = await textRecognizer.processImage(inputImage);
+    List<String> datos = recognizedText.text.split('\n');
+    String xserial = '';
+    String xplaca = '';
+    String xyear = '';
 
-        // Captura cedula
-        if(xserial == ''){
-          xserial  = extractSerial(dato)!;
+    for (String dato in datos) {
+      // Extract serial if not yet extracted
+      if (xserial.isEmpty) {
+        xserial = extractSerial(dato) ?? '';
+        if (xserial.isNotEmpty) {
           serial.text = xserial;
         }
-
-        // Captura cedula
-        if(xplaca == ''){
-          xplaca  = extractPlaca(dato)!;
+      }
+      // Extract placa if not yet extracted
+      if (xplaca.isEmpty) {
+        xplaca = extractPlaca(dato) ?? '';
+        if (xplaca.isNotEmpty) {
           placa.text = xplaca;
         }
-
-        // Captura cedula
-        if(xyear == ''){
-          xyear  = extractYear(dato)!;
-          year.text = xyear;
-          if(xyear != ''){
-            apiServiceBrand(year.text as int);
-          }
-        }
       }
-    } catch (e) {
-      print('Error al reconocer texto: $e');
-    } finally {
-      textRecognizer.close();
+      // Try to extract year from each line
+      if (xyear.isEmpty) {
+        xyear = extractYear(dato) ?? '';
+      }
     }
+
+    // If year not found in individual lines, search entire recognized text
+    if (xyear.isEmpty) {
+      xyear = extractYear(recognizedText.text) ?? '';
+    }
+
+    // If a year was found, update the year field and call the API
+    if (xyear.isNotEmpty) {
+      year.text = xyear;
+      apiServiceBrand(int.parse(year.text));
+    }
+  } catch (e) {
+    print('Error al reconocer texto: $e');
+  } finally {
+    textRecognizer.close();
   }
+}
 
   Future<void> _recognizeText(File image) async {
-    final inputImage = InputImage.fromFile(image);
-    final textRecognizer = TextRecognizer();
+  final inputImage = InputImage.fromFile(image);
+  final textRecognizer = TextRecognizer();
 
-    try {
-      final recognizedText = await textRecognizer.processImage(inputImage);
-      List<String> datos = recognizedText.text.split('\n');
-        String  id            = '';
-        String  lastNames     = '';
-        String  names         = '';
-        String  dateBirthDay  = '';
-      for (String dato in datos){
+  try {
+    final recognizedText = await textRecognizer.processImage(inputImage);
+    List<String> datos = recognizedText.text.split('\n');
+    String id = '';
+    String lastNames = '';
+    String names = '';
+    String dateBirthDay = '';
 
-        // Captura cedula
-        if(id == ''){
-          id  = extractSpecificId(dato);
-          identityCard.text = cleanID(id);
+    for (String dato in datos) {
+      // Capture ID
+      if (id.isEmpty) {
+        id = extractSpecificId(dato);
+        identityCard.text = cleanID(id);
+        // Only sync to owner if they are not different
+        if (!_areDifferent) {
           idCard.text = cleanID(id);
-          for(TypeDoc t in TypeDocs){
+          for (TypeDoc t in TypeDocs) {
             String prefix = extractOnlyPrefix(id);
-            if(t.name == prefix){
+            if (t.name == prefix) {
               setState(() {
                 typeDoc = t;
                 typeDocOwner = t;
@@ -323,32 +345,50 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
             }
           }
         }
-        // Captura nombres
-        if(names ==  ''){
-          names   =  extractName(dato);
-          name.text = names;
+      }
+
+      // Capture Names
+      if (names.isEmpty) {
+        names = extractName(dato);
+        name.text = names;
+        if (!_areDifferent) {
           nameOwner.text = names;
         }
-        // Captura apellidos
-        if(lastNames ==  ''){
-          lastNames   =  extractLastName(dato);
-          lastName.text = lastNames;
+      }
+
+      // Capture Last Names
+      if (lastNames.isEmpty) {
+        lastNames = extractLastName(dato);
+        lastName.text = lastNames;
+        if (!_areDifferent) {
           lastNameOwner.text = lastNames;
         }
+      }
 
-        // Fecha de nacimiento
-        if(dateBirthDay ==  ''){
-          dateBirthDay    = extractDateOfBirth(dato);
-          dateBirth.text  = dateBirthDay;
-          dateBirthOwner.text = dateBirthDay;
+      // Capture Date of Birth with conditional syncing
+      if (dateBirthDay.isEmpty) {
+        final extractedDate = extractDateOfBirth(dato);
+        if (extractedDate != null) {
+          dateBirthDay = extractedDate;
+          setState(() {
+            dateBirth.text = dateBirthDay;
+            age.text = calculateAge(DateFormat('dd/MM/yyyy').parse(dateBirthDay)).toString();
+          });
+          if (!_areDifferent) {
+            setState(() {
+              dateBirthOwner.text = dateBirthDay;
+              ageOwner.text = calculateAge(DateFormat('dd/MM/yyyy').parse(dateBirthDay)).toString();
+            });
+          }
         }
       }
-    } catch (e) {
-      print('Error al reconocer texto: $e');
-    } finally {
-      textRecognizer.close();
     }
+  } catch (e) {
+    print('Error al reconocer texto: $e');
+  } finally {
+    textRecognizer.close();
   }
+}
 
   Future<void> _pickImage(ImageSource source) async {
     //final pickedFile = await _picker.pickImage(source: ImageSource.camera);
@@ -428,6 +468,8 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     Country("Venezuela", 1)
   ];
 
+  
+
   // Poliza a gestionar
 
   List<Brand> Brands = [];
@@ -443,6 +485,96 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     }
     return age;
   }
+
+Future<void> _pickImageOwner(ImageSource source) async {
+  final XFile? pickedFile = await _pickerOwner.pickImage(source: source);
+  setState(() {
+    if (pickedFile != null) {
+      _imageFileOwner = File(pickedFile.path);
+      _recognizeTextOwner(_imageFileOwner!);
+    } else {
+      print('No image selected for Owner.');
+    }
+  });
+}
+
+// Method to recognize text for Owner
+Future<void> _recognizeTextOwner(File image) async {
+  final inputImage = InputImage.fromFile(image);
+  final textRecognizer = TextRecognizer();
+
+  try {
+    final recognizedText = await textRecognizer.processImage(inputImage);
+    List<String> datos = recognizedText.text.split('\n');
+    String id = '';
+    String lastNames = '';
+    String names = '';
+    String dateBirthDay = '';
+
+    for (String dato in datos) {
+      // Capture ID
+      if (id.isEmpty) {
+        id = extractSpecificId(dato);
+        idCard.text = cleanID(id);
+        // Optionally, set typeDocOwner if needed
+      }
+
+      // Capture Names
+      if (names.isEmpty) {
+        names = extractName(dato);
+        nameOwner.text = names;
+      }
+
+      // Capture Last Names
+      if (lastNames.isEmpty) {
+        lastNames = extractLastName(dato);
+        lastNameOwner.text = lastNames;
+      }
+
+      // Capture Date of Birth only for Owner
+      if (dateBirthDay.isEmpty) {
+        final regex = RegExp(r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b');
+        final match = regex.firstMatch(dato);
+        if (match != null) {
+          String date = '${match.group(1)}/${match.group(2)}/${match.group(3)}';
+          DateFormat format = DateFormat('dd/MM/yyyy');
+          DateTime dateTime = format.parse(date);
+          setState(() {
+            dateBirthOwner.text = "${DateFormat('dd/MM/yyyy').format(dateTime)}";
+            ageOwner.text = "${calculateAge(dateTime)}";
+          });
+          dateBirthDay = date;
+        }
+      }
+    }
+  } catch (e) {
+    print('Error al reconocer texto para Owner: $e');
+  } finally {
+    textRecognizer.close();
+  }
+}
+
+Future<void> _openCameraOverlay(Function(XFile) onPictureTaken) async {
+  try {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraOverlayPage(
+          camera: firstCamera,
+          onPictureTaken: onPictureTaken,
+        ),
+      ),
+    );
+  } catch (e) {
+    print('Error initializing camera: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error initializing camera.'))
+    );
+  }
+}
+
 
   Future<void> apiServiceBrand(int year) async {
     selectedBrand = null;
@@ -583,7 +715,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://qaapisys2000.lamundialdeseguros.com//api/v1/valrep/color'),
+        Uri.parse('https://apisys2000.lamundialdeseguros.com//api/v1/valrep/color'),
         headers: {
           'Content-Type': 'application/json', // Define el tipo de contenido
           //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
@@ -617,46 +749,288 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
     }
   }
 
+
+
+  String formatearFecha(String fechaString, String formatoSalida) {
+    List<String> partesFecha = fechaString.split("/");
+    if (partesFecha.length != 3) {
+      // Handle invalid date format
+      return '0000-00-00';
+    }
+    int dia = int.parse(partesFecha[0]);
+    int mes = int.parse(partesFecha[1]);
+    int anio = int.parse(partesFecha[2]);
+
+    DateTime fecha = DateTime(anio, mes, dia);
+    DateFormat formatter = DateFormat(formatoSalida);
+    String fechaFormateada = formatter.format(fecha);
+
+    return fechaFormateada;
+  }
+
+
+
+Future<bool> apiServiceValidateAuto(Policy policy) async {
+  setState(() {
+    isLoading = true;
+  });
+
+  final url = Uri.parse('https://apisys2000.lamundialdeseguros.com/api/v1/external/validateEmissionAuto');
+  final headers = {
+    'Content-Type': 'application/json',
+    'apikey': '2baed164561a8073ba1d3b45bc923e3785517b5dc0668eda178b0c87b7c3598c',
+  };
+  var productor = "0";
+
+  DateTime dateTime = DateTime.now();
+  DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+  String formattedDate = formatter.format(dateTime);
+
+  final body = jsonEncode({
+    'plan': 'Auto',
+    'tipo_cedula_tomador': policy.taker.typeDoc.id,
+    'rif_tomador': policy.taker.iDcard,
+    'nombre_tomador': policy.taker.name,
+    'apellido_tomador': policy.taker.lastName,
+    'fnac_tomador': formatearFecha(policy.taker.Birthdate, 'yyyy-MM-dd'),
+    'tipo_cedula_titular': policy.detailsOwner.typeDoc.id,
+    'rif_titular': policy.detailsOwner.idCard,
+    'nombre_titular': policy.detailsOwner.name,
+    'apellido_titular': policy.detailsOwner.lastName,
+    'fnac_titular': formatearFecha(policy.detailsOwner.birthDate, 'yyyy-MM-dd'),
+    'telefono_titular': policy.detailsOwner.phone,
+    'correo_titular': policy.detailsOwner.email,
+    'marca': policy.vehicle!.brand.id,
+    'modelo': policy.vehicle!.modelId,
+    'version': policy.vehicle!.versionId,
+    'año': policy.vehicle!.year,
+    'color': policy.vehicle!.color,
+    'placa': policy.vehicle!.placa,
+    'serial_carroceria': policy.vehicle!.serial,
+    'dec_persona_politica': policy.PoliticianExposed,
+    'dec_term_y_cod': true,
+    'productor': GlobalVariables().user.cedula,
+    'frecuencia': 'A',
+    'fecha_emision': formattedDate
+  });
+
+  print('Validation Request Body: $body');
+
+  try {
+    final response = await http.post(url, headers: headers, body: body);
+    print('Validation Response Status: ${response.statusCode}');
+    print('Validation Response Body: ${response.body}');
+
+    final decoded = json.decode(response.body) as Map<String, dynamic>;
+
+    if (response.statusCode == 200) {
+      if (decoded['status'] == false) {
+        String errorMessage = decoded['result']?['error'] ?? 'Validación fallida.';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      String error = decoded['message'] ?? 'Error desconocido durante la validación.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error ${response.statusCode}: $error')),
+      );
+      return false;
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Excepción: $e')),
+    );
+    return false;
+  } finally {
+    setState(() {
+      isLoading = false;
+    });
+  }
+}
+
+
   Future<void> Save() async {
+
+    // Only validate if the checkbox is checked
+      if (_areDifferent && identityCard.text.trim() == idCard.text.trim()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('La cédula del tomador y titular no pueden ser iguales. Por favor, modifíquelas.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return; // Stop further execution if validation fails
+    }
+
+
+
     setState(() {
       isLoading = true;
     });
 
     try {
 
-      // Validar campos nulos
-      if (identityCard == null ||
-          identityCard== null ||
-          name == null ||
-          lastName == null ||
-          dateBirth == null ||
-          idCard == null ||
-          typeDocOwner == null ||
-          nameOwner == null ||
-          lastNameOwner == null ||
-          dateBirth == null ||
-          phone == null ||
-          selectedGender == null) {
-        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
-        await alertas.usuarioNoexiste(context);
-        return;
-      }
+ //    // Validar campos nulos
+ //    if (identityCard == null ||
+ //        identityCard== null ||
+ //        name == null ||
+ //        lastName == null ||
+ //        dateBirth == null ||
+ //        idCard == null ||
+ //        typeDocOwner == null ||
+ //        nameOwner == null ||
+ //        lastNameOwner == null ||
+ //        dateBirth == null ||
+ //        phone == null ||
+ //        selectedGender == null) {
+ //      // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
+ //      await alertas.usuarioNoexiste(context);
+ //      return;
+ //    }
 
-      if(placa == null || serial == null || brand == null || color == null || model == null || year ==null){
-        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
-        await alertas.usuarioNoexiste(context);
-        return;
-      }
+ //    if(placa == null || serial == null || brand == null || color == null || model == null || year ==null){
+ //      // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
+ //      await alertas.usuarioNoexiste(context);
+ //      return;
+ //    }
 
 
       if (smoker == null) {
         smoker = false;
       }
 
+          // **Age Validation**
+         int takerAge = int.tryParse(age.text) ?? 0;
+         int ownerAge = int.tryParse(ageOwner.text) ?? 0;
+         if (takerAge < 18 || ownerAge < 18) {
+           ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(content: Text('Los menores de edad no están permitidos.')),
+           );
+           return; // Stop further execution
+         }
+    
+            // New Vehicle Data Validation
+          if (widget.product.id == auto || widget.product.id == moto) {
+            if (typeVehicle.text.trim().isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Complete los datos del vehículo.')),
+              );
+              return; // Stop if vehicle data is incomplete
+            }
+            // Additional check for unconfigured vehicle
+            if (typeVehicle.text.trim() == "Vehículo no está configurado.") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('El vehículo no está configurado. Por favor, seleccione otra opción o contacte con el administrador.')),
+              );
+              return; // Prevent continuation if vehicle type is not configured
+            }
+            // Check if selectedColor is not chosen
+                if (selectedColor == null) {
+                 ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Por favor, seleccione un color para el vehículo.')),
+              );
+              return; // Stop execution until color is selected
+            }
+          }
+           if(typeDoc == null) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, seleccione el tipo de documento del tomador'))
+       );
+       // Dropdowns might not accept focus directly, so we just notify the user.
+       return;
+     }
+     
+     if(_areDifferent && typeDocOwner == null) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, seleccione el tipo de documento del titular'))
+       );
+       return;
+     }
+    
+     if(identityCard.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese la cédula del tomador'))
+       );
+       FocusScope.of(context).requestFocus(identityCardCodeFocus);
+       return;
+     }
+     
+     if(name.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese el nombre del tomador'))
+       );
+       FocusScope.of(context).requestFocus(nameCodeFocus);
+       return;
+     }
+    
+     if(lastName.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese el apellido del tomador'))
+       );
+       FocusScope.of(context).requestFocus(lastNameCodeFocus);
+       return;
+     }
+    
+     if(dateBirth.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese la fecha de nacimiento del tomador'))
+       );
+       FocusScope.of(context).requestFocus(dateBirthCodeFocus);
+       return;
+     }
+    
+     if(selectedGender == null) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, seleccione el sexo'))
+       );
+       // Focus might not work for dropdown; just notify.
+       return;
+     }
+    
+     if(email.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese el correo electrónico'))
+       );
+       FocusScope.of(context).requestFocus(emailCodeFocus);
+       return;
+     }
+    
+     if(phone.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text('Por favor, ingrese el teléfono'))
+       );
+       FocusScope.of(context).requestFocus(phoneCodeFocus);
+       return;
+     }
+    
+     // If product is auto/moto, check vehicle-specific fields
+     if(widget.product.id == auto || widget.product.id == moto) {
+       if(typeVehicle.text.trim().isEmpty) {
+         ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(content: Text('Complete los datos del vehículo'))
+         );
+         FocusScope.of(context).requestFocus(typeVehicleCodeFocus);
+         return;
+       }
+       if(selectedColor == null) {
+         ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(content: Text('Por favor, seleccione un color para el vehículo'))
+         );
+         return;
+       }
+    }
+
 
       Taker taker = Taker(
                             typeDoc,
-                            idCard.text,
+                            identityCard.text,
                             name.text,
                             lastName.text,
                             dateBirth.text
@@ -664,7 +1038,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
 
       DetailsOwner owner = DetailsOwner(
           typeDocOwner,
-          identityCard.text,
+          idCard.text,
           nameOwner.text,
           lastNameOwner.text,
           selectedGender,
@@ -701,42 +1075,55 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
       List <Amount> amounts = [];
 
       Policy policy = Policy(
-                              widget.product,
-                              taker,
-                              owner,
-                              selectedProducer,
-                              beneficiaries,
-                              selectedRelatives,
-                              relatives,
-                              vehicle,
-                              false,
-                              false,
-                              false,
-                              false,
-                              false,
-                              "",
-                              false,
-                              "",
-                              false,
-                              "",
-                              false,
-                              "",
-                              0,
-                              0,
-                              "xxxxxx",
-                              "",
-                              false,
-                              false,
-                              "",
-                              _imageFile,
-                              _imageFileRif,
-                              _imageFileAuto
-                            );
+            widget.product,
+            taker,
+            owner,
+            selectedProducer,
+            beneficiaries,
+            selectedRelatives,
+            relatives,
+            vehicle,
+            false,
+            false,
+            false,
+            false,
+            false,
+            "",
+            false,
+            "",
+            false,
+            "",
+            false,
+            "",
+            0,
+            0,
+            "xxxxxx",
+            "",
+            false,
+            false,
+            "",
+            id: _imageFile,        // taker's image
+            rif: _imageFileRif,    // rif image
+            auto: _imageFileAuto,     // auto image
+            ownerId: _areDifferent ? _imageFileOwner : null,
+
+          );
+
+
+                        // Validate vehicle details via API for auto/moto products
+              if(widget.product.id == auto || widget.product.id == moto) {
+                bool valid = await apiServiceValidateAuto(policy);
+                if (!valid) {
+                  return; // Stop if validation fails
+                }
+              }      
 
       switch (widget.product.id) {
         case 14:
-        case 22:
-        case 24:
+        case 57:
+          Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementAutoPage(policy)));
+          break;
+        case 56:
             Navigator.push(context,MaterialPageRoute(builder: (context) => RiskStatementAutoPage(policy)));
           break;
         case 15:
@@ -773,6 +1160,104 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
         apiServiceBrand(int.parse(year.text));
       }
     });
+
+    // Set the default country to Venezuela
+    if (Paises.isNotEmpty) {
+      country = Paises[0];
+    }
+    // TextField: Tomador -> identityCard
+  // TextField: Titular -> idCard
+
+  identityCard.addListener(() {
+    // If they're NOT different and we're not currently updating from Owner, copy Taker -> Owner
+    if (!_areDifferent && !_isUpdatingFromOwner) {
+      _isUpdatingFromTaker = true;
+      idCard.text = identityCard.text;
+      _isUpdatingFromTaker = false;
+    }
+  });
+
+  idCard.addListener(() {
+    // If they're NOT different and we're not currently updating from Taker, copy Owner -> Taker
+    if (!_areDifferent && !_isUpdatingFromTaker) {
+      _isUpdatingFromOwner = true;
+      identityCard.text = idCard.text;
+      _isUpdatingFromOwner = false;
+    }
+  });
+
+  // TextField: Tomador -> name
+  // TextField: Titular -> nameOwner
+
+  name.addListener(() {
+    if (!_areDifferent && !_isUpdatingFromOwner) {
+      _isUpdatingFromTaker = true;
+      nameOwner.text = name.text;
+      _isUpdatingFromTaker = false;
+    }
+  });
+
+  nameOwner.addListener(() {
+    if (!_areDifferent && !_isUpdatingFromTaker) {
+      _isUpdatingFromOwner = true;
+      name.text = nameOwner.text;
+      _isUpdatingFromOwner = false;
+    }
+  });
+
+  // TextField: Tomador -> lastName
+  // TextField: Titular -> lastNameOwner
+
+  lastName.addListener(() {
+    if (!_areDifferent && !_isUpdatingFromOwner) {
+      _isUpdatingFromTaker = true;
+      lastNameOwner.text = lastName.text;
+      _isUpdatingFromTaker = false;
+    }
+  });
+
+  lastNameOwner.addListener(() {
+    if (!_areDifferent && !_isUpdatingFromTaker) {
+      _isUpdatingFromOwner = true;
+      lastName.text = lastNameOwner.text;
+      _isUpdatingFromOwner = false;
+    }
+  });
+
+  // TextField: Tomador -> dateBirth
+  // TextField: Titular -> dateBirthOwner
+
+  dateBirth.addListener(() {
+  if (!_areDifferent && !_isUpdatingFromOwner) {
+    _isUpdatingFromTaker = true;
+    dateBirthOwner.text = dateBirth.text;
+    try {
+      DateFormat format = DateFormat('dd/MM/yyyy');
+      DateTime dt = format.parse(dateBirth.text);
+      ageOwner.text = calculateAge(dt).toString();
+    } catch (e) {
+      print('Error parsing dateBirth: $e');
+    }
+    _isUpdatingFromTaker = false;
+  }
+});
+
+  dateBirthOwner.addListener(() {
+  if (!_areDifferent && !_isUpdatingFromTaker) {
+    _isUpdatingFromOwner = true;
+    dateBirth.text = dateBirthOwner.text;
+    try {
+      DateFormat format = DateFormat('dd/MM/yyyy');
+      DateTime dt = format.parse(dateBirthOwner.text);
+      age.text = calculateAge(dt).toString();
+    } catch (e) {
+      print('Error parsing dateBirthOwner: $e');
+    }
+    _isUpdatingFromOwner = false;
+  }
+});
+  
+
   }
   @override
   void dispose() {
@@ -813,28 +1298,34 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
   Widget buildForm(BuildContext context) {
     DateTime? selectedDate = DateTime.now();
 
-    Future<void> _selectDate(BuildContext context,int type) async {
-      final DateTime? picked = await
-      showDatePicker(
+    Future<void> _selectDate(BuildContext context, int type) async {
+      final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1930),
         lastDate: DateTime(2101),
       );
-      if (picked != null && type == 1) {
+    
+      if (picked != null) {
         setState(() {
           selectedDate = picked;
-          dateBirth = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(selectedDate!)}");
-          age = TextEditingController(text: "${selectedDate != null ? calculateAge(selectedDate!) : 'N/A'}");
-        });
-      }else{
-        setState(() {
-          selectedDate = picked;
-          dateBirthOwner = TextEditingController(text: "${DateFormat('dd/MM/yyyy').format(selectedDate!)}");
-          ageOwner = TextEditingController(text: "${selectedDate != null ? calculateAge(selectedDate!) : 'N/A'}");
+          final formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate!);
+          final calculatedAge = "${calculateAge(selectedDate!)}";
+    
+          if (type == 1) {
+            dateBirth.text = formattedDate;
+            age.text = calculatedAge;
+            // Sincronizar con Titular si no son diferentes
+            if (!_areDifferent) {
+              dateBirthOwner.text = formattedDate;
+              ageOwner.text = calculatedAge;
+            }
+          } else {
+            dateBirthOwner.text = formattedDate;
+            ageOwner.text = calculatedAge;
+          }
         });
       }
-
     }
 
     // Expresión regular para validar el correo electrónico
@@ -856,8 +1347,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           Center(
             child: GestureDetector(
               onTap: () {
-                _pickImage(ImageSource.camera);
-              },
+               _openCameraOverlay((XFile image) {
+                 setState(() {
+                   _imageFile = File(image.path);
+                   _recognizeText(_imageFile!);
+                 });
+               });
+             },
               child: Container(
               width: 300,
               height: 110,
@@ -877,7 +1373,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Cargar Cedula',
+                    'Cargar Cédula',
                     style: TextStyle(
                         fontSize: 24,
                         color: Color.fromRGBO(15, 26, 90, 1),
@@ -967,14 +1463,18 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             iconSize: 0,
                             value: typeDoc,
                             borderRadius: BorderRadius.only(
-                              topLeft:  Radius.zero,
-                              topRight:  Radius.circular(30.0),
-                              bottomLeft:  Radius.circular(30.0),
+                              topLeft: Radius.zero,
+                              topRight: Radius.circular(30.0),
+                              bottomLeft: Radius.circular(30.0),
                               bottomRight: Radius.zero,
                             ),
                             onChanged: (TypeDoc? newValue) {
                               setState(() {
                                 typeDoc = newValue;
+                                if (!_areDifferent) {
+                                  // Sincroniza typeDoc con typeDocOwner si no son diferentes
+                                  typeDocOwner = newValue;
+                                }
                               });
                             },
                             items: TypeDocs.map((TypeDoc tipoDoc) {
@@ -983,14 +1483,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                                 child: Text(tipoDoc.name),
                               );
                             }).toList(),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none,
+                            decoration: const InputDecoration(
+                              counterText: '',
+                              hintText: 'CI',
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 20.0,
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)),
-                              suffixIcon: Container(
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                              ),
+                              suffixIcon: Padding(
                                 padding: EdgeInsets.only(right: 0),
                                 child: Icon(Icons.keyboard_arrow_down_outlined),
                               ),
@@ -1250,6 +1756,134 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           fontFamily: 'Poppins'),
                     ),
                   ),
+                  // *********** NEW CHECKBOX ROW ***********
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // Centers the row
+                    children: [
+                      Checkbox(
+                        value: _areDifferent,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            _areDifferent = newValue ?? false;
+                            if (!_areDifferent) {
+                              // Sincronizar todos los campos cuando tomador y asegurado son la misma persona
+                              _isUpdatingFromTaker = true;
+                              idCard.text = identityCard.text;
+                              nameOwner.text = name.text;
+                              lastNameOwner.text = lastName.text;
+                              dateBirthOwner.text = dateBirth.text;
+                              ageOwner.text = age.text;
+                              // Sincronizar también typeDoc
+                              typeDocOwner = typeDoc;
+                              _isUpdatingFromTaker = false;
+                            } else {
+                              // Permitir entrada independiente para el titular
+                              _isUpdatingFromOwner = true;
+                              idCard.text = '';
+                              nameOwner.text = '';
+                              lastNameOwner.text = '';
+                              dateBirthOwner.text = '';
+                              ageOwner.text = '';
+                              typeDocOwner = null;
+                              _isUpdatingFromOwner = false;
+                            }
+                          });
+                        },
+                      ),
+
+                      Text(
+                        "¿El tomador y asegurado son personas diferentes?",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11,
+                          color: Color(0xFF49454F),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // *****************************************
+                  // After the Titular fields (e.g., after the ageOwner TextField)
+
+                const SizedBox(height: 20),
+                if (_areDifferent)
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                       _openCameraOverlay((XFile image) {
+                         setState(() {
+                           _imageFileOwner = File(image.path);
+                           _recognizeTextOwner(_imageFileOwner!);
+                         });
+                       });
+                     },
+                      child: Container(
+                        width: 300,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(246, 247, 255, 1),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(98, 162, 232, 0.5),
+                              spreadRadius: 1,
+                              blurRadius: 4,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Cargar Cédula Titular',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Color.fromRGBO(15, 26, 90, 1),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Image.asset(
+                              'assets/upload.png', // Replace with your image path
+                              width: 35,
+                              height: 35,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 20),
+                if (_areDifferent && _imageFileOwner != null)
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        _pickImageOwner(ImageSource.gallery);
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(246, 247, 255, 1),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(98, 162, 232, 0.5),
+                              spreadRadius: 1,
+                              blurRadius: 4,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Image.file(_imageFileOwner!),
+                      ),
+                    ),
+                  ),
+
           const SizedBox(height: 20),
           Padding(
                     padding: const EdgeInsets.only(left: 50,right: 0),
@@ -1276,14 +1910,18 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                             iconSize: 0,
                             value: typeDocOwner,
                             borderRadius: BorderRadius.only(
-                              topLeft:  Radius.zero,
-                              topRight:  Radius.circular(30.0),
-                              bottomLeft:  Radius.circular(30.0),
+                              topLeft: Radius.zero,
+                              topRight: Radius.circular(30.0),
+                              bottomLeft: Radius.circular(30.0),
                               bottomRight: Radius.zero,
                             ),
                             onChanged: (TypeDoc? newValue) {
                               setState(() {
                                 typeDocOwner = newValue;
+                                 if (!_areDifferent) {
+                                   // When not different, sync the Taker's TypeDoc as well
+                                   typeDoc = newValue;
+                                }
                               });
                             },
                             items: TypeDocs.map((TypeDoc tipoDoc) {
@@ -1292,14 +1930,20 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                                 child: Text(tipoDoc.name),
                               );
                             }).toList(),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none,
+                            decoration: const InputDecoration(
+                              counterText: '',
+                              hintText: 'CI',
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 20.0,
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)),
-                              suffixIcon: Container(
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(121, 116, 126, 1),
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                              ),
+                              suffixIcon: Padding(
                                 padding: EdgeInsets.only(right: 0),
                                 child: Icon(Icons.keyboard_arrow_down_outlined),
                               ),
@@ -1659,7 +2303,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           ),
                         ),
                         Container(
-                          width: 150,
+                          width: 300,
                           height: 40,
                           decoration: BoxDecoration(// Color de fondo gris
                               borderRadius: BorderRadius.only(
@@ -1827,8 +2471,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           Center(
                     child: GestureDetector(
                         onTap: () {
-                          _pickImageRif(ImageSource.camera);
-                        },
+                        _openCameraOverlay((XFile image) {
+                          setState(() {
+                            _imageFileRif = File(image.path);
+                            // Optionally process the image for Rif if needed
+                          });
+                        });
+                      },
                         child: Container(
                             width: 300,
                             height: 110,
@@ -2024,8 +2673,13 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
           if(widget.product.id == auto || widget.product.id == moto)Center(
                     child: GestureDetector(
                         onTap: () {
-                          _pickImageAuto(ImageSource.camera);
-                        },
+                       _openCameraOverlay((XFile image) {
+                         setState(() {
+                           _imageFileAuto = File(image.path);
+                           _recognizeTextAuto(_imageFileAuto!);
+                         });
+                       });
+                     },
                         child: Container(
                             width: 300,
                             height: 110,
@@ -2045,7 +2699,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Certificado de circulacion',
+                                  'Certificado de Circulación',
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Color.fromRGBO(15, 26, 90, 1),
@@ -2234,7 +2888,15 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       onChanged: (Brand? newValue) {
                         setState(() {
                           selectedBrand = newValue;
-                          apiServiceModels(int.parse(year.text),selectedBrand.id);
+                          // Reset dependent fields when brand changes
+                          selectedModel = null;
+                          selectedVersion = null;
+                          typeVehicle.text = '';
+                          models = [];      // Optionally clear models list
+                          versions = [];    // Optionally clear versions list
+
+                          // Fetch models for the selected brand
+                          apiServiceModels(int.parse(year.text), selectedBrand!.id);
                         });
                       },
                       items: Brands.map((Brand brand) {
@@ -2294,9 +2956,16 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                       onChanged: (newValue) {
                         setState(() {
                           selectedModel = newValue;
-                          apiServiceVersion(int.parse(year.text),selectedBrand.id,selectedModel["id"]);
+                          selectedVersion = null;      // Clear previous version selection
+                          typeVehicle.text = '';       // Reset the typeVehicle field
+                          apiServiceVersion(
+                            int.parse(year.text), 
+                            selectedBrand.id, 
+                            selectedModel["id"]
+                          );
                         });
                       },
+
                       items: models.map((model) {
                         return DropdownMenuItem(
                           value: model,
@@ -2359,7 +3028,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                           }else{
                             typeVehicle.text = "Vehículo no está configurado.";
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Vehículo no está configurado. Contactar con el administardor')),
+                              SnackBar(content: Text('Vehículo no está configurado. Contactar con el administrador')),
                             );
                           }
                         });
@@ -2371,7 +3040,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                         );
                       }).toList(),
                       decoration: InputDecoration(
-                        hintText: 'Version',
+                        hintText: 'Versión',
                         hintStyle: TextStyle(
                           color: Color.fromRGBO(121, 116, 126, 1),
                           fontFamily: 'Poppins',
@@ -2509,7 +3178,7 @@ class TakerdetailsPageState extends State<TakerDetailsPage> {
                   // Otros estilos de texto que desees aplicar
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Tipo de Vehiculo',
+                  hintText: 'Tipo de Vehículo',
                   //errorText: _isValidEmail(email.text) ? null : 'Correo inválido',
                   prefixIcon: Container(
                     padding: const EdgeInsets.all(1),

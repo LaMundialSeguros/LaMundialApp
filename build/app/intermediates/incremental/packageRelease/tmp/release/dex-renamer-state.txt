@@ -1,4 +1,7 @@
-#Sun Dec 29 15:39:10 VET 2024
-base.0=C\:\\Projects\\Flutter\\lamundial\\LaMundialApp\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
-path.0=classes.dex
+#Sat Jan 25 12:38:34 VET 2025
+base.1=C\:\\app\\LaMundialApp\\build\\app\\intermediates\\desugar_lib_dex\\release\\classes1000.dex
+path.1=classes1000.dex
+base.0=C\:\\app\\LaMundialApp\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
+path.0=classes.dex

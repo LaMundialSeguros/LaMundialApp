@@ -10,7 +10,9 @@ Policy _$PolicyFromJson(Map<String, dynamic> json) => Policy(
       Product.fromJson(json['product'] as Map<String, dynamic>),
       Taker.fromJson(json['taker'] as Map<String, dynamic>),
       DetailsOwner.fromJson(json['detailsOwner'] as Map<String, dynamic>),
-      Producer.fromJson(json['producer'] as Map<String, dynamic>),
+      json['producer'] == null
+          ? null
+          : Producer.fromJson(json['producer'] as Map<String, dynamic>),
       (json['beneficiaries'] as List<dynamic>)
           .map((e) => Beneficiary.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -40,9 +42,6 @@ Policy _$PolicyFromJson(Map<String, dynamic> json) => Policy(
       json['PoliticianExposed'] as bool,
       json['currentHealth'] as bool,
       json['additionalText'] as String,
-      json['id'] as File,
-      json['rif'] as File,
-      json['auto'] as File,
     );
 
 Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
@@ -75,7 +74,4 @@ Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
       'PoliticianExposed': instance.PoliticianExposed,
       'currentHealth': instance.currentHealth,
       'additionalText': instance.additionalText,
-      'id': instance.id,
-      'rif': instance.rif,
-      'auto': instance.auto,
     };

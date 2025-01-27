@@ -33,7 +33,7 @@ class MenuProductsPageState extends State<MenuProducts>{
 
     Future<void> apiServiceGetRamos() async {
       products = [];
-      final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/app/getPlanesCorredor');
+      final url = Uri.parse('https://apisys2000.lamundialdeseguros.com/api/v1/app/getPlanesCorredor');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
         'xcorreo': GlobalVariables().user.email,
@@ -50,11 +50,12 @@ class MenuProductsPageState extends State<MenuProducts>{
             final List<dynamic> targetProduct = records[0];
 
             setState(() {
-              products = targetProduct.map((product) {
+          products = targetProduct
+              .where((product) => product['product'] != null) // Filter out products with null 'product'
+              .map((product) {
                 return Product.fromJsonApi(product);
               }).toList();
-
-            });
+        });
           }
         } else {
           throw Exception('Error al cargar los datos. Código: ${response.statusCode}');
@@ -77,7 +78,7 @@ class MenuProductsPageState extends State<MenuProducts>{
         for (var product in products)
           GestureDetector(
             onTap: () {
-              if(product.id == 22 || product.id == 24){
+              if(product.id == 56 || product.id == 57){
                 Navigator.push(context,MaterialPageRoute(builder: (context) => TakerDetailsPage(product)));
               }else{
                 ScaffoldMessenger.of(context).showSnackBar(

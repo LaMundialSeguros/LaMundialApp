@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print a
 
 import 'dart:convert';
 import 'dart:io';
@@ -865,52 +865,52 @@ class VerifyDetailsPageState extends State<VerifyDetails> {
                     padding: const EdgeInsets.only(left: 50,right: 0),
                     child: Row(
                       children: [
+                //       Container(
+                //         width: 150,
+                //         height: 40,
+                //         decoration: BoxDecoration(
+                //           color: Color.fromRGBO(98, 162, 232, 0.5),
+                //           borderRadius: BorderRadius.only(
+                //             topLeft:  Radius.zero,
+                //             topRight:  Radius.circular(40.0),
+                //             bottomLeft:  Radius.circular(40.0),
+                //             bottomRight: Radius.zero,
+                //           ),
+                //           border: Border.all(
+                //             color: Color.fromRGBO(79, 127, 198, 1),
+                //           ), // Borde rojo
+                //         ),
+                //         child: TextField(
+                //           readOnly: true,
+                //           maxLength: 50,  // Limita la longitud del texto a 50 caracteres
+                //           inputFormatters:	[
+                //             FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
+                //           ],
+                //           controller: smoker,
+                //           style: const TextStyle(
+                //             color: Colors.black, // Color del texto
+                //             fontFamily: 'Poppins',
+                //             // Otros estilos de texto que desees aplicar
+                //           ),
+                //           decoration: InputDecoration(
+                //             counterText: '',
+                //             hintText: '',
+                //             border: InputBorder.none,
+                //             contentPadding: const EdgeInsets.symmetric(
+                //               vertical: 10,
+                //               horizontal: 20.0,
+                //             ),
+                //             hintStyle:
+                //             TextStyle(
+                //                 color: Color.fromRGBO(121, 116, 126, 1),
+                //                 fontFamily: 'Poppins',
+                //                 fontWeight: FontWeight.w700
+                //             ),
+                //           ),
+                //         ),
+                //       ),
                         Container(
-                          width: 150,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(98, 162, 232, 0.5),
-                            borderRadius: BorderRadius.only(
-                              topLeft:  Radius.zero,
-                              topRight:  Radius.circular(40.0),
-                              bottomLeft:  Radius.circular(40.0),
-                              bottomRight: Radius.zero,
-                            ),
-                            border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
-                            ), // Borde rojo
-                          ),
-                          child: TextField(
-                            readOnly: true,
-                            maxLength: 50,  // Limita la longitud del texto a 50 caracteres
-                            inputFormatters:	[
-                              FilteringTextInputFormatter.allow(RegExp('[a-zA-ZáéíóúÁÉÍÓÚÑñ ]')),  // Solo letras y espacios
-                            ],
-                            controller: smoker,
-                            style: const TextStyle(
-                              color: Colors.black, // Color del texto
-                              fontFamily: 'Poppins',
-                              // Otros estilos de texto que desees aplicar
-                            ),
-                            decoration: InputDecoration(
-                              counterText: '',
-                              hintText: '',
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 20.0,
-                              ),
-                              hintStyle:
-                              TextStyle(
-                                  color: Color.fromRGBO(121, 116, 126, 1),
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 150,
+                          width: 300,
                           height: 40,
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(98, 162, 232, 0.5),
@@ -942,7 +942,7 @@ class VerifyDetailsPageState extends State<VerifyDetails> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10,
-                                horizontal: 20.0,
+                                horizontal: 12.0,
                               ),
                               hintStyle:
                               TextStyle(

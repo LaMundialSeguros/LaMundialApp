@@ -233,7 +233,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
         await sendImageToApi(context,_imageFile!,cedula.text);
       }*/
       // Aquí, además de hacer la consulta del usuario, también almacenas las credenciales
-      await apiRegisterPayment(context,notifyPayment);
+      await apiRegisterPayment(context,notifyPayment, '');
       // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario

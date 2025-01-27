@@ -89,7 +89,7 @@ String obtenerFechaActual() {
 Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) async {
   try {
     final response = await http.post(
-      Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/app/loginCorredor'),
+      Uri.parse('https://apisys2000.lamundialdeseguros.com/api/v1/app/loginCorredor'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -137,7 +137,7 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => WelcomeProducer(),
+            builder: (context) => WelcomeProducer(url: ''),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
@@ -205,9 +205,9 @@ Future<void> apiRegisterProducer(context, Producer productor) async {
   }
 }
 
-Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
+Future<void> apiRegisterPayment(BuildContext context, NotifyPayment notifyPayment, String recibo) async {
   // URL de la API
-  final url = Uri.parse('https://qaapisys2000.lamundialdeseguros.com/api/v1/collection/receipts/notification');
+  final url = Uri.parse('https://apisys2000.lamundialdeseguros.com/api/v1/collection/receipt/admin');
 
   // Estructura del body
   final Map<String, dynamic> body = {
@@ -216,8 +216,8 @@ Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
     "ctenedor": notifyPayment.idCard,
     "mpago": double.parse(notifyPayment.amount),
     "mpagoext": 0,
-    "cprog": "origenProg",
-    "recibos": [],
+    "cprog": "cobroAppMovil",
+    "recibos": [ recibo ],
     "soporte": [
       {
         "cmoneda": notifyPayment.currency.cod,
@@ -240,7 +240,9 @@ Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
     // Realizar la solicitud POST
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+            'apikey': '2baed164561a8073ba1d3b45bc923e3785517b5dc0668eda178b0c87b7c3598c',
+        },
       body: jsonEncode(body),
     );
 
@@ -248,13 +250,11 @@ Future<void> apiRegisterPayment(context, NotifyPayment notifyPayment) async {
     if (response.statusCode == 200) {
 
       //Navigator.push(context,MaterialPageRoute(builder: (context) => NotifyPaymentsForm()));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Pago notificado')),
-      );
-      Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomeProducer()));
+      
+      Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomeProducer(url: '',)));
 
     } else {
-      print('Error al enviar datos: ${response.statusCode}');
+      print('Error al enviar datos: (Este es el endpoint admin registerpayment) ${response.statusCode}');
     }
   } catch (e) {
     print('Excepción: $e');

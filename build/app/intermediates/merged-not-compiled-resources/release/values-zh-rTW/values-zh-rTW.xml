@@ -53,7 +53,20 @@
     <string name="common_signin_button_text">登入</string>
     <string name="common_signin_button_text_long">使用 Google 帳戶登入</string>
     <string msgid="5912733858573823945" name="confirm_device_credential_password">"使用密碼"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"已將連結複製到剪貼簿"</string>
     <string msgid="4776854077120974966" name="default_error_msg">"不明的錯誤"</string>
+    <string name="exo_download_completed">下載完成</string>
+    <string name="exo_download_description">下載</string>
+    <string name="exo_download_downloading">下載中</string>
+    <string name="exo_download_failed">無法下載</string>
+    <string name="exo_download_notification_channel_name">下載</string>
+    <string name="exo_download_paused">已暫停下載</string>
+    <string name="exo_download_paused_for_network">系統會等到連上網路後再開始下載</string>
+    <string name="exo_download_paused_for_wifi">系統會等到連上 Wi-Fi 後再開始下載</string>
+    <string name="exo_download_removing">正在移除下載內容</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"複製連結"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"在瀏覽器中開啟"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"分享連結"</string>
     <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"請輕觸指紋感應器"</string>
     <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"指紋硬體無法使用。"</string>
     <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"這個裝置沒有指紋感應器"</string>
@@ -66,8 +79,4 @@
     <string msgid="7309881387583143581" name="generic_error_user_canceled">"使用者已取消驗證作業。"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"搜尋"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
-    <string name="zxing_app_name">條碼掃描器</string>
-    <string name="zxing_button_ok">確定</string>
-    <string name="zxing_msg_camera_framework_bug">很抱歉，Android 相機出現問題，您可能需要重新啟動您的裝置。</string>
-    <string name="zxing_msg_default_status">將條碼置於鏡頭範圍內以進行掃描。</string>
 </resources>

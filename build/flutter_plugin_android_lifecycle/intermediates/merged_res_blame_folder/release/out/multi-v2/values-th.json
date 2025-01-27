@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-4:/values-th/values-th.xml",
+            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-23:/values-th/values-th.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-3\\30a70739a57f04c2abe92c295a8eed57\\transformed\\core-1.13.1\\res\\values-th\\values-th.xml",
+                    "source": "C:\\Users\\Darkr\\.gradle\\caches\\transforms-3\\b87d80925a1a71a3a5bca63c681c134c\\transformed\\core-1.13.1\\res\\values-th\\values-th.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-2:/values-th/values-th.xml",
+            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-25:/values-th/values-th.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-3\\30a70739a57f04c2abe92c295a8eed57\\transformed\\core-1.13.1\\res\\values-th\\values-th.xml",
+                    "source": "C:\\Users\\Darkr\\.gradle\\caches\\transforms-3\\b87d80925a1a71a3a5bca63c681c134c\\transformed\\core-1.13.1\\res\\values-th\\values-th.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

@@ -382,7 +382,8 @@ class LoginPageState extends State<LoginPage> {
                             Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
                           },
                           child: Text(
-                            '¿Olvidó su contraseña? Click aquí.',
+                            // '¿Olvidó su contraseña? Click aqui.',
+                            '',
                             style: TextStyle(
                                 fontSize: 9,
                                 color: Color.fromRGBO(121, 116, 126, 1),
@@ -462,7 +463,8 @@ class LoginPageState extends State<LoginPage> {
                             Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterProductorPage()));
                           },
                           child: Text(
-                            '¿No tiene una cuenta? Cree una.',
+                            // '¿No tiene una cuenta? Cree una.',
+                            '',
                             style: TextStyle(
                                 fontSize: 9,
                                 color: Color.fromRGBO(121, 116, 126, 1),
