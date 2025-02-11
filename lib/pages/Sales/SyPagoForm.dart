@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, unused_field, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -122,7 +122,7 @@ class SyPagoFormPagePageState extends State<SyPagoFormPage> {
       phone.text.trim().isEmpty ||
       codeSelected == null) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(
           'Por favor, complete todos los campos obligatorios: Tipo de documento, Cédula, Teléfono y Código telefónico.',
         ),
@@ -195,7 +195,7 @@ class SyPagoFormPagePageState extends State<SyPagoFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarSales("SYPAGO"),
+      appBar: const CustomAppBarSales("SYPAGO"),
       body: Padding(
         padding: const EdgeInsets.only(top: 1),
         child: ModalProgressHUD(
@@ -229,7 +229,7 @@ class SyPagoFormPagePageState extends State<SyPagoFormPage> {
           child: Column(
             children: [
               const SizedBox(height: 50),
-              bannerSyPago(),
+              const bannerSyPago(),
               const SizedBox(height: 50),
 
               // Row for disabled typeDoc and disabled identityCard

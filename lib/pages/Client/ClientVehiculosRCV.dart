@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
+// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, file_names
 
+import 'package:flutter/material.dart';
 import '../../Apis/apis.dart';
-import '../../Utilidades/AppBarServices.dart';
 import '../../Utilidades/AppBarVehiculos.dart';
 
 class ClientVehiculosRCV extends StatelessWidget{
@@ -12,7 +11,7 @@ class ClientVehiculosRCV extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:CustomAppBarVehiculos(),
+      appBar:const CustomAppBarVehiculos(),
       body: Menu(context,datos),
     );
   }
@@ -36,8 +35,8 @@ Widget Menu(BuildContext context,datos) {
                   child: Container(
             height: 120,
             decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 1),
-                borderRadius: BorderRadius.only(
+                color: const Color.fromRGBO(255, 255, 255, 1),
+                borderRadius: const BorderRadius.only(
                   topLeft:  Radius.circular(15.0),
                   topRight:  Radius.circular(15.0),
                   bottomLeft:  Radius.circular(15.0),
@@ -47,7 +46,7 @@ Widget Menu(BuildContext context,datos) {
                   color: Colors.transparent,
                 ),
                 boxShadow: [
-                  BoxShadow(
+                  const BoxShadow(
                     color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                     spreadRadius: 2, // Distancia de la sombra
                     blurRadius: 4, // Difuminado de la sombra
@@ -74,7 +73,7 @@ Widget Menu(BuildContext context,datos) {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   producto['modelo']+"/"+producto['marca'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color.fromRGBO(15, 26, 90, 1),
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
@@ -86,11 +85,11 @@ Widget Menu(BuildContext context,datos) {
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: EdgeInsets.all(10.0),
                               child:  Align(
                                       alignment: Alignment.topRight,
                                 child: Text(
@@ -128,7 +127,7 @@ Widget Menu(BuildContext context,datos) {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   producto['placa'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color.fromRGBO(15, 26, 90, 1),
                                     fontSize: 14,
                                     fontFamily: 'Poppins',
@@ -140,10 +139,10 @@ Widget Menu(BuildContext context,datos) {
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child:Row(

@@ -1,11 +1,8 @@
-import 'dart:ffi';
-import 'dart:io';
+// ignore_for_file: file_names, non_constant_identifier_names, deprecated_member_use
 
-import 'package:flutter/material.dart';
-import 'package:lamundialapp/Utilidades/Class/Amount.dart';
+import 'dart:io';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
 import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
-import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Producer.dart';
 import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relative.dart';

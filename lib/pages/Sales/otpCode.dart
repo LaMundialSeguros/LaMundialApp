@@ -1,34 +1,23 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, camel_case_types, use_build_context_synchronously, unused_local_variable
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:lamundialapp/Utilidades/Class/User.dart';
-
-import 'package:flutter/gestures.dart'; // for TapGestureRecognizer
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
-import 'package:lamundialapp/Utilidades/Class/Banco.dart';
 import 'package:lamundialapp/Utilidades/Class/Currency.dart';
 import 'package:lamundialapp/Utilidades/Class/Default.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/TypePayment.dart';
 import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
-import 'package:lamundialapp/components/bannerSyPago.dart';
 import 'package:lamundialapp/pages/Sales/SuccessDetails.dart';
 
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:http/http.dart' as http;
-
-import '../../Utilidades/Class/TypeDoc.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -68,7 +57,7 @@ class otpCodePageState extends State<otpCodePage> {
 
   // For "re-send" cooldown
   DateTime? lastResentTime;
-  final Duration resendCooldown = Duration(minutes: 2);
+  final Duration resendCooldown = const Duration(minutes: 2);
 
   @override
   void initState() {
@@ -192,7 +181,7 @@ class otpCodePageState extends State<otpCodePage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(decoded['message'] ?? 'OTP inválido.')),
           );
-           setState(() => isLoading = false);
+          setState(() => isLoading = false);
         }
       } else {
         throw Exception('Error al validar OTP. Código: ${response.statusCode}');
@@ -362,7 +351,7 @@ String getPolicyType(int productId) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarSales("SYPAGO OTP"),
+      appBar: const CustomAppBarSales("SYPAGO OTP"),
       body: Padding(
         padding: const EdgeInsets.only(top: 1),
         child: ModalProgressHUD(
@@ -493,8 +482,7 @@ String getPolicyType(int productId) {
                                   });
                                 },
                               );
-                             // const transactionId = '1234567890';
-                             // apiServiceAuto(transactionId);  
+
                               // This calls the validation method
                               apiServiceValidateOTP();
                             },
@@ -521,7 +509,6 @@ String getPolicyType(int productId) {
 
                     const SizedBox(height: 30),
     
-                    // "¿No recibió su código?" -> Reintentar link
                     // Only show after user first attempts OTP (otpRequested = true) & if the button isn't disabled
                     if (!isButtonDisabled && otpRequested)
                       RichText(

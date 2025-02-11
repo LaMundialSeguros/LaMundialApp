@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class SegmentedInput extends StatelessWidget {
@@ -20,14 +22,14 @@ class SegmentedInput extends StatelessWidget {
                                   width: 40, // Adjust the width as needed
                                     child: Container(
                                       decoration: BoxDecoration(// Color de fondo gris
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft:  Radius.zero,
                                             topRight:  Radius.circular(20.0),
                                             bottomLeft:  Radius.circular(20.0),
                                             bottomRight: Radius.zero,
                                           ),
                                           border: Border.all(
-                                            color: Color.fromRGBO(79, 127, 198, 1),
+                                            color: const Color.fromRGBO(79, 127, 198, 1),
                                           )),
                                       child: TextField(
                                         style: const TextStyle(
@@ -39,9 +41,9 @@ class SegmentedInput extends StatelessWidget {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         maxLength: 1,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: const EdgeInsets.symmetric(
+                                          contentPadding: EdgeInsets.symmetric(
                                             vertical: 6,
                                             horizontal: 12.0,
                                           ),

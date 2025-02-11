@@ -1,7 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/pages/Client/MenuClient.dart';
-import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
 
 class CustomAppBarVehiculos extends StatelessWidget implements PreferredSizeWidget {
 
@@ -13,8 +12,8 @@ class CustomAppBarVehiculos extends StatelessWidget implements PreferredSizeWidg
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
+                const Padding(
+                  padding: EdgeInsets.only(left: 30),
                   child: Text(
                     "   VEHÍCULOS \n ASEGURADOS ",
                     style: TextStyle(
@@ -36,7 +35,7 @@ class CustomAppBarVehiculos extends StatelessWidget implements PreferredSizeWidg
               ],
             ),
             centerTitle: true,
-            backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+            backgroundColor:const Color.fromRGBO(15, 26, 90, 1),
             leading: IconButton(
               icon: Image.asset(
                 'assets/return.png', // Reemplaza con la ruta de tu imagen

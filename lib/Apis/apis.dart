@@ -1,6 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, unused_local_variable, prefer_interpolation_to_compose_strings, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/Utilidades/Class/Poliza.dart';
@@ -9,17 +10,12 @@ import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
 import 'package:lamundialapp/pages/Client/ClientPoliza.dart';
 import 'package:lamundialapp/pages/Client/ClientVehiculosRCV.dart';
 import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
-import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
-import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
 import 'package:lamundialapp/pages/Productor/WelcomeProducer.dart';
-import 'package:lamundialapp/pages/dosfa_page.dart';
-
 import 'package:intl/intl.dart';
 import 'package:lamundialapp/pages/rolPage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'dart:core';
 import 'package:http/http.dart' as http;
-
 import 'package:lamundialapp/Alertas/alertaspos.dart';
 import 'package:lamundialapp/pages/menu_page.dart';
 import 'package:crypto/crypto.dart';
@@ -39,21 +35,12 @@ class GlobalVariables {
   late User user;
   late List<Poliza> polizas = [];
 
-  // Agrega más variables según sea necesario
-
   // Métodos relacionados con las variables globales
   void resetVariables() {
     polizas = [];
     // Reinicia otras variables según sea necesario
   }
 }
-
-// Para acceder a las variables globales:
-// GlobalVariables().nombreUser;
-// GlobalVariables().edad;
-
-// Para acceder a los métodos relacionados con las variables globales:
-// GlobalVariables().resetVariables();
 
 //Definición de variables
 var cedulaFormatter =
@@ -76,7 +63,6 @@ var coddosfa = '';
 //Instancia de pagar
 //pagarState pagar = pagarState();
 AlertaState alertas = AlertaState();
-TwoFactorAuthPageState twofa = TwoFactorAuthPageState();
 //Fin de Instancia
 
 String obtenerFechaActual() {
@@ -99,8 +85,6 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
       }),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
-    //final Map<String, dynamic> jsonResponse = json.decode(response.body);
-    // ignore: avoid_print
     mensaje = decoded['status'];
     var result = decoded['result'];
     switch (mensaje) {
@@ -116,13 +100,13 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
         String correo     = '';
         String istatus    = '';
         for (var record in records) {
-           cusuario   = record['cusuario'];
-           xnombre    = record['xnombre'] ?? '';
-           xapellido  = record['xapellido'] ?? '';
-           xlogin     = record['xlogin'] ?? '';
-           correo     = usuario;
-           ccorredor  = record['ccorredor'].toString() ?? '';
-           istatus    = record['istatus'];
+          cusuario   = record['cusuario'];
+          xnombre    = record['xnombre'] ?? '';
+          xapellido  = record['xapellido'] ?? '';
+          xlogin     = record['xlogin'] ?? '';
+          correo     = usuario;
+          ccorredor  = record['ccorredor'].toString();
+          istatus    = record['istatus'];
         }
 
         User user = User(
@@ -137,7 +121,7 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => WelcomeProducer(url: ''),
+            builder: (context) => const WelcomeProducer(url: ''),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
@@ -152,7 +136,7 @@ Future<void> apiConsultaUsuario(context, String usuario, String clave,int rol) a
         throw Exception('Error de conecxion al cargar los datos. Código: ${response.statusCode}');
     }
   } catch (e) {
-    SnackBar(content: Text('Error de conecxion al cargar los datos.'));
+    const SnackBar(content: Text('Error de conecxion al cargar los datos.'));
     print(e);
     alertas.sinConexion(context);
   }
@@ -175,21 +159,18 @@ Future<void> apiRegisterProducer(context, Producer productor) async {
       }),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
-    //final Map<String, dynamic> jsonResponse = json.decode(response.body);
-    // ignore: avoid_print
     mensaje = decoded['status'];
-    //var result = decoded['result'];
     switch (mensaje) {
       case true:
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => RolPage(),
+            builder: (context) => const RolPage(),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
         );
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Se creo con exito el usuario')),
+          const SnackBar(content: Text('Se creo con exito el usuario')),
         );
         break;
       case false:
@@ -199,7 +180,6 @@ Future<void> apiRegisterProducer(context, Producer productor) async {
         break;
     }
   } catch (e) {
-    // ignore: avoid_print
     print(e);
     alertas.sinConexion(context);
   }
@@ -248,10 +228,8 @@ Future<void> apiRegisterPayment(BuildContext context, NotifyPayment notifyPaymen
 
     // Verificar la respuesta
     if (response.statusCode == 200) {
-
-      //Navigator.push(context,MaterialPageRoute(builder: (context) => NotifyPaymentsForm()));
       
-      Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomeProducer(url: '',)));
+      Navigator.push(context,MaterialPageRoute(builder: (context) => const WelcomeProducer(url: '',)));
 
     } else {
       print('Error al enviar datos: (Este es el endpoint admin registerpayment) ${response.statusCode}');
@@ -312,8 +290,6 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
     );
     GlobalVariables().resetVariables();
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
-
-    // ignore: avoid_print
     mensaje = decoded['message'];
     switch (mensaje) {
       case 'Login successful':
@@ -349,7 +325,7 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => WelcomeClient(),
+            builder: (context) => const WelcomeClient(),
           ),
               (route) =>
           false, // Elimina todas las rutas existentes en la pila
@@ -377,50 +353,11 @@ Future<void> apiConsultaUsuarioCliente(context, String cedula, String password, 
         break;
     }
   } catch (e) {
-    // ignore: avoid_print
     print(e);
     alertas.sinConexion(context);
   }
 }
-//Rutina para consumir la API del DosFA
-Future<void> apiConsultaDosfa(context, String dosfa) async {
-  try {
-    final response = await http.post(
-      Uri.parse('https://test-pos.crixto.org/funcion-consulta-dosfa'),
-      //Uri.parse('https://node-pos.crixto.org/funcion-consulta-dosfa'),
-      // Uri.parse('https://pos.crixto.io/funcion-consulta-dosfa'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'coddosfa': coddosfa,
-        'dosfa': dosfa,
-      }),
-    );
-    final decoded = json.decode(response.body) as Map<Object, dynamic>;
-    // ignore: avoid_print
-    mensaje = decoded['msg'];
-    switch (mensaje) {
-      case 'True':
-        TwoFactorAuthPageState.twoFactorCodeController.text = '';
-        Navigator.of(context).pop();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const MenuPage(),
-          ),
-        );
-        //alertas.usuarioExiste(context).then((_) {});
-        break;
-      case 'False':
-        alertas.usuarioNoexiste(context).then((_) {
-          TwoFactorAuthPageState.twoFactorCodeController.text = '';
-        });
-        break;
-    }
-  } catch (e) {
-    alertas.sinConexion(context);
-  }
-}
+
 
 Future<void> test(context,Policy policy) async {
   try {
@@ -432,22 +369,18 @@ Future<void> test(context,Policy policy) async {
       body: jsonEncode(policy),
     );
     final decoded = json.decode(response.body) as Map<Object, dynamic>;
-    // ignore: avoid_print
     mensaje = decoded['msg'];
     switch (mensaje) {
       case 'True':
-        TwoFactorAuthPageState.twoFactorCodeController.text = '';
         Navigator.of(context).pop();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const MenuPage(),
           ),
         );
-        //alertas.usuarioExiste(context).then((_) {});
         break;
       case 'False':
         alertas.usuarioNoexiste(context).then((_) {
-          TwoFactorAuthPageState.twoFactorCodeController.text = '';
         });
         break;
     }
@@ -462,39 +395,6 @@ String generateMd5(String input) {
 }
 //Fin de Rutina
 
-//Rutina para consumir la API de Guardar TOKEN
-//Future<void> apiGuardarToken(context, String qrEncriptado, marca, iv) async {
-Future<void> apiGuardarToken(context, String qrEncriptado) async {
-  //try {
-  final response = await http.post(
-    Uri.parse('https://test-pos.crixto.org/funcion-guardar-token'),
-    //Uri.parse('https://node-pos.crixto.org/funcion-guardar-token'),
-    //Uri.parse('https://pos.crixto.io/funcion-guardar-token'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode({
-      'qr': qrEncriptado,
-      //'marca': marca,
-      //'iv': iv,
-    }),
-  );
-  final decoded = json.decode(response.body) as Map<Object, dynamic>;
-  // ignore: avoid_print
-  mensaje = decoded['msg'];
-  switch (mensaje) {
-    case 'exito':
-      break;
-  }
-  // } catch (e) {
-  //   // ignore: avoid_print
-
-  //   alertas.errorQR(context);
-  // }
-}
-//Fin de Rutina
-
-//Future<List<dynamic>> apiConsultServices(String cedula) async {
 Future<dynamic> apiConsultServices(context,String cedula) async {
   try {
     final response = await http.post(
@@ -510,18 +410,9 @@ Future<dynamic> apiConsultServices(context,String cedula) async {
 
     datos = decoded['Polizas'];
     return datos;
-    /*Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => ServicesClient(datos),
-      ),
-          (route) =>
-      false, // Elimina todas las rutas existentes en la pila
-    );*/
 
   } catch (e) {
-    // ignore: avoid_print
     print(e);
-    //alertas.sinConexion(context);
   }
 }
 
@@ -550,9 +441,9 @@ Future<dynamic> apiServiceManagerRCV(context,String cedula,int codigo) async {
     );
 
   } catch (e) {
-    // ignore: avoid_print
+
     print(e);
-    //alertas.sinConexion(context);
+
   }
 }
 
@@ -580,9 +471,7 @@ Future<dynamic> apiServiceOptions(context,int codigo) async {
     );
 
   } catch (e) {
-    // ignore: avoid_print
     print(e);
-    //alertas.sinConexion(context);
   }
 }
 

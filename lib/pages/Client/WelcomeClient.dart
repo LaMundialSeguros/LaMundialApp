@@ -1,13 +1,9 @@
+// ignore_for_file: non_constant_identifier_names, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
 import 'package:lamundialapp/pages/Client/MenuClient.dart';
-import 'package:lamundialapp/pages/Client/ServicesClient.dart';
-import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 import '../../Apis/apis.dart';
-import '../../Utilidades/Class/User.dart';
 
 class WelcomeClient extends StatelessWidget{
   const WelcomeClient({Key? key}) : super(key: key);
@@ -16,7 +12,7 @@ class WelcomeClient extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar:CustomAppBar(),
+      appBar:const CustomAppBar(),
       body: Menu(context),
     );
   }
@@ -33,7 +29,7 @@ Widget Menu(BuildContext context) {
               const SizedBox(height: 100),
               Container(
                 //padding: EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -53,7 +49,7 @@ Widget Menu(BuildContext context) {
                   children: [
                     Text(
                           GlobalVariables().user.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                           fontSize: 14,
                           color: Color.fromRGBO(15, 26, 90, 1),
                           fontWeight: FontWeight.bold,
@@ -65,7 +61,7 @@ Widget Menu(BuildContext context) {
               const SizedBox(height: 30),
               Container(
                 //padding: EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -93,15 +89,15 @@ Widget Menu(BuildContext context) {
                   width: 320,
                   height: 150,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(232, 79, 81, 0.05),
-                      borderRadius: BorderRadius.only(
+                      color: const Color.fromRGBO(232, 79, 81, 0.05),
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.circular(30.0),
                         topRight:  Radius.circular(30.0),
                         bottomLeft:  Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0),
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(232, 79, 81, 1),
+                        color: const Color.fromRGBO(232, 79, 81, 1),
                       )),
                   child: Center(
                     child: Column(
@@ -109,7 +105,7 @@ Widget Menu(BuildContext context) {
                         const SizedBox(height: 30),
                         Image.asset('assets/gestionar.png',height: 60,),
                         Container(
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
@@ -142,15 +138,15 @@ Widget Menu(BuildContext context) {
                   width: 320,
                   height: 150,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(232, 79, 81, 0.05),
-                      borderRadius: BorderRadius.only(
+                      color: const Color.fromRGBO(232, 79, 81, 0.05),
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.circular(30.0),
                         topRight:  Radius.circular(30.0),
                         bottomLeft:  Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0),
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(232, 79, 81, 1),
+                        color: const Color.fromRGBO(232, 79, 81, 1),
                       )),
                   child: Center(
                     child: Column(
@@ -158,7 +154,7 @@ Widget Menu(BuildContext context) {
                         const SizedBox(height: 30),
                         Image.asset('assets/comprar.png',height: 60,),
                         Container(
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(

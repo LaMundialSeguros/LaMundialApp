@@ -1,8 +1,7 @@
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, sized_box_for_whitespace, file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
-
 import '../../Apis/apis.dart';
 
 class ServicesClient extends StatelessWidget{
@@ -115,7 +114,7 @@ Widget Menu(BuildContext context,datos,search,searchCodeFocus) {
                           border: Border.all(
                             color: Colors.transparent,
                           ),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                               spreadRadius: 2, // Distancia de la sombra
@@ -157,9 +156,9 @@ Widget Menu(BuildContext context,datos,search,searchCodeFocus) {
                                   ),
                                   Expanded(
                                     child: Column(
-                                      children: [
+                                      children: const [
                                         Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(10.0),
                                           child:  Align(
                                             alignment: Alignment.topRight,
                                             child: Text(
@@ -186,13 +185,13 @@ Widget Menu(BuildContext context,datos,search,searchCodeFocus) {
                               color: Colors.red,
                             )),*/
                               child: Row(
-                                children: [
+                                children: const [
                                   Expanded(
                                     flex: 1,
                                     child: Column(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(10.0),
                                           child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
@@ -212,7 +211,7 @@ Widget Menu(BuildContext context,datos,search,searchCodeFocus) {
                                   Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
+                                      padding: EdgeInsets.all(12.0),
                                       child: Align(
                                         alignment: Alignment.bottomRight,
                                         child:Row(

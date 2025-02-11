@@ -1,7 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/pages/Client/MenuClient.dart';
-import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
 
 class CustomAppBarSales extends StatelessWidget implements PreferredSizeWidget {
   final String name;
@@ -15,7 +14,7 @@ class CustomAppBarSales extends StatelessWidget implements PreferredSizeWidget {
           children: [
             Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 color: Color.fromRGBO(255, 255, 255, 1),
                 fontFamily: 'Poppins',
@@ -33,7 +32,7 @@ class CustomAppBarSales extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         centerTitle: true,
-        backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+        backgroundColor:const Color.fromRGBO(15, 26, 90, 1),
         leading: IconButton(
           icon: Image.asset(
             'assets/return.png', // Reemplaza con la ruta de tu imagen

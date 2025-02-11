@@ -1,23 +1,24 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, prefer_final_fields, avoid_init_to_null, non_constant_identifier_names, use_build_context_synchronously, sort_child_properties_last, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers
 
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lamundialapp/Apis/apis.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/Class/Producer.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/pages/ForgotPassword.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../Utilidades/Class/Gender.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
 import '../../components/logo.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -198,7 +199,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
       if (password.text != confirmPassword.text) {
         // Correo inválido
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Contraseña inválida')),
+          const SnackBar(content: Text('Contraseña inválida')),
         );
         //await alertas.usuarioNoexiste(context);
         return;
@@ -243,8 +244,8 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
         child: ClipPath(clipper: CurveAppBar(),
         child: AppBar(
           //toolbarHeight: 50,
-          backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-          title: LogoWidget(),
+          backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+          title: const LogoWidget(),
           leading: IconButton(
             icon: Image.asset(
               'assets/return.png', // Reemplaza con la ruta de tu imagen
@@ -256,7 +257,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
           ),
         ),
         ),
-        preferredSize: Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(150),
       ),/*AppBar(
 
       )*/
@@ -304,7 +305,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
           const SizedBox(height: 25),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -328,9 +329,9 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                             width: 300,
                             height: 110,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(246, 247, 255, 1),
+                              color: const Color.fromRGBO(246, 247, 255, 1),
                               borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                   spreadRadius: 1, // Extensión de la sombra
@@ -342,7 +343,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   'Foto C.I.',
                                   style: TextStyle(
                                       fontSize: 24,
@@ -350,7 +351,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Poppins'),
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Image.asset(
                                   'assets/photo.png', // Replace with your image path
                                   width: 35, // Set image width (optional)
@@ -375,9 +376,9 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           width: 150,
                           height: 110,
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(246, 247, 255, 1),
+                            color: const Color.fromRGBO(246, 247, 255, 1),
                             borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                 spreadRadius: 1, // Extensión de la sombra
@@ -398,23 +399,23 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           width: 100,
                           height: 40,
                           decoration: BoxDecoration(// Color de fondo gris
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft:  Radius.zero,
                                 topRight:  Radius.circular(30.0),
                                 bottomLeft:  Radius.circular(30.0),
                                 bottomRight: Radius.zero,
                               ),
                               border: Border.all(
-                                color: Color.fromRGBO(79, 127, 198, 1),
+                                color: const Color.fromRGBO(79, 127, 198, 1),
                               )),
                           child: DropdownButtonFormField<TypeDoc>(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                             ),
                             iconSize: 0,
                             value: typeDoc,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(30.0),
                               bottomLeft:  Radius.circular(30.0),
@@ -432,15 +433,15 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                               );
                             }).toList(),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                              enabledBorder: UnderlineInputBorder(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                              enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.transparent)),
                               suffixIcon: Container(
-                                padding: EdgeInsets.only(right: 0),
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
+                                padding: const EdgeInsets.only(right: 0),
+                                child: const Icon(Icons.keyboard_arrow_down_outlined),
                               ),
                             ),
                           ),
@@ -449,14 +450,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           width: 200,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -471,11 +472,11 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -496,14 +497,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -537,7 +538,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -550,14 +551,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -591,7 +592,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -604,14 +605,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -645,7 +646,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -658,14 +659,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -699,7 +700,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -712,14 +713,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -748,7 +749,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -761,14 +762,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
                           bottomRight: Radius.zero,
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
+                          color: const Color.fromRGBO(79, 127, 198, 1),
                         )),
                     child: Row(
                       children: [
@@ -797,7 +798,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 12.0),
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Color.fromRGBO(121, 116, 126, 1),
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
@@ -806,17 +807,6 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                             obscureText: !showPassword,
                           ),
                         ),
-                        /*IconButton(
-                          icon: Icon(
-                            showPassword ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.grey[500],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),*/
                       ],
                     ),
                   ),
@@ -825,14 +815,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
                           bottomRight: Radius.zero,
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
+                          color: const Color.fromRGBO(79, 127, 198, 1),
                         )),
                     child: Row(
                       children: [
@@ -861,7 +851,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 12.0),
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Color.fromRGBO(121, 116, 126, 1),
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
@@ -870,17 +860,6 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                             obscureText: !showPassword,
                           ),
                         ),
-                        /*IconButton(
-                          icon: Icon(
-                            showPassword ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.grey[500],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),*/
                       ],
                     ),
                   ),
@@ -889,14 +868,14 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                     ),
                     child: TextField(
@@ -930,7 +909,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                           horizontal: 12.0,
                         ),
                         hintStyle:
-                        TextStyle(
+                        const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700
@@ -943,24 +922,24 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
             width: 300,
             height: 40,
             decoration: BoxDecoration(// Color de fondo gris
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft:  Radius.zero,
                   topRight:  Radius.circular(40.0),
                   bottomLeft:  Radius.circular(40.0),
                   bottomRight: Radius.zero,
             ),
             border: Border.all(
-                color: Color.fromRGBO(79, 127, 198, 1),
+                color: const Color.fromRGBO(79, 127, 198, 1),
             )),
             child: DropdownButtonFormField<Gender>(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         color: Colors.black,
 
                       ),
                       iconSize: 0,
                       value: selectedGender,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
@@ -979,20 +958,20 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                       }).toList(),
                       decoration: InputDecoration(
                           hintText: 'Sexo',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Color.fromRGBO(121, 116, 126, 1),
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                          enabledBorder: UnderlineInputBorder(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent)),
                           suffixIcon: Container(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.keyboard_arrow_down_outlined),
+                            padding: const EdgeInsets.only(right: 10),
+                            child: const Icon(Icons.keyboard_arrow_down_outlined),
                           ),
                       ),
                     ),
@@ -1010,7 +989,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                     if (!_isValidEmail(correo.text)) {
                       // Correo inválido
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Correo inválido')),
+                        const SnackBar(content: Text('Correo inválido')),
                       );
                     }else{
                       RegisterClient();
@@ -1040,8 +1019,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
           const SizedBox(height: 30),
           Container(
 
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -1057,7 +1035,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                   ),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -1073,7 +1051,7 @@ class RegisterProductorPageState extends State<RegisterProductorPage> {
                   ),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

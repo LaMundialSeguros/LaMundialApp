@@ -1,7 +1,6 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, unused_local_variable, no_leading_underscores_for_local_identifiers, unnecessary_import, unused_import
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -65,7 +64,7 @@ class RiskStatementAutoPageState extends State<RiskStatementAutoPage> {
   Widget build(BuildContext context) {
     bool _isChecked = false;
     return Scaffold(
-      appBar: CustomAppBarSales("Declaración de Riesgo"),
+      appBar: const CustomAppBarSales("Declaración de Riesgo"),
       body:SingleChildScrollView(child: Builder(
         builder: (BuildContext context) {
           return buildForm(context); // Pasa el contexto obtenido
@@ -93,12 +92,12 @@ class RiskStatementAutoPageState extends State<RiskStatementAutoPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Declaro que todos los datos proporcionados son ciertos, completos, libres de falsificación, reticencia y omisión. "
                       "y Autorizo a cualquier institución u organismo público o privado para que antes o después de un evento cubierto por la "
                       "póliza suministre cualquier dato de interés para el asegurador.",
-                      //textAlign: TextAlign.justify,
+
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -107,7 +106,7 @@ class RiskStatementAutoPageState extends State<RiskStatementAutoPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -118,13 +117,13 @@ class RiskStatementAutoPageState extends State<RiskStatementAutoPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Doy fe que el dinero utilizado para el pago de la prima de la Póliza cuya suscripción en este acto solicito, "
                       "proviene de una fuente lícita y por lo tanto, no tiene relación alguna con dinero, capitales, bienes, haberes, "
                       "títulos o beneficios derivados de las actividades ilícitas o de los delitos de Legitimación de Capitales "
                       "y Financiamiento del Terrorismo.",
-                      //textAlign: TextAlign.justify,
+
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -133,7 +132,7 @@ class RiskStatementAutoPageState extends State<RiskStatementAutoPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               const SizedBox(height: 50),
               Container(
                 width: 380,

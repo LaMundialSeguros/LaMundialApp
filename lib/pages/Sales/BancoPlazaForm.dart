@@ -1,6 +1,4 @@
-// ignore_for_file: avoid_print
-
-import 'dart:convert';
+// ignore_for_file: avoid_print, avoid_init_to_null, non_constant_identifier_names, unused_local_variable, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,20 +6,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/AccountType.dart';
 import 'package:lamundialapp/Utilidades/Class/CardType.dart';
-import 'package:lamundialapp/Utilidades/Class/CardType.dart';
-import 'package:lamundialapp/Utilidades/Class/CardType.dart';
-import 'package:lamundialapp/Utilidades/Class/CardType.dart';
-import 'package:lamundialapp/Utilidades/Class/Contry.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/Producer.dart';
-import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
-import '../../Utilidades/Class/CardType.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
-import '../../Utilidades/Class/CardType.dart';
 
 
 final localAuth = LocalAuthentication();
@@ -107,7 +96,7 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarSales("BANCO PLAZA"),
+      appBar: const CustomAppBarSales("BANCO PLAZA"),
       body: Padding(
         padding: const EdgeInsets.only(top: 1),
         child: ModalProgressHUD(
@@ -151,23 +140,23 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 100,
                           height: 40,
                           decoration: BoxDecoration(// Color de fondo gris
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft:  Radius.zero,
                                 topRight:  Radius.circular(30.0),
                                 bottomLeft:  Radius.circular(30.0),
                                 bottomRight: Radius.zero,
                               ),
                               border: Border.all(
-                                color: Color.fromRGBO(79, 127, 198, 1),
+                                color: const Color.fromRGBO(79, 127, 198, 1),
                               )),
                           child: DropdownButtonFormField<TypeDoc>(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                             ),
                             iconSize: 0,
                             value: typeDoc,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(30.0),
                               bottomLeft:  Radius.circular(30.0),
@@ -185,15 +174,15 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               );
                             }).toList(),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                              enabledBorder: UnderlineInputBorder(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                              enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.transparent)),
                               suffixIcon: Container(
-                                padding: EdgeInsets.only(right: 0),
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
+                                padding: const EdgeInsets.only(right: 0),
+                                child: const Icon(Icons.keyboard_arrow_down_outlined),
                               ),
                             ),
                           ),
@@ -202,14 +191,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 200,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -224,11 +213,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'Cédula de Identidad',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -253,14 +242,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 300,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -275,11 +264,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'Titular',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -301,24 +290,24 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                       width: 200,
                       height: 40,
                       decoration: BoxDecoration(// Color de fondo gris
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft:  Radius.zero,
                             topRight:  Radius.circular(40.0),
                             bottomLeft:  Radius.circular(40.0),
                             bottomRight: Radius.zero,
                           ),
                           border: Border.all(
-                            color: Color.fromRGBO(79, 127, 198, 1),
+                            color: const Color.fromRGBO(79, 127, 198, 1),
                           )),
                       child: DropdownButtonFormField<CardType>(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.black,
 
                         ),
                         iconSize: 0,
                         value: CardTypeSelected,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
@@ -337,20 +326,20 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                         }).toList(),
                         decoration: InputDecoration(
                           hintText: 'Tipo Tarjeta',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color.fromRGBO(121, 116, 126, 1),
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700,
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                          enabledBorder: UnderlineInputBorder(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent)),
                           suffixIcon: Container(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.keyboard_arrow_down_outlined),
+                            padding: const EdgeInsets.only(right: 10),
+                            child: const Icon(Icons.keyboard_arrow_down_outlined),
                           ),
                         ),
                       ),
@@ -365,14 +354,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 300,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -387,11 +376,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'Número de tarjeta',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -417,14 +406,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 150,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -440,11 +429,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'MM/AA',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -462,14 +451,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 150,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -484,11 +473,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'CVC',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -514,23 +503,23 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 150,
                           height: 40,
                           decoration: BoxDecoration(// Color de fondo gris
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft:  Radius.zero,
                                 topRight:  Radius.circular(30.0),
                                 bottomLeft:  Radius.circular(30.0),
                                 bottomRight: Radius.zero,
                               ),
                               border: Border.all(
-                                color: Color.fromRGBO(79, 127, 198, 1),
+                                color: const Color.fromRGBO(79, 127, 198, 1),
                               )),
                           child: DropdownButtonFormField<AccountType>(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                             ),
                             iconSize: 0,
                             value: AccountTypeSelected,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(30.0),
                               bottomLeft:  Radius.circular(30.0),
@@ -549,21 +538,21 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                             }).toList(),
                             decoration: InputDecoration(
                               hintText: 'Tipo Cuenta',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 color: Color.fromRGBO(121, 116, 126, 1),
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                              enabledBorder: UnderlineInputBorder(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                              enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.transparent)),
                               suffixIcon: Container(
-                                padding: EdgeInsets.only(right: 0),
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
+                                padding: const EdgeInsets.only(right: 0),
+                                child: const Icon(Icons.keyboard_arrow_down_outlined),
                               ),
                             ),
                           ),
@@ -572,14 +561,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 150,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -594,11 +583,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'PIN Tarjeta',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),
@@ -624,14 +613,14 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                           width: 300,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft:  Radius.zero,
                               topRight:  Radius.circular(40.0),
                               bottomLeft:  Radius.circular(40.0),
                               bottomRight: Radius.zero,
                             ),
                             border: Border.all(
-                              color: Color.fromRGBO(79, 127, 198, 1),
+                              color: const Color.fromRGBO(79, 127, 198, 1),
                             ), // Borde rojo
                           ),
                           child: TextField(
@@ -646,11 +635,11 @@ class BancoPlazaFormPageState extends State<BancoPlazaFormPage> {
                               fontFamily: 'Poppins',
                               // Otros estilos de texto que desees aplicar
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: '',
                               hintText: 'Descripcion',
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 20.0,
                               ),

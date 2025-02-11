@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'dart:core';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -16,7 +15,6 @@ bool disableDate(DateTime day) {
   return false;
 }
 // Fin de rutina
-
 
 // ignore: camel_case_types
 class Alerta extends StatefulWidget {
@@ -50,30 +48,16 @@ class AlertaState extends State<Alerta> {
       //title: "FONDO INSUFICIENTE",
       buttons: [
         DialogButton(
-            onPressed: () {
-              /*menu.MenuAppState().disconnectSocket();
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-                (route) => false,
-              );*/
-              //Navigator.of(context).popUntil((route) => route.isFirst);
-              //pagar.limpiar_campos();
-              //SystemNavigator.pop();
-              //Restart.restartApp();
-            },
+            onPressed: () {},
             color: const Color.fromRGBO(3, 134, 208, 1),
             child: const Text("Aceptar",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Poppins',
-                    fontSize: 20))),
+                    color: Colors.white, fontFamily: 'Poppins', fontSize: 20))),
       ],
       image: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.center,
-        child: Image.asset("assets/Sesion_Caducada.png"),
+        child: Image.asset("assets/error.png"),
       ),
     ).show();
   }
@@ -88,7 +72,6 @@ class AlertaState extends State<Alerta> {
         DialogButton(
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
-              //Navigator.pop(context);
             },
             color: Colors.white,
             child: const Text("Aceptar",
@@ -100,7 +83,7 @@ class AlertaState extends State<Alerta> {
       image: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.center,
-        child: Image.asset("assets/no_existen_registros.png"),
+        child: Image.asset("assets/error.png"),
       ),
       //image: Image.asset("img/no_existe_registro.png"),
     ).show();
@@ -110,97 +93,24 @@ class AlertaState extends State<Alerta> {
     Alert(
       style: alertStyle,
       context: context,
-
       title: "Error de conexión",
       buttons: [
         DialogButton(
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
-              // Navigator.of(context).pop();
             },
-            color: Color.fromRGBO(232, 79, 81, 1),
+            color: const Color.fromRGBO(232, 79, 81, 1),
             child: const Text("Aceptar",
                 style: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 1),
                     fontFamily: 'Poppins',
                     fontSize: 20))),
       ],
-      //image: Image.asset("img/error_de_conexion.png"),
       image: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.center,
-        child: Image.asset("assets/error_conexion.png"),
+        child: Image.asset("assets/error.png"),
       ),
-      //image: SvgPicture.asset("img/icons/error_conexion.svg"),
-    ).show();
-  }
-
-// Future<void> sinConexion(context) async {
-//   AnimationController controller = AnimationController(
-//     duration: const Duration(milliseconds: 500),
-//     vsync: Navigator.of(context),
-//   );
-
-//   Animation<Offset> offsetAnimation = Tween<Offset>(
-//     begin: const Offset(0.0, 1.5),
-//     end: Offset.zero,
-//   ).animate(CurvedAnimation(
-//     parent: controller,
-//     curve: Curves.easeOut,
-//   ));
-
-//   controller.forward();
-
-//   Alert(
-//     context: context,
-//     style: AlertStyle(
-//       animationType: AnimationType.fromBottom, // La animación original
-//       animationDuration: const Duration(milliseconds: 500),
-//       overlayColor: Colors.black.withOpacity(0.7),
-//     ),
-//     //title: "ERROR DE CONEXIÓN",
-//     buttons: [
-//       DialogButton(
-//         onPressed: () {
-//           Navigator.of(context).popUntil((route) => route.isFirst);
-//         },
-//         color: Colors.blue,
-//         child: const Text("OK", style: TextStyle(color: Colors.white)),
-//       ),
-//     ],
-//     image: Image.asset("img/error_de_conexion.png"),
-//   ).show();
-
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return SlideTransition(
-//         position: offsetAnimation,
-//         child: const SizedBox.shrink(),
-//       );
-//     },
-//   );
-// }
-
-  Future<void> impresoraDesconectada(context) async {
-    //loading = false;
-    Alert(
-      style: alertStyle,
-      context: context,
-      //title: "ERROR DE CONEXIÓN",
-      buttons: [
-        DialogButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: const Color.fromRGBO(3, 134, 208, 1),
-            child: const Text("OK",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Poppins',
-                    fontSize: 20))),
-      ],
-      image: Image.asset("assets/errorprinter.png"),
     ).show();
   }
 
@@ -213,26 +123,20 @@ class AlertaState extends State<Alerta> {
         DialogButton(
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
-              //Navigator.pop(context);
-              //cedula.text = '';
-              //dosfa.text = '';
             },
-            color: Color.fromRGBO(232, 79, 81, 1),
+            color: const Color.fromRGBO(232, 79, 81, 1),
             child: const Text("Aceptar",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Poppins',
-                    fontSize: 20))),
+                    color: Colors.white, fontFamily: 'Poppins', fontSize: 20))),
       ],
       image: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.center,
-        child: Image.asset("assets/errorprinter.png"),
+        child: Image.asset("assets/error.png"),
       ),
       //image: Image.asset("img/datos_invalidos.png"),
     ).show();
   }
-
 
   Future<void> noVer(context) async {
     Alert(
@@ -254,10 +158,9 @@ class AlertaState extends State<Alerta> {
       image: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.center,
-        child: Image.asset("assets/no_existen_registros.png"),
+        child: Image.asset("assets/error.png"),
       ),
       //image: Image.asset("img/qrinvalido.png"),
     ).show();
   }
-
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, prefer_final_fields, avoid_init_to_null, non_constant_identifier_names, prefer_const_constructors, sort_child_properties_last, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, file_names
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -241,7 +241,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           '   REGISTRO \n DE USUARIO',
                           style: TextStyle(
@@ -265,7 +265,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(246, 247, 255, 1),
                               borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                   spreadRadius: 1, // Extensión de la sombra
@@ -312,7 +312,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(246, 247, 255, 1),
                             borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                 spreadRadius: 1, // Extensión de la sombra
@@ -742,7 +742,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'La Mundial de Seguros C.A. RIF: J-00084644-8',
                           style: TextStyle(
@@ -758,7 +758,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'Inscrita en la Superintendencia de la Actividad Aseguradora bajo el No. 73 ',
                           style: TextStyle(
@@ -774,7 +774,7 @@ class RegisterClientPageState extends State<RegisterClientPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'Todos los derechos reservados.',
                           style: TextStyle(

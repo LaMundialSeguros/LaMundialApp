@@ -1,35 +1,11 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unnecessary_string_interpolations, sized_box_for_whitespace, must_be_immutable
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:lamundialapp/Utilidades/Class/User.dart';
-
-import 'package:flutter/gestures.dart'; // for TapGestureRecognizer
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:intl/intl.dart';
-import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/SuccessAppBarSales.dart';
-import 'package:lamundialapp/Utilidades/Class/Banco.dart';
-import 'package:lamundialapp/Utilidades/Class/Currency.dart';
-import 'package:lamundialapp/Utilidades/Class/Default.dart';
-import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/TypePayment.dart';
-import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
-import 'package:lamundialapp/components/bannerSyPago.dart';
 import 'package:lamundialapp/pages/Productor/WelcomeProducer.dart';
-import 'package:lamundialapp/pages/Sales/SuccessDetails.dart';
-
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:http/http.dart' as http;
 
-import '../../Utilidades/Class/TypeDoc.dart';
 class SuccessDetails extends StatelessWidget {
   
   bool isLoading = false;
@@ -50,7 +26,7 @@ class SuccessDetails extends StatelessWidget {
 
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: SuccessCustomAppBarSales("PAGO EXITOSO"), // Custom header
+    appBar: const SuccessCustomAppBarSales("PAGO EXITOSO"), // Custom header
     body: Padding(
       padding: const EdgeInsets.only(top: 1),
       child: ModalProgressHUD(
@@ -83,7 +59,7 @@ Widget build(BuildContext context) {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     text: 'Su Póliza de ',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 25,
                       color: Color.fromRGBO(15, 26, 90, 1), 
@@ -92,13 +68,13 @@ Widget build(BuildContext context) {
                     children: [
                       TextSpan(
                         text: '$policyType',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.bold, // Update the font weight for $policyType
                           color: Color.fromRGBO(15, 26, 90, 1), 
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text: ', Número ',
                         style: TextStyle(
                           fontFamily: 'Poppins',
@@ -109,13 +85,13 @@ Widget build(BuildContext context) {
                       ),
                       TextSpan(
                         text: '$cnpoliza',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.bold, // Update the font weight for $cnpoliza
                           color: Color.fromRGBO(15, 26, 90, 1), 
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text: '\nFue emitida exitosamente.\n',
                         style: TextStyle(
                           fontFamily: 'Poppins',
@@ -132,7 +108,7 @@ Widget build(BuildContext context) {
                   textAlign: TextAlign.center,
                   text:  TextSpan(
                     text: 'El número de referencia de su pago es ',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 25,
                       color: Color.fromRGBO(15, 26, 90, 1), 
@@ -141,7 +117,7 @@ Widget build(BuildContext context) {
                     children: [
                       TextSpan(
                         text: transactionId,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(15, 26, 90, 1), 
@@ -160,7 +136,7 @@ Widget build(BuildContext context) {
                 Container(
                   width: 300,
                    // set the desired width
-                  child: Text(
+                  child: const Text(
                     'Fue enviado a su correo electrónico toda la documentación de su póliza.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -187,7 +163,7 @@ Widget build(BuildContext context) {
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeProducer(url: '')),
+                    MaterialPageRoute(builder: (context) => const WelcomeProducer(url: '')),
                     (Route<dynamic> route) => false, // This clears all previous routes
                   );
                   },

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print, unused_local_variable, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings, avoid_unnecessary_containers
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
@@ -20,17 +22,6 @@ class MenuProductsPageState extends State<MenuProducts>{
       super.initState();
       apiServiceGetRamos();
     }
-
-    /*List<Product> products = [
-      Product('Salud Individual', 1),
-      Product('Salud Familiar', 2),
-      Product('Seguro Funerario', 3),
-      Product('4 en 1', 4),
-      Product('Póliza de Vida', 5),
-      Product('R.C.V. Autos', 6),
-      Product('R.C.V. Motos', 7),
-    ];*/
-
     Future<void> apiServiceGetRamos() async {
       products = [];
       final url = Uri.parse('https://apisys2000.lamundialdeseguros.com/api/v1/app/getPlanesCorredor');

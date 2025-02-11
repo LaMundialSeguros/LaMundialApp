@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
 import 'package:lamundialapp/Utilidades/Class/Brand.dart';
-import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Vehicle.g.dart';

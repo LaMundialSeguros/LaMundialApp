@@ -1,8 +1,7 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, non_constant_identifier_names, sort_child_properties_last, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,8 +12,6 @@ import 'package:lamundialapp/pages/Productor/RegisterProductor.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
 import '../components/banner.dart';
 import '../components/logo.dart';
 
@@ -44,8 +41,6 @@ class LoginPageState extends State<LoginPage> {
     bool isFaceIdAvailable = availableBiometrics.contains(BiometricType.face);
     if (isFaceIdAvailable) {
       final ByteData data = await rootBundle.load('lib/images/face.gif');
-      //String? uuid = await UniqueIdentifier.serial;
-      //print(uuid);
       return data.buffer.asUint8List();
     } else {
       final ByteData data = await rootBundle.load('assets/huella.png');
@@ -197,8 +192,8 @@ class LoginPageState extends State<LoginPage> {
         child: ClipPath(clipper: CurveAppBar(),
         child: AppBar(
           //toolbarHeight: 50,
-          backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-          title: LogoWidget(),
+          backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+          title: const LogoWidget(),
           leading: IconButton(
                     icon: Image.asset(
                         'assets/return.png', // Reemplaza con la ruta de tu imagen
@@ -210,7 +205,7 @@ class LoginPageState extends State<LoginPage> {
           ),
         ),
         ),
-        preferredSize: Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(150),
       ),/*AppBar(
 
       )*/
@@ -263,14 +258,14 @@ class LoginPageState extends State<LoginPage> {
             width: 300,
             height: 40,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft:  Radius.zero,
                   topRight:  Radius.circular(40.0),
                   bottomLeft:  Radius.circular(40.0),
                   bottomRight: Radius.zero,
                 ),
                 border: Border.all(
-                  color: Color.fromRGBO(79, 127, 198, 1),
+                  color: const Color.fromRGBO(79, 127, 198, 1),
                 ), // Borde rojo
             ),
             child: TextField(
@@ -299,7 +294,7 @@ class LoginPageState extends State<LoginPage> {
                   horizontal: 12.0,
                 ),
                 hintStyle:
-                    TextStyle(
+                    const TextStyle(
                         color: Color.fromRGBO(121, 116, 126, 1),
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w700
@@ -312,14 +307,14 @@ class LoginPageState extends State<LoginPage> {
             width: 300,
             height: 40,
             decoration: BoxDecoration(// Color de fondo gris
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft:  Radius.zero,
                   topRight:  Radius.circular(40.0),
                   bottomLeft:  Radius.circular(40.0),
                   bottomRight: Radius.zero,
                 ),
                 border: Border.all(
-                  color: Color.fromRGBO(79, 127, 198, 1),
+                  color: const Color.fromRGBO(79, 127, 198, 1),
                 )),
             child: Row(
               children: [
@@ -348,7 +343,7 @@ class LoginPageState extends State<LoginPage> {
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 12.0),
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                           color: Color.fromRGBO(121, 116, 126, 1),
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700
@@ -373,15 +368,15 @@ class LoginPageState extends State<LoginPage> {
           ),
           const SizedBox(height: 15),
           Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 45.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 45.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const ForgotPasswordPage()));
                           },
-                          child: Text(
+                          child: const Text(
                             // '¿Olvidó su contraseña? Click aqui.',
                             '',
                             style: TextStyle(
@@ -409,7 +404,7 @@ class LoginPageState extends State<LoginPage> {
                     if (!_isValidEmail(username.text)) {
                       // Correo inválido
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Correo inválido')),
+                        const SnackBar(content: Text('Correo inválido')),
                       );
                     }else{
                       signUserIn();
@@ -433,22 +428,6 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                // if (isLoading)
-                //   Positioned(
-                //     left: 100,
-                //     child: Container(
-                //       margin: const EdgeInsets.only(left: 8),
-                //       child: const SpinKitDualRing(
-                //         color: Color.fromRGBO(76, 182, 149, 0.965),
-                //         size: 60.0,
-                //       ),
-                //       // const CircularProgressIndicator(
-                //       //   valueColor: AlwaysStoppedAnimation<Color?>(
-                //       //     Color.fromARGB(179, 255, 255, 255),
-                //       //   ),
-                //       // ),
-                //     ),
-                //   ),
               ],
             ),
           ),
@@ -460,9 +439,9 @@ class LoginPageState extends State<LoginPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterProductorPage()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const RegisterProductorPage()));
                           },
-                          child: Text(
+                          child: const Text(
                             // '¿No tiene una cuenta? Cree una.',
                             '',
                             style: TextStyle(
@@ -481,7 +460,6 @@ class LoginPageState extends State<LoginPage> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData) {
-
                         return Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -521,13 +499,12 @@ class LoginPageState extends State<LoginPage> {
                     },
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () {},
-                          child: Text(
+                          child: const Text(
                             'Usar huella',
                             style: TextStyle(
                                 fontSize: 9,
@@ -541,8 +518,8 @@ class LoginPageState extends State<LoginPage> {
                   ),
           const SizedBox(height: 20),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -557,8 +534,8 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -573,8 +550,8 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

@@ -1,6 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
@@ -30,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-        backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+        backgroundColor:const Color.fromRGBO(15, 26, 90, 1),
         leading: IconButton(
           icon: Image.asset(
             'assets/return.png', // Reemplaza con la ruta de tu imagen

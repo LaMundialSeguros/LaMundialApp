@@ -1,15 +1,11 @@
-// ignore_for_file: avoid_print
-
-import 'dart:convert';
+// ignore_for_file: avoid_print, non_constant_identifier_names, no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
 import 'package:lamundialapp/pages/Sales/VerifyPayment.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 
 final localAuth = LocalAuthentication();
@@ -79,7 +75,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
   Widget build(BuildContext context) {
     bool _isChecked = false;
     return Scaffold(
-      appBar: CustomAppBarSales("Declaración de Riesgo"),
+      appBar: const CustomAppBarSales("Declaración de Riesgo"),
       body:SingleChildScrollView(child: Builder(
         builder: (BuildContext context) {
           return buildForm(context); // Pasa el contexto obtenido
@@ -107,13 +103,12 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Declaro que todos los datos proporcionados son ciertos, completos, libres de falsificación, "
                           "reticencia y omisión. y Autorizo a cualquier institución u organismo público o privado "
                           "para que antes o después de un evento cubierto por la póliza suministre cualquier dato de "
                           "interés para el asegurador.",
-                      //textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -122,7 +117,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -133,14 +128,13 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Doy fe que el dinero utilizado para el pago de la prima de la Póliza "
                       "cuya suscripción en este acto solicito, proviene de una fuente lícita "
                       "y por lo tanto, no tiene relación alguna con dinero, capitales, bienes, "
                       "haberes, títulos o beneficios derivados de las actividades ilícitas o de los "
                       "delitos de Legitimación de Capitales y Financiamiento del Terrorismo.",
-                      //textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -149,7 +143,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -160,12 +154,11 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Declaro que no conozco, ni he sido diagnosticado con alguna enfermedad o "
                           "condición grave de salud que ponga en riesgo mi integridad física o "
                           "mi vida. Por lo afirmo que me encuentro en buen Estado de Salud.",
-                      //textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -174,7 +167,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -185,12 +178,11 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Declaro que no practico deportes o actividades recreativas o "
                       "profesionales u ocupación de riesgo que pongan en peligro "
                       "mi integridad física o mi vida.",
-                      //textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -199,7 +191,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -210,13 +202,12 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "¿Ha padecido enfermedades cardiovasculares: hipertensión arterial, "
                       "infarto al miocardio, arritmia cardíaca, angina de pecho, fiebre reumática, "
                       "arteriosclerosis, trastornos valvulares, tromboflebitis? En caso de afirmativo, "
                       "indique detalles: Fecha de diagnóstico, Médico tratante, Estado de salud actual.",
-                      //textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins"
@@ -232,14 +223,14 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   width: 300,
                   height: 200,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft:  Radius.zero,
                       topRight:  Radius.circular(40.0),
                       bottomLeft:  Radius.circular(40.0),
                       bottomRight: Radius.zero,
                     ),
                     border: Border.all(
-                      color: Color.fromRGBO(79, 127, 198, 1),
+                      color: const Color.fromRGBO(79, 127, 198, 1),
                     ), // Borde rojo
                   ),
                   child: TextField(
@@ -255,10 +246,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       fontFamily: 'Poppins',
                       // Otros estilos de texto que desees aplicar
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Describa la enfermedad y quién la padece...',
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20.0,
                       ),
@@ -272,7 +263,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -283,7 +274,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "¿Ha padecido Enfermedades endocrinas: diabetes, obesidad, "
                       "alteraciones del colesterol y triglicéridos? En caso de afirmativo, "
@@ -304,14 +295,14 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   width: 300,
                   height: 200,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft:  Radius.zero,
                       topRight:  Radius.circular(40.0),
                       bottomLeft:  Radius.circular(40.0),
                       bottomRight: Radius.zero,
                     ),
                     border: Border.all(
-                      color: Color.fromRGBO(79, 127, 198, 1),
+                      color: const Color.fromRGBO(79, 127, 198, 1),
                     ), // Borde rojo
                   ),
                   child: TextField(
@@ -327,10 +318,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       fontFamily: 'Poppins',
                       // Otros estilos de texto que desees aplicar
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Describa la enfermedad y quién la padece...',
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20.0,
                       ),
@@ -344,7 +335,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -355,7 +346,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "¿Ha padecido enfermedades Hematológicas? En caso de afirmativo, "
                       "proporcione detalles: Diagnostico, Fecha de inicio, "
@@ -376,14 +367,14 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   width: 300,
                   height: 200,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft:  Radius.zero,
                       topRight:  Radius.circular(40.0),
                       bottomLeft:  Radius.circular(40.0),
                       bottomRight: Radius.zero,
                     ),
                     border: Border.all(
-                      color: Color.fromRGBO(79, 127, 198, 1),
+                      color: const Color.fromRGBO(79, 127, 198, 1),
                     ), // Borde rojo
                   ),
                   child: TextField(
@@ -399,10 +390,10 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       fontFamily: 'Poppins',
                       // Otros estilos de texto que desees aplicar
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Describa la enfermedad y quién la padece...',
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20.0,
                       ),
@@ -416,7 +407,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Checkbox(
@@ -427,7 +418,7 @@ class RiskStatementPageState extends State<RiskStatementPage> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "¿Consume: Tabaco o cigarrillo o cualquier otra droga adictiva? "
                       "En caso de afirmativo, proporcione detalles: "

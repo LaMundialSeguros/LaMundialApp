@@ -1,16 +1,12 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, override_on_non_overriding_member, no_leading_underscores_for_local_identifiers, prefer_const_constructors, unused_local_variable, avoid_print, sort_child_properties_last, sized_box_for_whitespace, file_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/pages/Client/ServicesClient.dart';
-import 'package:lamundialapp/pages/Client/test.dart';
 import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
 import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
 import 'package:lamundialapp/pages/statistics/ClientStatisticsMenu.dart';
 
-import '../../Apis/apis.dart';
 
 
 class MenuClient extends StatefulWidget {

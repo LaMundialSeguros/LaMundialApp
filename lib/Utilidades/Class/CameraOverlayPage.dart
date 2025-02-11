@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // Import image_picker
@@ -51,7 +53,7 @@ class _CameraOverlayPageState extends State<CameraOverlayPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Capturar Imágen'),
+        title: const Text('Capturar Imágen'),
         actions: [
           IconButton(
             icon: Icon(_flashIcon()),
@@ -78,7 +80,7 @@ class _CameraOverlayPageState extends State<CameraOverlayPage> {
           ),
           // New Gallery Access Button
           IconButton(
-            icon: Icon(Icons.photo_library),
+            icon: const Icon(Icons.photo_library),
             onPressed: () async {
               try {
                 final ImagePicker picker = ImagePicker();
@@ -115,7 +117,7 @@ class _CameraOverlayPageState extends State<CameraOverlayPage> {
                         _showFocusCircle = true;
                       });
 
-                      Future.delayed(Duration(milliseconds: 500), () {
+                      Future.delayed(const Duration(milliseconds: 500), () {
                         setState(() {
                           _showFocusCircle = false;
                         });
@@ -154,12 +156,12 @@ class _CameraOverlayPageState extends State<CameraOverlayPage> {
               ],
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
         onPressed: () async {
           try {
             await _initializeControllerFuture;

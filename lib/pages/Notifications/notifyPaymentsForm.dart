@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_init_to_null, non_constant_identifier_names, avoid_print, annotate_overrides, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, unused_local_variable, prefer_const_constructors
+
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +15,7 @@ import 'package:lamundialapp/Utilidades/Class/notifyPayment.dart';
 import 'package:lamundialapp/components/bannerNotifyPayments.dart';
 import 'package:http/http.dart' as http;
 import 'dart:core';
-import 'package:image_picker/image_picker.dart';
+
 
 class NotifyPaymentsForm extends StatefulWidget {
   const NotifyPaymentsForm({Key? key}) : super(key: key);
@@ -154,7 +155,6 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
         Uri.parse('https://devapisys2000.lamundialdeseguros.com/api/v1/valrep/type-of-payment'),
         headers: {
           'Content-Type': 'application/json', // Define el tipo de contenido
-          //'Authorization': 'Bearer tu_token', // Si necesitas autenticación
         },
         body: body,
       );
@@ -166,14 +166,6 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
           final List<dynamic> targetBank = jsonResponse['data']['typePayment'];
 
           setState(() {
-            // Convertimos cada elemento en un Map
-            /*TypePayments = targetBank.map((bank) {
-              return {
-                'id': bank['ctipopago'],
-                'name': bank['xtipopago'],
-              };
-            }).toList();*/
-
             // Convertimos cada elemento en una instancia de TypePayment
             TypePayments = targetBank.map((bank) {
               return TypePayment.fromJsonApi(bank);
@@ -778,7 +770,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(246, 247, 255, 1),
                               borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                   spreadRadius: 1, // Extensión de la sombra
@@ -825,7 +817,7 @@ class NotifyPaymentsFormState extends State<NotifyPaymentsForm> {
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(246, 247, 255, 1),
                             borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
                                 spreadRadius: 1, // Extensión de la sombra

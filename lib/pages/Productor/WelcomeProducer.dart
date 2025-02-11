@@ -1,18 +1,12 @@
+// ignore_for_file: unused_local_variable, use_build_context_synchronously, non_constant_identifier_names, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
 import 'package:lamundialapp/Utilidades/AppBarWelcome.dart';
 import 'package:lamundialapp/pages/Productor/MenuProductor.dart';
-import 'package:lamundialapp/pages/statistics/ProducerStatisticsMenu.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
 import '../../Apis/apis.dart';
-import '../../Utilidades/Class/User.dart';
 
-// ignore_for_file: avoid_print
 
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:flutter/gestures.dart'; // for TapGestureRecognizer
 
 class WelcomeProducer extends StatelessWidget {
   final String url;
@@ -31,7 +25,7 @@ class WelcomeProducer extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppBarWelcome(),
+      appBar: const CustomAppBarWelcome(),
       body: Menu(context),
     );
   }
@@ -42,8 +36,8 @@ class WelcomeProducer extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Póliza'),
-          content: Text('¿Desea descargar su póliza?'),
+          title: const Text('Póliza'),
+          content: const Text('¿Desea descargar su póliza?'),
           actions: <Widget>[
             TextButton(
               onPressed: () async {
@@ -57,13 +51,13 @@ class WelcomeProducer extends StatelessWidget {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Sí'),
+              child: const Text('Sí'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
           ],
         );
@@ -80,7 +74,7 @@ Widget Menu(BuildContext context) {
         children: [
           const SizedBox(height: 100),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -100,7 +94,7 @@ Widget Menu(BuildContext context) {
               children: [
                 Text(
                   GlobalVariables().user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Color.fromRGBO(15, 26, 90, 1),
                     fontWeight: FontWeight.bold,
@@ -112,7 +106,7 @@ Widget Menu(BuildContext context) {
           ),
           const SizedBox(height: 30),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -130,21 +124,21 @@ Widget Menu(BuildContext context) {
           const SizedBox(height: 30),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MenuProductor(0)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MenuProductor(0)));
             },
             child: Container(
               width: 320,
               height: 150,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(232, 79, 81, 0.05),
-                borderRadius: BorderRadius.only(
+                color: const Color.fromRGBO(232, 79, 81, 0.05),
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
                   bottomLeft: Radius.circular(30.0),
                   bottomRight: Radius.circular(30.0),
                 ),
                 border: Border.all(
-                  color: Color.fromRGBO(232, 79, 81, 1),
+                  color: const Color.fromRGBO(232, 79, 81, 1),
                 ),
               ),
               child: Center(
@@ -153,7 +147,7 @@ Widget Menu(BuildContext context) {
                     const SizedBox(height: 30),
                     Image.asset('assets/comprar.png', height: 60),
                     Container(
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(

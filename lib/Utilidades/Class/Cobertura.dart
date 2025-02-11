@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, prefer_null_aware_operators
+
 class Cobertura {
   final int ramo;
   final String cplan;

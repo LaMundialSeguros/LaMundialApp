@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names, non_constant_identifier_names
+
 import 'package:lamundialapp/Utilidades/Class/TypeDoc.dart';
 import 'package:json_annotation/json_annotation.dart';
 

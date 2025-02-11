@@ -1,22 +1,13 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, avoid_init_to_null, non_constant_identifier_names, prefer_const_constructors, sort_child_properties_last, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
-import '../components/banner.dart';
 import '../components/logo.dart';
 
 final localAuth = LocalAuthentication();
@@ -238,7 +229,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'La Mundial de Seguros C.A. RIF: J-00084644-8',
                           style: TextStyle(
@@ -254,7 +245,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'Inscrita en la Superintendencia de la Actividad Aseguradora bajo el No. 73 ',
                           style: TextStyle(
@@ -270,7 +261,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'Todos los derechos reservados.',
                           style: TextStyle(

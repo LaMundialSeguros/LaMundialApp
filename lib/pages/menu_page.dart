@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: sort_child_properties_last, avoid_unnecessary_containers, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-
-import '../components/logo.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -24,8 +23,8 @@ class _MenuPageState extends State<MenuPage> {
         child: ClipPath(clipper: CurveAppBar(),
           child: AppBar(
             //toolbarHeight: 50,
-            backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-            title: Text(
+            backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+            title: const Text(
                           "Menu",
                           style: TextStyle(
                             color: Colors.white, // Cambia el color del texto aquí
@@ -33,7 +32,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
           ),
         ),
-        preferredSize: Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(150),
       ),
       body: Container(
         child: Column(

@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/Utilidades/AppBarVehiculos.dart';
+// ignore_for_file: avoid_print, sort_child_properties_last, non_constant_identifier_names, avoid_unnecessary_containers, file_names
 
-import '../../Apis/apis.dart';
+import 'package:flutter/material.dart';
 import '../../Utilidades/AppBarServices.dart';
 
 class ClientPoliza extends StatelessWidget{
@@ -12,7 +10,7 @@ class ClientPoliza extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:CustomAppBarServices(),
+      appBar:const CustomAppBarServices(),
       body: Menu(context,datos),
       floatingActionButton: SafeArea(
         child: Padding(
@@ -27,15 +25,15 @@ class ClientPoliza extends StatelessWidget{
                   // Acción a realizar al presionar el botón
                   print('Botón presionado');
                 },
-                child:  Text(
+                child:  const Text(
                           "Pagar Póliza",
-                          style: const TextStyle(
+                          style: TextStyle(
                           color: Color.fromRGBO(255, 255, 255, 1), // Color del texto
                           fontFamily: 'Poppins',
                         ),
                 ),
-                backgroundColor: Color.fromRGBO(232, 79, 81, 0.85), // Establecemos el color a rojo
-                shape: RoundedRectangleBorder(
+                backgroundColor: const Color.fromRGBO(232, 79, 81, 0.85), // Establecemos el color a rojo
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft:  Radius.circular(12.0),
                     topRight:  Radius.circular(12.0),
@@ -60,8 +58,8 @@ Widget Menu(BuildContext context,datos) {
       height: 600,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
-          borderRadius: BorderRadius.only(
+          color: const Color.fromRGBO(255, 255, 255, 1),
+          borderRadius: const BorderRadius.only(
             topLeft:  Radius.circular(15.0),
             topRight:  Radius.circular(15.0),
             bottomLeft:  Radius.circular(15.0),
@@ -70,7 +68,7 @@ Widget Menu(BuildContext context,datos) {
           border: Border.all(
             color: Colors.transparent,
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color.fromRGBO(98, 162, 232, 0.5), // Color de la sombra
               spreadRadius: 2, // Distancia de la sombra
@@ -94,15 +92,15 @@ Widget Menu(BuildContext context,datos) {
                   width: 315,
                   height: 70,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(232, 79, 81, 0.05),
-                      borderRadius: BorderRadius.only(
+                      color: const Color.fromRGBO(232, 79, 81, 0.05),
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.circular(15.0),
                         topRight:  Radius.circular(15.0),
                         bottomLeft:  Radius.circular(15.0),
                         bottomRight: Radius.circular(15.0),
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(232, 79, 81, 1),
+                        color: const Color.fromRGBO(232, 79, 81, 1),
                       )),
                   child: Center(
                     child: Column(
@@ -114,7 +112,7 @@ Widget Menu(BuildContext context,datos) {
                             children: [
                               Text(
                                 producto['servicio'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16,
                                     color: Color.fromRGBO(15, 26, 90, 1),
                                     fontFamily: 'Poppins'),

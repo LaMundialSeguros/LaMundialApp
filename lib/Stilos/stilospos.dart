@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:rflutter_alert/rflutter_alert.dart';

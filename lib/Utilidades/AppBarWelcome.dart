@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/pages/Client/WelcomeClient.dart';
 import 'package:lamundialapp/pages/rolPage.dart';
 
 class CustomAppBarWelcome extends StatelessWidget implements PreferredSizeWidget {
@@ -30,7 +31,7 @@ class CustomAppBarWelcome extends StatelessWidget implements PreferredSizeWidget
           ),
         ],
       ),
-        backgroundColor:Color.fromRGBO(15, 26, 90, 1),
+        backgroundColor:const Color.fromRGBO(15, 26, 90, 1),
         leading: IconButton(
           icon: Image.asset(
             'assets/logoutblanco.png', // Reemplaza con la ruta de tu imagen
@@ -39,7 +40,7 @@ class CustomAppBarWelcome extends StatelessWidget implements PreferredSizeWidget
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (context) => RolPage(),
+                builder: (context) => const RolPage(),
               ),
                   (route) =>
               false, // Elimina todas las rutas existentes en la pila

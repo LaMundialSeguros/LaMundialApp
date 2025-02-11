@@ -1,40 +1,16 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, annotate_overrides, avoid_unnecessary_containers
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
 import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
-import 'package:lamundialapp/Utilidades/Class/Contry.dart';
-import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
-import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/Producer.dart';
-import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relationship.dart';
-import 'package:lamundialapp/Utilidades/Class/Taker.dart';
-import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
-import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
-import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
-import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
-import '../../Utilidades/Class/Gender.dart';
-import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
-import '../../Utilidades/Class/Vehicle.dart';
-import '../../components/logo.dart';
 
 
 final localAuth = LocalAuthentication();
@@ -116,7 +92,7 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarSales("Beneficiarios"),
+      appBar: const CustomAppBarSales("Beneficiarios"),
       body:Padding(
         padding: const EdgeInsets.only(top: 1),
         child: ModalProgressHUD(
@@ -168,7 +144,7 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                         const SizedBox(height: 25),
                         Container(
                           //padding: EdgeInsets.symmetric(horizontal: 0),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
@@ -191,23 +167,23 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 100,
                                 height: 40,
                                 decoration: BoxDecoration(// Color de fondo gris
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft:  Radius.zero,
                                       topRight:  Radius.circular(30.0),
                                       bottomLeft:  Radius.circular(30.0),
                                       bottomRight: Radius.zero,
                                     ),
                                     border: Border.all(
-                                      color: Color.fromRGBO(79, 127, 198, 1),
+                                      color: const Color.fromRGBO(79, 127, 198, 1),
                                     )),
                                 child: DropdownButtonFormField<TypeDoc>(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'Poppins',
                                     color: Colors.black,
                                   ),
                                   iconSize: 0,
                                   value: _selectedTypeDocs[index],
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(30.0),
                                     bottomLeft:  Radius.circular(30.0),
@@ -225,15 +201,15 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                     );
                                   }).toList(),
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                                    enabledBorder: UnderlineInputBorder(
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                                    enabledBorder: const UnderlineInputBorder(
                                       borderSide: BorderSide.none,
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(color: Colors.transparent)),
                                     suffixIcon: Container(
-                                      padding: EdgeInsets.only(right: 0),
-                                      child: Icon(Icons.keyboard_arrow_down_outlined),
+                                      padding: const EdgeInsets.only(right: 0),
+                                      child: const Icon(Icons.keyboard_arrow_down_outlined),
                                     ),
                                   ),
                                 ),
@@ -242,14 +218,14 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 200,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(40.0),
                                     bottomLeft:  Radius.circular(40.0),
                                     bottomRight: Radius.zero,
                                   ),
                                   border: Border.all(
-                                    color: Color.fromRGBO(79, 127, 198, 1),
+                                    color: const Color.fromRGBO(79, 127, 198, 1),
                                   ), // Borde rojo
                                 ),
                                 child: TextField(
@@ -260,10 +236,10 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                     fontFamily: 'Poppins',
                                     // Otros estilos de texto que desees aplicar
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'Cédula de Identidad',
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                       vertical: 10,
                                       horizontal: 20.0,
                                     ),
@@ -288,14 +264,14 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 150,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(40.0),
                                     bottomLeft:  Radius.circular(40.0),
                                     bottomRight: Radius.zero,
                                   ),
                                   border: Border.all(
-                                    color: Color.fromRGBO(79, 127, 198, 1),
+                                    color: const Color.fromRGBO(79, 127, 198, 1),
                                   ), // Borde rojo
                                 ),
                                 child: TextField(
@@ -306,10 +282,10 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                     fontFamily: 'Poppins',
                                     // Otros estilos de texto que desees aplicar
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'Nombre',
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                       vertical: 10,
                                       horizontal: 20.0,
                                     ),
@@ -326,14 +302,14 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 150,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(40.0),
                                     bottomLeft:  Radius.circular(40.0),
                                     bottomRight: Radius.zero,
                                   ),
                                   border: Border.all(
-                                    color: Color.fromRGBO(79, 127, 198, 1),
+                                    color: const Color.fromRGBO(79, 127, 198, 1),
                                   ), // Borde rojo
                                 ),
                                 child: TextField(
@@ -344,10 +320,10 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                     fontFamily: 'Poppins',
                                     // Otros estilos de texto que desees aplicar
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'Apellido',
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                       vertical: 10,
                                       horizontal: 20.0,
                                     ),
@@ -372,14 +348,14 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 100,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(40.0),
                                     bottomLeft:  Radius.circular(40.0),
                                     bottomRight: Radius.zero,
                                   ),
                                   border: Border.all(
-                                    color: Color.fromRGBO(79, 127, 198, 1),
+                                    color: const Color.fromRGBO(79, 127, 198, 1),
                                   ), // Borde rojo
                                 ),
                                 child: TextField(
@@ -390,10 +366,10 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                     fontFamily: 'Poppins',
                                     // Otros estilos de texto que desees aplicar
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: '%',
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                       vertical: 10,
                                       horizontal: 20.0,
                                     ),
@@ -410,23 +386,23 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                 width: 200,
                                 height: 40,
                                 decoration: BoxDecoration(// Color de fondo gris
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft:  Radius.zero,
                                       topRight:  Radius.circular(30.0),
                                       bottomLeft:  Radius.circular(30.0),
                                       bottomRight: Radius.zero,
                                     ),
                                     border: Border.all(
-                                      color: Color.fromRGBO(79, 127, 198, 1),
+                                      color: const Color.fromRGBO(79, 127, 198, 1),
                                     )),
                                 child: DropdownButtonFormField<Relationship>(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'Poppins',
                                     color: Colors.black,
                                   ),
                                   iconSize: 0,
                                   value: _selectedRelationship[index],
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft:  Radius.zero,
                                     topRight:  Radius.circular(30.0),
                                     bottomLeft:  Radius.circular(30.0),
@@ -445,20 +421,20 @@ class BeneficiariesFormPageState extends State<BeneficiariesFormPage> {
                                   }).toList(),
                                   decoration: InputDecoration(
                                     hintText: 'Parentesco',
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       color: Color.fromRGBO(121, 116, 126, 1),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w700,
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                                    enabledBorder: UnderlineInputBorder(
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                                    enabledBorder: const UnderlineInputBorder(
                                       borderSide: BorderSide.none,
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(color: Colors.transparent)),
                                     suffixIcon: Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Icon(Icons.keyboard_arrow_down_outlined),
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: const Icon(Icons.keyboard_arrow_down_outlined),
                                     ),
                                   ),
                                 ),

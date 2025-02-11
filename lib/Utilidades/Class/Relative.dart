@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:lamundialapp/Utilidades/Class/Contry.dart';
-import 'package:lamundialapp/Utilidades/Class/Gender.dart';
+// ignore_for_file: file_names
+
 import 'package:lamundialapp/Utilidades/Class/Relationship.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeDoc.dart';
 import 'package:json_annotation/json_annotation.dart';

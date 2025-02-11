@@ -1,13 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/pages/Client/MenuClient.dart';
-import 'package:lamundialapp/pages/Client/ServicesClient.dart';
-import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+// ignore_for_file: avoid_unnecessary_containers, non_constant_identifier_names
 
-import '../../Apis/apis.dart';
-import '../../Utilidades/Class/User.dart';
+import 'package:flutter/material.dart';
 
 class ProducerStatisticsMenu extends StatelessWidget{
   const ProducerStatisticsMenu({Key? key}) : super(key: key);
@@ -33,22 +26,22 @@ Widget Menu(BuildContext context) {
                     width: 340,
                     height: 80,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(232, 79, 81, 0.05),
-                        borderRadius: BorderRadius.only(
+                        color: const Color.fromRGBO(232, 79, 81, 0.05),
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.circular(15.0),
                           topRight:  Radius.circular(15.0),
                           bottomLeft:  Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(232, 79, 81, 1),
+                          color: const Color.fromRGBO(232, 79, 81, 1),
                         )),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -74,22 +67,22 @@ Widget Menu(BuildContext context) {
                     width: 340,
                     height: 80,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(232, 79, 81, 0.05),
-                        borderRadius: BorderRadius.only(
+                        color: const Color.fromRGBO(232, 79, 81, 0.05),
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.circular(15.0),
                           topRight:  Radius.circular(15.0),
                           bottomLeft:  Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(232, 79, 81, 1),
+                          color: const Color.fromRGBO(232, 79, 81, 1),
                         )),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -115,22 +108,22 @@ Widget Menu(BuildContext context) {
                     width: 340,
                     height: 80,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(232, 79, 81, 0.05),
-                        borderRadius: BorderRadius.only(
+                        color: const Color.fromRGBO(232, 79, 81, 0.05),
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.circular(15.0),
                           topRight:  Radius.circular(15.0),
                           bottomLeft:  Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(232, 79, 81, 1),
+                          color: const Color.fromRGBO(232, 79, 81, 1),
                         )),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -156,22 +149,22 @@ Widget Menu(BuildContext context) {
                     width: 340,
                     height: 80,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(232, 79, 81, 0.05),
-                        borderRadius: BorderRadius.only(
+                        color: const Color.fromRGBO(232, 79, 81, 0.05),
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.circular(15.0),
                           topRight:  Radius.circular(15.0),
                           bottomLeft:  Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(232, 79, 81, 1),
+                          color: const Color.fromRGBO(232, 79, 81, 1),
                         )),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -197,22 +190,22 @@ Widget Menu(BuildContext context) {
                     width: 340,
                     height: 80,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(232, 79, 81, 0.05),
-                        borderRadius: BorderRadius.only(
+                        color: const Color.fromRGBO(232, 79, 81, 0.05),
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.circular(15.0),
                           topRight:  Radius.circular(15.0),
                           bottomLeft:  Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(232, 79, 81, 1),
+                          color: const Color.fromRGBO(232, 79, 81, 1),
                         )),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(

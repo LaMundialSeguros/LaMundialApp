@@ -1,3 +1,5 @@
+// ignore: file_names
+
 
 import 'package:lamundialapp/Utilidades/Class/Currency.dart';
 import 'package:lamundialapp/Utilidades/Class/TypeDoc.dart';

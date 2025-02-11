@@ -1,24 +1,13 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
-import 'package:lamundialapp/Utilidades/segmentedInput.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
 import '../Utilidades/Class/Method.dart';
-import '../components/banner.dart';
-import '../components/logo.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -51,16 +40,7 @@ class NewPasswordPageState extends State<NewPasswordPage> {
     });
 
     try {
-      // Validar campos nulos
-      /*if (selectedMethod == null) {
-        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
-        await alertas.usuarioNoexiste(context);
-        return;
-      }*/
 
-      //Navigator.push(context,MaterialPageRoute(builder: (context) => SecretCodePage()));
-
-      // Resto del código...
     } catch (e) {
       // Manejar errores si es necesario
     } finally {
@@ -78,8 +58,8 @@ class NewPasswordPageState extends State<NewPasswordPage> {
     return Scaffold(
       appBar: AppBar(
         //toolbarHeight: 50,
-        backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-        title: Text(
+        backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+        title: const Text(
                   "CAMBIAR CONTRASEÑA",
                   style: TextStyle(
                             fontSize: 25,
@@ -138,14 +118,14 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
                           bottomRight: Radius.zero,
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
+                          color: const Color.fromRGBO(79, 127, 198, 1),
                         )),
                     child: Row(
                       children: [
@@ -174,7 +154,7 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 12.0),
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Color.fromRGBO(121, 116, 126, 1),
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
@@ -183,17 +163,6 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                             obscureText: !showPassword,
                           ),
                         ),
-                        /*IconButton(
-                          icon: Icon(
-                            showPassword ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.grey[500],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),*/
                       ],
                     ),
                   ),
@@ -202,14 +171,14 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
                           bottomRight: Radius.zero,
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
+                          color: const Color.fromRGBO(79, 127, 198, 1),
                         )),
                     child: Row(
                       children: [
@@ -238,7 +207,7 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 12.0),
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Color.fromRGBO(121, 116, 126, 1),
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
@@ -247,17 +216,6 @@ class NewPasswordPageState extends State<NewPasswordPage> {
                             obscureText: !showPassword,
                           ),
                         ),
-                        /*IconButton(
-                          icon: Icon(
-                            showPassword ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.grey[500],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),*/
                       ],
                     ),
                   ),

@@ -1,41 +1,17 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, annotate_overrides, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
-import 'package:lamundialapp/Utilidades/Class/Beneficiary.dart';
-import 'package:lamundialapp/Utilidades/Class/Contry.dart';
-import 'package:lamundialapp/Utilidades/Class/DetailsOwner.dart';
-import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/Producer.dart';
-import 'package:lamundialapp/Utilidades/Class/Product.dart';
 import 'package:lamundialapp/Utilidades/Class/Relationship.dart';
 import 'package:lamundialapp/Utilidades/Class/Relative.dart';
-import 'package:lamundialapp/Utilidades/Class/Taker.dart';
-import 'package:lamundialapp/Utilidades/Class/TypeVehicle.dart';
-import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
-import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:lamundialapp/pages/Sales/RiskStatement.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
-import 'package:lamundialapp/pages/secretCode.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
-import '../../Utilidades/Class/Gender.dart';
-import '../../Utilidades/Class/Method.dart';
 import '../../Utilidades/Class/TypeDoc.dart';
-import '../../Utilidades/Class/Vehicle.dart';
-import '../../components/logo.dart';
 
 
 final localAuth = LocalAuthentication();

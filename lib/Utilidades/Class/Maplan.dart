@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:lamundialapp/Utilidades/Class/Cobertura.dart';
 import 'package:lamundialapp/Utilidades/Class/Frecuencia.dart';
 import 'package:lamundialapp/Utilidades/Class/Plan.dart';

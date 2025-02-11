@@ -1,21 +1,15 @@
+// ignore_for_file: override_on_non_overriding_member, no_leading_underscores_for_local_identifiers, unused_local_variable, avoid_print, sort_child_properties_last, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/AppBar.dart';
-import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/Utilidades/Class/Product.dart';
-import 'package:lamundialapp/pages/Client/ServicesClient.dart';
-import 'package:lamundialapp/pages/Client/test.dart';
 import 'package:lamundialapp/pages/Notifications/notifyPaymentsForm.dart';
 import 'package:lamundialapp/pages/Sales/MenuProducts.dart';
-import 'package:lamundialapp/pages/rolPage.dart';
-import 'package:lamundialapp/pages/statistics/ProducerStatisticsMenu.dart';
 
-import '../../Apis/apis.dart';
 
 
 class MenuProductor extends StatefulWidget {
   final int index;
-  MenuProductor(this.index,{Key? key}) : super(key: key);
+  const MenuProductor(this.index,{Key? key}) : super(key: key);
   @override
   MenuProductorState createState() => MenuProductorState();
 }
@@ -36,9 +30,8 @@ class MenuProductorState extends State<MenuProductor>{
   Widget build(BuildContext context) {
 
     List<Widget> _widgetOptions = <Widget>[
-      MenuProducts(),
-      NotifyPaymentsForm(),
-      //ProducerStatisticsMenu(),
+      const MenuProducts(),
+      const NotifyPaymentsForm(),
     ];
 
     if(_selectedIndex == -1){
@@ -47,7 +40,7 @@ class MenuProductorState extends State<MenuProductor>{
     final search = TextEditingController();
     FocusNode searchCodeFocus = FocusNode();
     return Scaffold(
-      appBar:CustomAppBar(),
+      appBar:const CustomAppBar(),
       body: _widgetOptions.elementAt(_selectedIndex),
       floatingActionButton: SafeArea(
         child: Padding(
@@ -64,7 +57,7 @@ class MenuProductorState extends State<MenuProductor>{
                 width: 24, // Ajusta el ancho de la imagen
                 height: 24, // Ajusta la altura de la imagen
               ),
-              backgroundColor: Color.fromRGBO(232, 79, 81, 0.85), // Establecemos el color a rojo
+              backgroundColor: const Color.fromRGBO(232, 79, 81, 0.85), // Establecemos el color a rojo
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0), // Hacemos el botón redondo
               ),
@@ -92,21 +85,13 @@ class MenuProductorState extends State<MenuProductor>{
               ),
               label: 'Notificar Pagar',
             ),
-            /*BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 30,
-                height: 30,
-                child: Image.asset('assets/estadisticas.png'),
-              ),
-              label: 'Estadisticas',
-            ),*/ //Estadisticas comentado
           ],
-          selectedLabelStyle: TextStyle(
+          selectedLabelStyle: const TextStyle(
               color: Color.fromRGBO(15, 26, 90, 1),
               fontSize: 12,
               fontFamily: "Poppins"
           ),
-          unselectedLabelStyle: TextStyle(
+          unselectedLabelStyle: const TextStyle(
               color: Color.fromRGBO(15, 26, 90, 1),
               fontSize: 12,
               fontFamily: "Poppins"

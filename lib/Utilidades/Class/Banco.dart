@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class Banco {
   final String code;
   final String name;

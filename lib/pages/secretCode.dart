@@ -1,25 +1,13 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, camel_case_types, unused_field, avoid_init_to_null, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lamundialapp/Utilidades/curveAppBar.dart';
-import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/Utilidades/segmentedInput.dart';
-import 'package:lamundialapp/pages/loginPageClient.dart';
-import 'package:lamundialapp/pages/login_page.dart';
 import 'package:lamundialapp/pages/newPassword.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
 import '../Utilidades/Class/Method.dart';
-import '../components/banner.dart';
-import '../components/logo.dart';
 
 final localAuth = LocalAuthentication();
 
@@ -27,7 +15,6 @@ class SecretCodePage extends StatefulWidget {
   const SecretCodePage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   secretCodePageState createState() => secretCodePageState();
 }
 
@@ -52,15 +39,7 @@ class secretCodePageState extends State<SecretCodePage> {
 
     try {
       // Validar campos nulos
-      /*if (selectedMethod == null) {
-        // Muestra la alerta de usuarioNoexiste desde el archivo alertas.dart
-        await alertas.usuarioNoexiste(context);
-        return;
-      }*/
-
-      Navigator.push(context,MaterialPageRoute(builder: (context) => NewPasswordPage()));
-
-      // Resto del código...
+      Navigator.push(context,MaterialPageRoute(builder: (context) => const NewPasswordPage()));
     } catch (e) {
       // Manejar errores si es necesario
     } finally {
@@ -78,8 +57,8 @@ class secretCodePageState extends State<SecretCodePage> {
     return Scaffold(
       appBar: AppBar(
         //toolbarHeight: 50,
-        backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-        title: Text(
+        backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+        title: const Text(
                   "CAMBIAR CONTRASEÑA",
                   style: TextStyle(
                             fontSize: 25,
@@ -142,7 +121,7 @@ class secretCodePageState extends State<SecretCodePage> {
                       controller: codeController,
                     ),
           ),
-          Center(
+          const Center(
             child: Text(
               '  Introduzca el código enviado \na su [método de autentificación]',
               style: TextStyle(
@@ -188,9 +167,7 @@ class secretCodePageState extends State<SecretCodePage> {
           ),
           const SizedBox(height: 100),
           Container(
-
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -205,8 +182,7 @@ class secretCodePageState extends State<SecretCodePage> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -221,8 +197,7 @@ class secretCodePageState extends State<SecretCodePage> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

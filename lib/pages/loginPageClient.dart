@@ -1,8 +1,7 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, avoid_init_to_null, non_constant_identifier_names, sort_child_properties_last, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,10 +12,7 @@ import 'package:lamundialapp/pages/ForgotPassword.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
 import '../Utilidades/Class/TypeDoc.dart';
-import '../components/banner.dart';
 import '../components/logo.dart';
 
 final localAuth = LocalAuthentication();
@@ -195,8 +191,8 @@ class LoginPageClientState extends State<LoginPageClient> {
         child: ClipPath(clipper: CurveAppBar(),
         child: AppBar(
           //toolbarHeight: 50,
-          backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-          title: LogoWidget(),
+          backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+          title: const LogoWidget(),
           leading: IconButton(
             icon: Image.asset(
               'assets/return.png', // Reemplaza con la ruta de tu imagen
@@ -208,7 +204,7 @@ class LoginPageClientState extends State<LoginPageClient> {
           ),
         ),
         ),
-        preferredSize: Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(150),
       ),/*AppBar(
 
       )*/
@@ -248,7 +244,7 @@ class LoginPageClientState extends State<LoginPageClient> {
           const BannerWidgetClient(),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -270,23 +266,23 @@ class LoginPageClientState extends State<LoginPageClient> {
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(// Color de fondo gris
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(30.0),
                         bottomLeft:  Radius.circular(30.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       )),
                   child: DropdownButtonFormField<TypeDoc>(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Poppins',
                       color: Colors.black,
                     ),
                     iconSize: 0,
                     value: typeDoc,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft:  Radius.zero,
                       topRight:  Radius.circular(30.0),
                       bottomLeft:  Radius.circular(30.0),
@@ -304,15 +300,15 @@ class LoginPageClientState extends State<LoginPageClient> {
                       );
                     }).toList(),
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
-                      enabledBorder: UnderlineInputBorder(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent)),
                       suffixIcon: Container(
-                        padding: EdgeInsets.only(right: 0),
-                        child: Icon(Icons.keyboard_arrow_down_outlined),
+                        padding: const EdgeInsets.only(right: 0),
+                        child: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
                   ),
@@ -321,14 +317,14 @@ class LoginPageClientState extends State<LoginPageClient> {
                   width: 200,
                   height: 40,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
                         bottomRight: Radius.zero,
                       ),
                       border: Border.all(
-                        color: Color.fromRGBO(79, 127, 198, 1),
+                        color: const Color.fromRGBO(79, 127, 198, 1),
                       ), // Borde rojo
                   ),
                   child: TextField(
@@ -343,11 +339,11 @@ class LoginPageClientState extends State<LoginPageClient> {
                       fontFamily: 'Poppins',
                       // Otros estilos de texto que desees aplicar
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       counterText: '',
                       hintText: 'Cédula de Identidad',
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20.0,
                       ),
@@ -368,14 +364,14 @@ class LoginPageClientState extends State<LoginPageClient> {
                     width: 300,
                     height: 40,
                     decoration: BoxDecoration(// Color de fondo gris
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft:  Radius.zero,
                           topRight:  Radius.circular(40.0),
                           bottomLeft:  Radius.circular(40.0),
                           bottomRight: Radius.zero,
                         ),
                         border: Border.all(
-                          color: Color.fromRGBO(79, 127, 198, 1),
+                          color: const Color.fromRGBO(79, 127, 198, 1),
                         )),
                     child: Row(
                       children: [
@@ -404,7 +400,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 12.0),
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Color.fromRGBO(121, 116, 126, 1),
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
@@ -429,15 +425,15 @@ class LoginPageClientState extends State<LoginPageClient> {
                   ),
           const SizedBox(height: 10),
           Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 45.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 45.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const ForgotPasswordPage()));
                           },
-                          child: Text(
+                          child: const Text(
                             '¿Olvidó su contraseña? Click aquí.',
                             style: TextStyle(
                                 fontSize: 9,
@@ -481,22 +477,6 @@ class LoginPageClientState extends State<LoginPageClient> {
                     ),
                   ),
                 ),
-                // if (isLoading)
-                //   Positioned(
-                //     left: 100,
-                //     child: Container(
-                //       margin: const EdgeInsets.only(left: 8),
-                //       child: const SpinKitDualRing(
-                //         color: Color.fromRGBO(76, 182, 149, 0.965),
-                //         size: 60.0,
-                //       ),
-                //       // const CircularProgressIndicator(
-                //       //   valueColor: AlwaysStoppedAnimation<Color?>(
-                //       //     Color.fromARGB(179, 255, 255, 255),
-                //       //   ),
-                //       // ),
-                //     ),
-                //   ),
               ],
             ),
           ),
@@ -508,9 +488,9 @@ class LoginPageClientState extends State<LoginPageClient> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterClientPage()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const RegisterClientPage()));
                           },
-                          child: Text(
+                          child: const Text(
                             '¿No tiene una cuenta? Cree una.',
                             style: TextStyle(
                                 fontSize: 9,
@@ -528,7 +508,6 @@ class LoginPageClientState extends State<LoginPageClient> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData) {
-
                         return Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -545,14 +524,11 @@ class LoginPageClientState extends State<LoginPageClient> {
                             onPressed: () async {
                               // Lógica para la autenticación biométrica
                               bool canUseBiometrics = await localAuth.canCheckBiometrics;
-
                               if (canUseBiometrics) {
                                 setState(() {
                                   isLoading = true;
                                 });
-
                                 await _authenticate();
-
                                 setState(() {
                                   isLoading = false;
                                 });
@@ -569,8 +545,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                   ),
           const SizedBox(height: 10),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -585,8 +560,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -601,8 +575,7 @@ class LoginPageClientState extends State<LoginPageClient> {
                     ),
                   ),
           Container(
-                    //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

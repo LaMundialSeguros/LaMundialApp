@@ -1,19 +1,16 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously, unused_local_variable, non_constant_identifier_names, prefer_const_constructors
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:lamundialapp/Apis/apis.dart';
 import 'package:lamundialapp/Utilidades/AppBarSales.dart';
-import 'package:lamundialapp/Utilidades/Class/Amount.dart';
 import 'package:lamundialapp/Utilidades/Class/ApiResponse.dart';
 import 'package:lamundialapp/Utilidades/Class/Frecuencia.dart';
 import 'package:lamundialapp/Utilidades/Class/Maplan.dart';
-import 'package:lamundialapp/Utilidades/Class/PaymentFrequency.dart';
 import 'package:lamundialapp/Utilidades/Class/Policy.dart';
-import 'package:lamundialapp/pages/Sales/TakerDetails.dart'; // <-- Ensure this path is correct
+import 'package:lamundialapp/pages/Sales/TakerDetails.dart';
 import 'package:lamundialapp/pages/Sales/VerifyDetails.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:http/http.dart' as http;

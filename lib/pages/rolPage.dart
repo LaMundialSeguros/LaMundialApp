@@ -1,11 +1,8 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, avoid_init_to_null, non_constant_identifier_names, sort_child_properties_last, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:lamundialapp/Apis/apis.dart';
-//import 'package:lamundialapp/components/square_tile.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lamundialapp/Utilidades/curveAppBar.dart';
 import 'package:lamundialapp/components/rolBanner.dart';
 import 'package:lamundialapp/pages/loginPageClient.dart';
@@ -13,9 +10,6 @@ import 'package:lamundialapp/pages/login_page.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-//import 'package:unique_identifier/unique_identifier.dart';
-
-import '../components/banner.dart';
 import '../components/logo.dart';
 
 final localAuth = LocalAuthentication();
@@ -82,11 +76,11 @@ class RolPageState extends State<RolPage> {
         child: ClipPath(clipper: CurveAppBar(),
         child: AppBar(
           //toolbarHeight: 50,
-          backgroundColor: Color.fromRGBO(15, 26, 90, 1),
-          title: LogoWidget(),
+          backgroundColor: const Color.fromRGBO(15, 26, 90, 1),
+          title: const LogoWidget(),
         ),
         ),
-        preferredSize: Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(150),
       ),/*AppBar(
 
       )*/
@@ -129,24 +123,24 @@ class RolPageState extends State<RolPage> {
             width: 300,
             height: 40,
             decoration: BoxDecoration(// Color de fondo gris
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft:  Radius.zero,
                   topRight:  Radius.circular(40.0),
                   bottomLeft:  Radius.circular(40.0),
                   bottomRight: Radius.zero,
             ),
             border: Border.all(
-                color: Color.fromRGBO(79, 127, 198, 1),
+                color: const Color.fromRGBO(79, 127, 198, 1),
             )),
             child: DropdownButtonFormField<Rol>(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         color: Colors.black,
 
                       ),
                       iconSize: 0,
                       value: selectedRol,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft:  Radius.zero,
                         topRight:  Radius.circular(40.0),
                         bottomLeft:  Radius.circular(40.0),
@@ -165,20 +159,20 @@ class RolPageState extends State<RolPage> {
                       }).toList(),
                       decoration: InputDecoration(
                           hintText: 'Seleccione su Rol',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Color.fromRGBO(121, 116, 126, 1),
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                          enabledBorder: UnderlineInputBorder(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent)),
                           suffixIcon: Container(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.keyboard_arrow_down_outlined),
+                            padding: const EdgeInsets.only(right: 10),
+                            child: const Icon(Icons.keyboard_arrow_down_outlined),
                           ),
                       ),
                     ),
@@ -224,7 +218,7 @@ class RolPageState extends State<RolPage> {
           Container(
 
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -240,7 +234,7 @@ class RolPageState extends State<RolPage> {
                   ),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -256,7 +250,7 @@ class RolPageState extends State<RolPage> {
                   ),
           Container(
                     //padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
